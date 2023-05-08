@@ -1,0 +1,12 @@
+.Title {
+    -fx-font-family: "Arial";
+    -fx-font-size: 50px;
+    -fx-border-color: transparent transparent #EDF4F5;
+}
+
+
+.BackGround{
+    -fx-background-image: url("../images/lightBlue2.jpg");
+
+
+}
