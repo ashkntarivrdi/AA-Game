@@ -11,9 +11,11 @@ public class LoginMenuController {
     @FXML
     private TextField username;
 
-    public void enterSignupMenu(MouseEvent mouseEvent) {
+    public void enterSignupMenu(MouseEvent mouseEvent) throws Exception {
+        new SignupMenu().start(LoginMenu.stage);
     }
 
     public void submit(MouseEvent mouseEvent) {
+
     }
 }

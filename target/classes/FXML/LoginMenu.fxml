@@ -4,14 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.skin.TitledPaneSkin.TitleRegion?>
-
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.SplitMenuButton?>
+
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.LoginMenuController"
@@ -23,11 +17,11 @@
 
         <VBox alignment="CENTER">
             <Label text="AA!" styleClass="Title"/>
-            <TextField promptText="username" fx:id="username" maxWidth="300"/>
+            <TextField promptText="username" fx:id="username" maxWidth="300" />
             <PasswordField promptText="password" fx:id="password" maxWidth="300"/>
             <VBox alignment="CENTER" spacing="20">
-                <Button text="Don't have an account?" onMouseClicked="#enterSignupMenu"/>
                 <Button text = "submit" onMouseClicked="#submit"/>
+                <Button text="Don't have an account?" onMouseClicked="#enterSignupMenu"/>
             </VBox>
         </VBox>
 
