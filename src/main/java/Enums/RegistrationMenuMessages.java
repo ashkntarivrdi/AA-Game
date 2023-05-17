@@ -7,7 +7,7 @@ public enum RegistrationMenuMessages {
     WEAK_PASSWORD,
     //Login
     INCORRECT_PASSWORD,
-    USERNAME_DOES_NOT_EXIST
-    ;
+    USERNAME_DOES_NOT_EXIST,
+    EMPTY_FIELD;
 
 }

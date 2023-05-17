@@ -7,6 +7,9 @@ import model.User;
 
 public class SignupController {
     public RegistrationMenuMessages createUser(TextField username, TextField password) {
+        if(username.getText().isEmpty() || password.getText().isEmpty())
+            return RegistrationMenuMessages.EMPTY_FIELD;
+
         Database.loadUsers();
         if(Database.getUserByUsername(username.getText()) != null)
             return RegistrationMenuMessages.USERNAME_EXISTS;

@@ -12,6 +12,15 @@ import java.util.List;
 
 public class Database {
     private static ArrayList<User> users = new ArrayList<>();
+    private static User currentUser;
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        Database.currentUser = currentUser;
+    }
 
     public static ArrayList<User> getUsers() {
         return users;
