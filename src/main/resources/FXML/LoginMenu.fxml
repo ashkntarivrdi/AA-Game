@@ -22,6 +22,7 @@
             <VBox alignment="CENTER" spacing="20">
                 <Button text = "submit" onMouseClicked="#submit"/>
                 <Button text="Don't have an account?" onMouseClicked="#enterSignupMenu"/>
+                <Button text="Play as a guest" onMouseClicked="#playAsGuest"/>
             </VBox>
         </VBox>
 
