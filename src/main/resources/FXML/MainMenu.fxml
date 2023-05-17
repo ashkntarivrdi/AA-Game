@@ -14,7 +14,7 @@
             prefHeight="400.0" prefWidth="600.0">
     <center>
         <VBox>
-            <Label text="Login Menu" styleClass="Title" alignment="CENTER"/>
+            <Label text="Main Menu" styleClass="Title" alignment="CENTER"/>
             <Button text="Start new game" onMouseClicked="#startNewGame"/>
             <Button text="Continue playing" onMouseClicked="#playPreviousGame"/>
             <Button text="Profile Menu" onMouseClicked="#enterProfileMenu"/>

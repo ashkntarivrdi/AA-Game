@@ -10,6 +10,7 @@ public class MainMenuController {
     }
 
     public void enterProfileMenu(MouseEvent mouseEvent) {
+
     }
 
     public void enterScoreBoardMenu(MouseEvent mouseEvent) {

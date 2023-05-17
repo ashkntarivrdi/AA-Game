@@ -47,5 +47,6 @@ public class LoginMenuController {
     }
 
     public void playAsGuest(MouseEvent mouseEvent) {
+        //TODO
     }
 }
