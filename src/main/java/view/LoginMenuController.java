@@ -1,6 +1,7 @@
 package view;
 
 import controller.LoginController;
+import controller.Utils.UserUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
@@ -46,7 +47,8 @@ public class LoginMenuController {
         }
     }
 
-    public void playAsGuest(MouseEvent mouseEvent) {
-        //TODO
+    public void playAsGuest(MouseEvent mouseEvent) throws Exception{
+        UserUtils.setGuestPlayerTrue();
+        new MainMenu().start(LoginMenu.stage);
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.SettingMenuController"
+            stylesheets="@../CSS/RegistrationStyle.css"
+            styleClass="BackGround"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <Label text="Setting" styleClass="Title"/>
+            <Button text="Change Control Keys" onMouseClicked="#changeControlKeys"/>
+            <Button text="Change Language" onMouseClicked="#changeLanguage"/>
+            <Button text="Change Theme" onMouseClicked="#changeTheme"/>
+            <Button text="Difficulty Rate" onMouseClicked="#changeDifficultyRate"/>
+            <Button text="Mute Sound" onMouseClicked="#muteSound"/>
+            <Button text="Balls Count" onMouseClicked="#changeBallsCount"/>
+            <Button text="Maps" onMouseClicked="#chooseMap"/>
+            <Button text="Back" onMouseClicked="#back"/>
+        </VBox>
+    </center>
+
+</BorderPane>
