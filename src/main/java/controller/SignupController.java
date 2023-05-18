@@ -14,7 +14,10 @@ public class SignupController {
         if(Database.getUserByUsername(username.getText()) != null)
             return RegistrationMenuMessages.USERNAME_EXISTS;
 
-        if(password.getText().length() < 6)
+        if(password.getText().length() < 6 ||
+                !password.getText().matches(".*[0-9].*") ||
+                !password.getText().matches(".*[A-Z].*") ||
+                !password.getText().matches(".*[a-z].*"))
             return RegistrationMenuMessages.WEAK_PASSWORD;
 
         Database.addUsers(new User(username.getText(), password.getText()));

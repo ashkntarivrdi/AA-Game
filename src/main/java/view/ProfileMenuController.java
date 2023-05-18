@@ -1,23 +1,32 @@
 package view;
 
-import controller.MainController;
 import controller.ProfileController;
 import controller.Utils.UserUtils;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import model.Database;
-import model.User;
+import javafx.scene.layout.Pane;
 
 public class ProfileMenuController {
     private final ProfileController profileController = new ProfileController();
-    public void changeUsername(MouseEvent mouseEvent) {
+    public TextField newUsername;
+    public PasswordField newPassword;
+
+    public void changeUsername(MouseEvent mouseEvent) throws Exception{
+        Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChangeUsername.fxml"));
+        Scene scene = new Scene(pane);
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
     }
 
-    public void changePassword(MouseEvent mouseEvent) {
+    public void changePassword(MouseEvent mouseEvent) throws Exception{
+        Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChangePassword.fxml"));
+        Scene scene = new Scene(pane);
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
     }
 
     public void logout(MouseEvent mouseEvent) throws Exception {
@@ -37,5 +46,51 @@ public class ProfileMenuController {
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
         new MainMenu().start(LoginMenu.stage);
+    }
+
+    public void setNewUsername(MouseEvent mouseEvent) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        switch (profileController.setNewUsername(newUsername)) {
+            case SUCCESS:
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Successful");
+                alert.setContentText("Username changed successfully!");
+                alert.show();
+                newUsername.clear();
+                break;
+            case USERNAME_EXISTS:
+                alert.setHeaderText("Fail");
+                alert.setContentText("Username already exists!");
+                alert.show();
+                break;
+            case EMPTY_FIELD:
+                alert.setHeaderText("Fail");
+                alert.setContentText("Username field is empty!");
+                alert.show();
+                break;
+        }
+    }
+
+    public void setNewPassword(MouseEvent mouseEvent) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        switch (profileController.setNewPassword(newPassword)) {
+            case SUCCESS:
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Successful");
+                alert.setContentText("Password changed successfully!");
+                alert.show();
+                newPassword.clear();
+                break;
+            case WEAK_PASSWORD:
+                alert.setHeaderText("Fail");
+                alert.setContentText("Your password is weak!");
+                alert.show();
+                break;
+            case EMPTY_FIELD:
+                alert.setHeaderText("Fail");
+                alert.setContentText("Password field is empty!");
+                alert.show();
+                break;
+        }
     }
 }
