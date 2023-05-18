@@ -1,9 +1,8 @@
 package controller;
 
-import Enums.RegistrationMenuMessages;
+import enums.RegistrationMenuMessages;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.User;
 
 import static model.Database.*;
 

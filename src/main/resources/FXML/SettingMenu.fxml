@@ -15,14 +15,14 @@
     <center>
         <VBox alignment="CENTER" spacing="15">
             <Label text="Setting" styleClass="Title"/>
-            <Button text="Change Control Keys" onMouseClicked="#changeControlKeys"/>
-            <Button text="Change Language" onMouseClicked="#changeLanguage"/>
-            <Button text="Change Theme" onMouseClicked="#changeTheme"/>
-            <Button text="Difficulty Rate" onMouseClicked="#changeDifficultyRate"/>
-            <Button text="Mute Sound" onMouseClicked="#muteSound"/>
-            <Button text="Balls Count" onMouseClicked="#changeBallsCount"/>
-            <Button text="Maps" onMouseClicked="#chooseMap"/>
-            <Button text="Back" onMouseClicked="#back"/>
+            <Button text="Change Control Keys" onMouseClicked="#changeControlKeys" maxWidth="150"/>
+            <Button text="Change Language" onMouseClicked="#changeLanguage" maxWidth="150"/>
+            <Button text="Change Theme" onMouseClicked="#changeTheme" maxWidth="150"/>
+            <Button text="Difficulty Rate" onMouseClicked="#changeDifficultyRate" maxWidth="150"/>
+            <Button text="Mute Sound" onMouseClicked="#muteSound" maxWidth="150"/>
+            <Button text="Balls Count" onMouseClicked="#changeBallsCount" maxWidth="150"/>
+            <Button text="Maps" onMouseClicked="#chooseMap" maxWidth="150"/>
+            <Button text="Back" onMouseClicked="#back" maxWidth="150"/>
         </VBox>
     </center>
 

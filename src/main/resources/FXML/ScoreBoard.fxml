@@ -15,7 +15,7 @@
     <center>
         <VBox alignment="CENTER" spacing="15">
             <Label text="ScoreBoard" styleClass="Title"/>
-            <Button text="Back" onMouseClicked="#enterMainMenu"/>
+            <Button text="Back" onMouseClicked="#enterMainMenu" maxWidth="150"/>
         </VBox>
 
     </center>

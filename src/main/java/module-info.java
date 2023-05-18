@@ -8,4 +8,5 @@ module AA {
     opens view to javafx.fxml;
     exports model;
     opens model to com.google.gson;
+    exports enums;
 }

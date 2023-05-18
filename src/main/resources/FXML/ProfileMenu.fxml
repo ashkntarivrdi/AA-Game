@@ -17,12 +17,12 @@
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Profile Menu" styleClass="Title"/>
-            <Button text="Change Username" onMouseClicked="#changeUsername"/>
-            <Button text="Change Password" onMouseClicked="#changePassword"/>
-            <Button text="Choose Avatar" onMouseClicked="#chooseAvatar"/>
-            <Button text="Delete Account" onMouseClicked="#deleteAccount"/>
-            <Button text="Logout" onMouseClicked="#logout"/>
-            <Button text="Back" onMouseClicked="#enterMainMenu"/>
+            <Button text="Change Username" onMouseClicked="#changeUsername" maxWidth="150"/>
+            <Button text="Change Password" onMouseClicked="#changePassword" maxWidth="150"/>
+            <Button text="Choose Avatar" onMouseClicked="#chooseAvatar" maxWidth="150"/>
+            <Button text="Delete Account" onMouseClicked="#deleteAccount" maxWidth="150"/>
+            <Button text="Logout" onMouseClicked="#logout" maxWidth="150"/>
+            <Button text="Back" onMouseClicked="#enterMainMenu" maxWidth="150"/>
         </VBox>
     </center>
 

@@ -20,8 +20,8 @@
             <TextField promptText="username" fx:id="username" maxWidth="300" />
             <PasswordField promptText="password" fx:id="password" maxWidth="300"/>
             <VBox alignment="CENTER" spacing="20">
-                <Button text = "submit" onMouseClicked="#submit"/>
-                <Button text = "already have an account?" onMouseClicked="#enterLoginMenu"/>
+                <Button text = "submit" onMouseClicked="#submit" maxWidth="150"/>
+                <Button text = "already have an account?" onMouseClicked="#enterLoginMenu" maxWidth="150"/>
             </VBox>
         </VBox>
 
