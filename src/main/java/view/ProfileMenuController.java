@@ -13,6 +13,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.*;
 
 public class ProfileMenuController {
     private final ProfileController profileController = new ProfileController();
@@ -61,6 +64,7 @@ public class ProfileMenuController {
         Image image4 = Avatar.AVATAR_4.image;
         Image image5 = Avatar.AVATAR_2.image;
 
+        VBox vBox = new VBox();
         HBox hBox = new HBox();
         ImageView imageView1 = new ImageView();
         ImageView imageView2 = new ImageView();
@@ -151,7 +155,16 @@ public class ProfileMenuController {
         });
 
         hBox.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5, button1, button2, button3, button4, button5);
-        pane.getChildren().add(hBox);
+
+        Text text = new Text(360, 50, "Pick an Avatar");
+        text.setFill(Color.BLACK);
+        Font font = Font.font("sanserif", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 25);
+        text.setFont(font);
+        vBox.setAlignment(Pos.BASELINE_LEFT);
+
+        vBox.setSpacing(15);
+        vBox.getChildren().addAll(text, hBox);
+        pane.getChildren().add(vBox);
         Scene scene = new Scene(pane);
         LoginMenu.stage.setScene(scene);
         LoginMenu.stage.show();
