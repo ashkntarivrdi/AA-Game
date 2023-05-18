@@ -5,10 +5,8 @@ import controller.Utils.UserUtils;
 import enums.Avatar;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -16,6 +14,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileMenuController {
     private final ProfileController profileController = new ProfileController();
@@ -58,54 +59,82 @@ public class ProfileMenuController {
     public void chooseAvatar(MouseEvent mouseEvent) throws Exception{
         Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChooseAvatar.fxml"));
 
-        Image image1 = Avatar.AVATAR_5.image;
-        Image image2 = Avatar.AVATAR_3.image;
-        Image image3 = Avatar.AVATAR_1.image;
-        Image image4 = Avatar.AVATAR_4.image;
-        Image image5 = Avatar.AVATAR_2.image;
+        ArrayList<ImageView> imageViews = createImageView();
+        Alert alert = getAlertForChoosingAvatar();
+        ArrayList<Button> buttons = createButton(imageViews, alert);
+
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(imageViews.get(0), imageViews.get(1), imageViews.get(2), imageViews.get(3), imageViews.get(4),
+                buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(3), buttons.get(4));
+
+        Text text = getTextForChoosingAvatar();
 
         VBox vBox = new VBox();
-        HBox hBox = new HBox();
-        ImageView imageView1 = new ImageView();
-        ImageView imageView2 = new ImageView();
-        ImageView imageView3 = new ImageView();
-        ImageView imageView4 = new ImageView();
-        ImageView imageView5 = new ImageView();
+        vBox.setAlignment(Pos.BASELINE_LEFT);
+        vBox.setSpacing(15);
+        vBox.getChildren().addAll(text, hBox);
 
-        imageView1.setImage(image1);
+        pane.getChildren().add(vBox);
+
+        Scene scene = new Scene(pane);
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
+    }
+
+    public Text getTextForChoosingAvatar() {
+        Text text = new Text(360, 50, "Pick an Avatar");
+        text.setFill(Color.BLACK);
+        Font font = Font.font("sanserif", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 25);
+        text.setFont(font);
+        return text;
+    }
+
+    public Alert getAlertForChoosingAvatar() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Do you want to pick this avatar?");
+        return alert;
+    }
+
+    public ArrayList<ImageView> createImageView() {
+
+        ImageView imageView1 = new ImageView(Avatar.AVATAR_5.image);
+        ImageView imageView2 = new ImageView(Avatar.AVATAR_3.image);
+        ImageView imageView3 = new ImageView(Avatar.AVATAR_1.image);
+        ImageView imageView4 = new ImageView(Avatar.AVATAR_4.image);
+        ImageView imageView5 = new ImageView(Avatar.AVATAR_2.image);
+
         imageView1.setFitWidth(85);
         imageView1.setPreserveRatio(true);
         imageView1.setSmooth(true);
         imageView1.setCache(true);
 
-        imageView2.setImage(image2);
         imageView2.setFitWidth(84);
         imageView2.setPreserveRatio(true);
         imageView2.setSmooth(true);
         imageView2.setCache(true);
 
-        imageView3.setImage(image3);
         imageView3.setFitWidth(84);
         imageView3.setPreserveRatio(true);
         imageView3.setSmooth(true);
         imageView3.setCache(true);
 
-        imageView4.setImage(image4);
         imageView4.setFitWidth(84);
         imageView4.setPreserveRatio(true);
         imageView4.setSmooth(true);
         imageView4.setCache(true);
 
-        imageView5.setImage(image5);
         imageView5.setFitWidth(84);
         imageView5.setPreserveRatio(true);
         imageView5.setSmooth(true);
         imageView5.setCache(true);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Do you want to pick this avatar?");
+        return new ArrayList<ImageView>(List.of(
+                imageView1, imageView2, imageView3, imageView4, imageView5));
+    }
+
+    public ArrayList<Button> createButton(ArrayList<ImageView> imageViews, Alert alert) {
         Button button1 = new Button();
-        button1.setGraphic(imageView1);
+        button1.setGraphic(imageViews.get(0));
         button1.setOnAction(value -> {
             alert.showAndWait().ifPresent(response -> {
                 if(response == ButtonType.OK) {
@@ -115,7 +144,7 @@ public class ProfileMenuController {
         });
 
         Button button2 = new Button();
-        button2.setGraphic(imageView2);
+        button2.setGraphic(imageViews.get(1));
         button2.setOnAction(value -> {
             alert.showAndWait().ifPresent(response -> {
                 if(response == ButtonType.OK) {
@@ -125,7 +154,7 @@ public class ProfileMenuController {
         });
 
         Button button3 = new Button();
-        button3.setGraphic(imageView3);
+        button3.setGraphic(imageViews.get(2));
         button3.setOnAction(value -> {
             alert.showAndWait().ifPresent(response -> {
                 if(response == ButtonType.OK) {
@@ -135,7 +164,7 @@ public class ProfileMenuController {
         });
 
         Button button4 = new Button();
-        button4.setGraphic(imageView4);
+        button4.setGraphic(imageViews.get(3));
         button4.setOnAction(value -> {
             alert.showAndWait().ifPresent(response -> {
                 if(response == ButtonType.OK) {
@@ -145,7 +174,7 @@ public class ProfileMenuController {
         });
 
         Button button5 = new Button();
-        button5.setGraphic(imageView5);
+        button5.setGraphic(imageViews.get(4));
         button5.setOnAction(value -> {
             alert.showAndWait().ifPresent(response -> {
                 if(response == ButtonType.OK) {
@@ -154,20 +183,8 @@ public class ProfileMenuController {
             });
         });
 
-        hBox.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5, button1, button2, button3, button4, button5);
-
-        Text text = new Text(360, 50, "Pick an Avatar");
-        text.setFill(Color.BLACK);
-        Font font = Font.font("sanserif", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 25);
-        text.setFont(font);
-        vBox.setAlignment(Pos.BASELINE_LEFT);
-
-        vBox.setSpacing(15);
-        vBox.getChildren().addAll(text, hBox);
-        pane.getChildren().add(vBox);
-        Scene scene = new Scene(pane);
-        LoginMenu.stage.setScene(scene);
-        LoginMenu.stage.show();
+        return new ArrayList<Button>(List.of(
+                button1, button2, button3, button4, button5));
     }
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
