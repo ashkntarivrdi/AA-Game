@@ -15,7 +15,7 @@
 
     <center>
 
-        <VBox alignment="CENTER">
+        <VBox alignment="CENTER" spacing="10">
             <Label text="Signup Menu" styleClass="Title"/>
             <TextField promptText="username" fx:id="username" maxWidth="300" />
             <PasswordField promptText="password" fx:id="password" maxWidth="300"/>
