@@ -30,7 +30,6 @@ public class MainMenu extends Application {
             text.setText("You have entered as guest!");
             text.setTranslateX(70);
             text.setTranslateY(10);
-
         }
         else {
             text.setText("Username: " + UserUtils.getCurrentUsername() +

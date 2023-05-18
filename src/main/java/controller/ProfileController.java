@@ -15,15 +15,10 @@ public class ProfileController {
         if(getUserByUsername(newUsername.getText()) != null)
             return RegistrationMenuMessages.USERNAME_EXISTS;
 
-        System.out.println("current user name: " + getCurrentUser().getName());
-        System.out.println("new username: " + newUsername.getText());
-
         loadUsers();
         getUserByUsername(getCurrentUser().getName()).setName(newUsername.getText());
         getCurrentUser().setName(newUsername.getText());
         saveUsers();
-
-        System.out.println("current user name: " + getCurrentUser().getName());
 
         return RegistrationMenuMessages.SUCCESS;
     }
