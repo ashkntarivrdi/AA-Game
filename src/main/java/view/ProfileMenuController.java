@@ -5,10 +5,12 @@ import controller.Utils.UserUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.Database;
 
 public class ProfileMenuController {
     private final ProfileController profileController = new ProfileController();
@@ -38,7 +40,14 @@ public class ProfileMenuController {
         new LoginMenu().start(LoginMenu.stage);
     }
 
-    public void deleteAccount(MouseEvent mouseEvent) {
+    public void deleteAccount(MouseEvent mouseEvent) throws Exception{
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Do you want to delete your account?");
+        alert.showAndWait().ifPresent(response -> {
+            if(response == ButtonType.OK)
+                profileController.removeCurrentUser();
+        });
+        new LoginMenu().start(LoginMenu.stage);
     }
 
     public void chooseAvatar(MouseEvent mouseEvent) {

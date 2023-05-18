@@ -34,6 +34,16 @@ public class Database {
         saveUsers();
     }
 
+    public static void removeUser(User user) {
+        for (User user1 : users) {
+            if(user1.getName().equals(user.getName())) {
+                users.remove(user1);
+                break;
+            }
+        }
+        saveUsers();
+    }
+
     public static void loadUsers() {
         try {
             String json = new String(Files.readAllBytes(Paths.get("./src/main/resources/Database/UserDatabase.json")));
