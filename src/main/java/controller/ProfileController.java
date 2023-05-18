@@ -1,5 +1,6 @@
 package controller;
 
+import enums.Avatar;
 import enums.RegistrationMenuMessages;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -43,5 +44,12 @@ public class ProfileController {
     public void removeCurrentUser() {
         loadUsers();
         removeUser(getUserByUsername(getCurrentUser().getName()));
+    }
+
+    public void setNewAvatar(Avatar avatar) {
+        loadUsers();
+        getUserByUsername(getCurrentUser().getName()).setAvatar(avatar);
+        getCurrentUser().setAvatar(avatar);
+        saveUsers();
     }
 }

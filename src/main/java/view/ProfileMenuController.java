@@ -2,15 +2,17 @@ package view;
 
 import controller.ProfileController;
 import controller.Utils.UserUtils;
+import enums.Avatar;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import model.Database;
 
 public class ProfileMenuController {
     private final ProfileController profileController = new ProfileController();
@@ -50,7 +52,109 @@ public class ProfileMenuController {
         new LoginMenu().start(LoginMenu.stage);
     }
 
-    public void chooseAvatar(MouseEvent mouseEvent) {
+    public void chooseAvatar(MouseEvent mouseEvent) throws Exception{
+        Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChooseAvatar.fxml"));
+
+        Image image1 = Avatar.AVATAR_5.image;
+        Image image2 = Avatar.AVATAR_3.image;
+        Image image3 = Avatar.AVATAR_1.image;
+        Image image4 = Avatar.AVATAR_4.image;
+        Image image5 = Avatar.AVATAR_2.image;
+
+        HBox hBox = new HBox();
+        ImageView imageView1 = new ImageView();
+        ImageView imageView2 = new ImageView();
+        ImageView imageView3 = new ImageView();
+        ImageView imageView4 = new ImageView();
+        ImageView imageView5 = new ImageView();
+
+        imageView1.setImage(image1);
+        imageView1.setFitWidth(85);
+        imageView1.setPreserveRatio(true);
+        imageView1.setSmooth(true);
+        imageView1.setCache(true);
+
+        imageView2.setImage(image2);
+        imageView2.setFitWidth(84);
+        imageView2.setPreserveRatio(true);
+        imageView2.setSmooth(true);
+        imageView2.setCache(true);
+
+        imageView3.setImage(image3);
+        imageView3.setFitWidth(84);
+        imageView3.setPreserveRatio(true);
+        imageView3.setSmooth(true);
+        imageView3.setCache(true);
+
+        imageView4.setImage(image4);
+        imageView4.setFitWidth(84);
+        imageView4.setPreserveRatio(true);
+        imageView4.setSmooth(true);
+        imageView4.setCache(true);
+
+        imageView5.setImage(image5);
+        imageView5.setFitWidth(84);
+        imageView5.setPreserveRatio(true);
+        imageView5.setSmooth(true);
+        imageView5.setCache(true);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Do you want to pick this avatar?");
+        Button button1 = new Button();
+        button1.setGraphic(imageView1);
+        button1.setOnAction(value -> {
+            alert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK) {
+                    profileController.setNewAvatar(Avatar.AVATAR_5);
+                }
+            });
+        });
+
+        Button button2 = new Button();
+        button2.setGraphic(imageView2);
+        button2.setOnAction(value -> {
+            alert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK) {
+                    profileController.setNewAvatar(Avatar.AVATAR_3);
+                }
+            });
+        });
+
+        Button button3 = new Button();
+        button3.setGraphic(imageView3);
+        button3.setOnAction(value -> {
+            alert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK) {
+                    profileController.setNewAvatar(Avatar.AVATAR_1);
+                }
+            });
+        });
+
+        Button button4 = new Button();
+        button4.setGraphic(imageView4);
+        button4.setOnAction(value -> {
+            alert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK) {
+                    profileController.setNewAvatar(Avatar.AVATAR_4);
+                }
+            });
+        });
+
+        Button button5 = new Button();
+        button5.setGraphic(imageView5);
+        button5.setOnAction(value -> {
+            alert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK) {
+                    profileController.setNewAvatar(Avatar.AVATAR_2);
+                }
+            });
+        });
+
+        hBox.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5, button1, button2, button3, button4, button5);
+        pane.getChildren().add(hBox);
+        Scene scene = new Scene(pane);
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
     }
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
