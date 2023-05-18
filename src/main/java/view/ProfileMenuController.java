@@ -3,8 +3,12 @@ package view;
 import controller.MainController;
 import controller.ProfileController;
 import controller.Utils.UserUtils;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import model.Database;
 import model.User;
 

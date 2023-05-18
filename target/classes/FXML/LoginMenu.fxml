@@ -11,7 +11,7 @@
             fx:controller="view.LoginMenuController"
             stylesheets="@../CSS/RegistrationStyle.css"
             styleClass="BackGround"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="600.0" prefWidth="500.0">
 
     <center>
 
@@ -21,8 +21,8 @@
             <PasswordField promptText="password" fx:id="password" maxWidth="300"/>
             <VBox alignment="CENTER" spacing="20">
                 <Button text = "submit" onMouseClicked="#submit"/>
-                <Button text="Don't have an account?" onMouseClicked="#enterSignupMenu"/>
                 <Button text="Play as a guest" onMouseClicked="#playAsGuest"/>
+                <Button text="Don't have an account?" onMouseClicked="#enterSignupMenu"/>
             </VBox>
         </VBox>
 

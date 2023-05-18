@@ -1,6 +1,5 @@
 package view;
 
-import controller.MainController;
 import controller.Utils.UserUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,13 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Ball;
 
 public class MainMenu extends Application {
     @Override
@@ -28,6 +25,7 @@ public class MainMenu extends Application {
         text.setFill(Color.BLACK);
         Font font = Font.font("serif", FontWeight.BOLD, FontPosture.ITALIC, 12);
         text.setFont(font);
+
         if(UserUtils.isGuestPlayer()) {
             text.setText("You have entered as guest!");
             text.setTranslateX(70);
@@ -43,7 +41,6 @@ public class MainMenu extends Application {
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().add(text);
         mainMenuPane.getChildren().add(hBox);
-
 
         Scene scene = new Scene(mainMenuPane);
         stage.setScene(scene);

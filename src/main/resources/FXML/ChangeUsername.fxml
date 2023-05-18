@@ -8,16 +8,11 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.ScoreBoardController"
+            fx:controller="view.ProfileMenuController"
             stylesheets="@../CSS/RegistrationStyle.css"
             styleClass="BackGround"
             prefHeight="600.0" prefWidth="500.0">
-    <center>
-        <VBox alignment="CENTER" spacing="15">
-            <Label text="ScoreBoard" styleClass="Title"/>
-            <Button text="Back" onMouseClicked="#enterMainMenu"/>
-        </VBox>
 
-    </center>
+
 
 </BorderPane>

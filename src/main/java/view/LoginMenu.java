@@ -15,6 +15,7 @@ public class LoginMenu extends Application {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
 //        stage.setMaximized(true);
+        stage.setResizable(false);
         stage.show();
     }
 }
