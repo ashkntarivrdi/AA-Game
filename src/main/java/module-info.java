@@ -6,6 +6,7 @@ module AA {
     requires java.logging;
 
 
+
     exports view;
     opens view to javafx.fxml;
     exports model;

@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -83,37 +84,11 @@ public class ProfileMenuController {
         hBox.getChildren().addAll(imageViews.get(0), imageViews.get(1), imageViews.get(2), imageViews.get(3), imageViews.get(4),
                 buttons.get(0), buttons.get(1), buttons.get(2), buttons.get(3), buttons.get(4));
 
-        Text text = getTextForChoosingAvatar();
-
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.BASELINE_LEFT);
         vBox.setSpacing(15);
 
-        FileChooser fileChooser  = getFileChooser();
-
-        Button button = new Button("Open a Picture...");
-        button.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        File file = fileChooser.showOpenDialog(LoginMenu.stage);
-                        if(file != null) {
-                            profileController.setAvatarFromChooseFile(file.getAbsolutePath());
-                        }
-                    }
-                }
-        );
-
-        Button button1 = new Button("Back");
-        button1.setOnMouseClicked(value -> {
-            try {
-                enterProfileMenu(mouseEvent);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        vBox.getChildren().addAll(text, hBox, button, button1);
+        vBox.getChildren().add(hBox);
 
         pane.getChildren().add(vBox);
 
@@ -137,15 +112,6 @@ public class ProfileMenuController {
                 .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
         fileChooser.setTitle("Open File");
         return fileChooser;
-    }
-
-
-    public Text getTextForChoosingAvatar() {
-        Text text = new Text(360, 50, "Pick an Avatar");
-        text.setFill(Color.BLACK);
-        Font font = Font.font("sanserif", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 25);
-        text.setFont(font);
-        return text;
     }
 
     public Alert getAlertForChoosingAvatar() {
@@ -297,6 +263,14 @@ public class ProfileMenuController {
                 alert.setContentText("Password field is empty!");
                 alert.show();
                 break;
+        }
+    }
+
+    public void chooseFile(MouseEvent mouseEvent) {
+        FileChooser fileChooser  = getFileChooser();
+        File file = fileChooser.showOpenDialog(LoginMenu.stage);
+        if(file != null) {
+            profileController.setAvatarFromChooseFile(file.getAbsolutePath());
         }
     }
 }

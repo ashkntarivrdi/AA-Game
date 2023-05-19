@@ -10,8 +10,9 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.MainMenuController"
             stylesheets="@../CSS/RegistrationStyle.css"
-            styleClass="BackGround"
+            styleClass="BackGroundColor"
             prefHeight="600.0" prefWidth="500.0">
+    <!--            styleClass="BackGround"-->
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Main Menu" styleClass="Title" alignment="CENTER"/>

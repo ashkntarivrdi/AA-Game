@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import javax.print.attribute.standard.Media;
+
 public class LoginMenu extends Application {
     public static Stage stage;
     @Override
@@ -18,5 +20,6 @@ public class LoginMenu extends Application {
 //        stage.setMaximized(true);
         stage.setResizable(false);
         stage.show();
+
     }
 }

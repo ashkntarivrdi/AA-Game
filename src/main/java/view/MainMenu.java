@@ -32,13 +32,9 @@ public class MainMenu extends Application {
             text.setText("Username: " + UserUtils.getCurrentUsername() +
                     " | Score: " + UserUtils.getCurrentUserScore());
             ImageView imageView = new ImageView(UserUtils.getCurrentUserAvatar());
-            imageView.setFitWidth(50);
-            imageView.setPreserveRatio(true);
-            imageView.setSmooth(true);
-            imageView.setCache(true);
-            HBox hBox = new HBox(text, imageView);
-            hBox.setSpacing(310);
-            vBox.getChildren().add(hBox);
+            imageView.setFitWidth(60);
+            imageView.setFitHeight(60);
+            vBox.getChildren().addAll(imageView, text);
         }
 
         vBox.setAlignment(Pos.BASELINE_LEFT);

@@ -20,6 +20,7 @@ public class LoginMenuController {
     }
 
     public void submit(MouseEvent mouseEvent) throws Exception {
+        
         Alert alert = new Alert(Alert.AlertType.ERROR);
         switch (loginController.loginUser(username, password)) {
             case SUCCESS:
