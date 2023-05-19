@@ -1,10 +1,20 @@
 package view;
 
+import controller.SettingController;
+import enums.Level;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
-
-import java.lang.module.ModuleDescriptor;
+import javafx.scene.layout.Pane;
+import model.CurrentGame;
 
 public class SettingMenuController {
+    public SettingController settingController = new SettingController();
+    public RadioButton easy;
+    public RadioButton medium;
+    public RadioButton hard;
+
     public void chooseMap(MouseEvent mouseEvent) {
         //TODO
     }
@@ -21,8 +31,13 @@ public class SettingMenuController {
         //TODO
     }
 
-    public void changeDifficultyRate(MouseEvent mouseEvent) {
-        //TODO
+    public void changeDifficultyRate(MouseEvent mouseEvent) throws Exception{
+        Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/DifficultyRate.fxml"));
+
+
+        Scene scene = new Scene(pane);
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
     }
 
     public void changeLanguage(MouseEvent mouseEvent) {
@@ -33,7 +48,26 @@ public class SettingMenuController {
         //TODO
     }
 
-    public void back(MouseEvent mouseEvent) throws Exception {
+    public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
         new MainMenu().start(LoginMenu.stage);
+    }
+
+    public void setNewDifficultyRate(MouseEvent mouseEvent) {
+        if(easy.isSelected()) {
+            hard.setSelected(false);
+            medium.setSelected(false);
+            settingController.setDifficultyRate(Level.EASY);
+        }
+        else if(hard.isSelected()) {
+            easy.setSelected(false);
+            medium.setSelected(false);
+            settingController.setDifficultyRate(Level.HARD);
+        }
+        else {
+            easy.setSelected(false);
+            hard.setSelected(false);
+            settingController.setDifficultyRate(Level.MEDIUM);
+        }
+        System.out.println(CurrentGame.getDifficultyRate());
     }
 }

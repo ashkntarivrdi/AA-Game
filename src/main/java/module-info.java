@@ -12,4 +12,5 @@ module AA {
     exports model;
     opens model to com.google.gson;
     exports enums;
+    exports controller;
 }

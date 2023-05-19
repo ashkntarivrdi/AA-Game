@@ -3,14 +3,14 @@ package model;
 import enums.Level;
 
 public class CurrentGame {
-    private Level difficultyRate;
+    private static Level difficultyRate = Level.MEDIUM;
     public static boolean guestPlayer;
 
-    public Level getDifficultyRate() {
+    public static Level getDifficultyRate() {
         return difficultyRate;
     }
 
-    public void setDifficultyRate(Level difficultyRate) {
-        this.difficultyRate = difficultyRate;
+    public static void setDifficultyRate(Level difficultyRate) {
+        CurrentGame.difficultyRate = difficultyRate;
     }
 }
