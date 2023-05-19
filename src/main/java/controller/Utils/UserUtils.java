@@ -1,8 +1,15 @@
 package controller.Utils;
+import controller.GameController;
 import enums.Avatar;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.Database;
+import model.User;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static model.CurrentGame.guestPlayer;
 
@@ -40,7 +47,10 @@ public class UserUtils {
         return alert;
     }
 
-    public static Avatar getCurrentUserAvatar() {
-        return Database.getCurrentUser().getAvatar();
+    public static Image getCurrentUserAvatar() throws IOException {
+        if(Database.getCurrentUser().getAvatar() != null)
+            return Database.getCurrentUser().getAvatar().image;
+        String imageUrl = "file:///" + Database.getCurrentUser().getPath().replace('\\', '/');
+        return new Image(new URL(imageUrl).openStream());
     }
 }

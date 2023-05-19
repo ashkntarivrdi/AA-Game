@@ -3,10 +3,15 @@ package view;
 import controller.ProfileController;
 import controller.Utils.UserUtils;
 import enums.Avatar;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -14,11 +19,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
+import java.awt.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileMenuController {
+    private Desktop desktop = Desktop.getDesktop();
     private final ProfileController profileController = new ProfileController();
     public TextField newUsername;
     public PasswordField newPassword;
@@ -79,7 +92,56 @@ public class ProfileMenuController {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.BASELINE_LEFT);
         vBox.setSpacing(15);
-        vBox.getChildren().addAll(text, hBox);
+
+        //start of file chooser
+        FileChooser fileChooser  = new FileChooser();
+        //
+        FileChooser.ExtensionFilter extFilterJPG
+                = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterjpg
+                = new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter extFilterPNG
+                = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
+        FileChooser.ExtensionFilter extFilterpng
+                = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
+        fileChooser.getExtensionFilters()
+                .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
+        //
+        fileChooser.setTitle("resource files");
+        Button button = new Button("Open a Picture...");
+        button.setOnAction(
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        File file = fileChooser.showOpenDialog(LoginMenu.stage);
+                        if(file != null) {
+                            System.out.println(file.getAbsolutePath());
+                            profileController.setAvatarFromChooseFile(file.getAbsolutePath());
+//                            String fileName = file.getName();
+//                            Path target = Paths.get("D:/Programming/AP/AA/src/main/resources/avatars", fileName);
+//                            try {
+//                                File tmpFile = new File("D:/Programming/AP/AA/src/main/resources/avatars/" + fileName);
+//                                if(!tmpFile.exists())
+//                                    Files.copy(file.toPath(), target);
+//                            } catch (IOException e) {
+//                                throw new RuntimeException(e);
+//                            }
+//                            profileController.setAvatarFromChooseFile("/avatars/" + fileName);
+                        }
+                    }
+                }
+        );
+
+        Button button1 = new Button("Back");
+        button1.setOnMouseClicked(value -> {
+            try {
+                enterProfileMenu(mouseEvent);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        vBox.getChildren().addAll(text, hBox, button, button1);
 
         pane.getChildren().add(vBox);
 
@@ -87,6 +149,7 @@ public class ProfileMenuController {
         LoginMenu.stage.setScene(scene);
         LoginMenu.stage.show();
     }
+
 
     public Text getTextForChoosingAvatar() {
         Text text = new Text(360, 50, "Pick an Avatar");

@@ -31,7 +31,7 @@ public class MainMenu extends Application {
         else {
             text.setText("Username: " + UserUtils.getCurrentUsername() +
                     " | Score: " + UserUtils.getCurrentUserScore());
-            ImageView imageView = new ImageView(UserUtils.getCurrentUserAvatar().image);
+            ImageView imageView = new ImageView(UserUtils.getCurrentUserAvatar());
             imageView.setFitWidth(50);
             imageView.setPreserveRatio(true);
             imageView.setSmooth(true);

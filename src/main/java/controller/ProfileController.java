@@ -4,6 +4,8 @@ import enums.Avatar;
 import enums.RegistrationMenuMessages;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import model.Database;
 
 import static model.Database.*;
 
@@ -50,6 +52,18 @@ public class ProfileController {
         loadUsers();
         getUserByUsername(getCurrentUser().getName()).setAvatar(avatar);
         getCurrentUser().setAvatar(avatar);
+        getUserByUsername(getCurrentUser().getName()).setPath("");
+        getCurrentUser().setPath("");
+        saveUsers();
+    }
+
+
+    public void setAvatarFromChooseFile(String path) {
+        loadUsers();
+        getUserByUsername(getCurrentUser().getName()).setPath(path);
+        getCurrentUser().setPath(path);
+        getUserByUsername(getCurrentUser().getName()).setAvatar(null);
+        getCurrentUser().setAvatar(null);
         saveUsers();
     }
 }
