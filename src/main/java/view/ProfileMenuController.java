@@ -38,12 +38,19 @@ public class ProfileMenuController {
     }
 
     public void logout(MouseEvent mouseEvent) throws Exception {
-        UserUtils.userLogout();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Logout Successful");
-        alert.setContentText("User logged out successfully");
-        alert.show();
-        new LoginMenu().start(LoginMenu.stage);
+        Alert alert = UserUtils.logoutConfirmation();
+        alert.showAndWait().ifPresent(response -> {
+            if(response == ButtonType.OK) {
+                UserUtils.userLogout();
+                Alert alert1 = UserUtils.logoutMessage();
+                alert1.show();
+                try {
+                    new LoginMenu().start(LoginMenu.stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public void deleteAccount(MouseEvent mouseEvent) throws Exception{
