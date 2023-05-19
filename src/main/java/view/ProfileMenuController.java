@@ -191,6 +191,10 @@ public class ProfileMenuController {
         new MainMenu().start(LoginMenu.stage);
     }
 
+    public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
+        new ProfileMenu().start(LoginMenu.stage);
+    }
+
     public void setNewUsername(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         switch (profileController.setNewUsername(newUsername)) {

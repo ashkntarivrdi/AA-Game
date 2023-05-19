@@ -14,6 +14,7 @@ public class SettingMenu extends Application {
         BorderPane borderPane = FXMLLoader.load(SettingMenu.class.getResource("/FXML/SettingMenu.fxml"));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
+        stage.setTitle("Settings");
         stage.show();
     }
 }

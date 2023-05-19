@@ -12,6 +12,7 @@ public class ScoreBoard extends Application {
         BorderPane borderPane = FXMLLoader.load(ScoreBoard.class.getResource("/FXML/ScoreBoard.fxml"));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
+        stage.setTitle("ScoreBoard");
         stage.show();
     }
 }

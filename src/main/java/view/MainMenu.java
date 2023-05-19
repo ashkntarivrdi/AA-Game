@@ -37,6 +37,7 @@ public class MainMenu extends Application {
 
         Scene scene = new Scene(mainMenuPane);
         stage.setScene(scene);
+        stage.setTitle("Main Menu");
         stage.show();
     }
 }

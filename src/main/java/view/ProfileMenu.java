@@ -12,6 +12,7 @@ public class ProfileMenu extends Application {
         Pane profileMenuPane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ProfileMenu.fxml"));
         Scene scene = new Scene(profileMenuPane);
         stage.setScene(scene);
+        stage.setTitle("Profile Menu");
         stage.show();
     }
 }

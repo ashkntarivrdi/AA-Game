@@ -12,6 +12,7 @@ public class SignupMenu extends Application {
         BorderPane signupPane = FXMLLoader.load(SignupMenu.class.getResource("/FXML/SignupMenu.fxml"));
         Scene scene = new Scene(signupPane);
         stage.setScene(scene);
+        stage.setTitle("Signup Menu");
 //        stage.setMaximized(true);
         stage.show();
     }

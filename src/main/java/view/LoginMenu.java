@@ -14,6 +14,7 @@ public class LoginMenu extends Application {
         BorderPane borderPane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/LoginMenu.fxml"));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
+        stage.setTitle("Login Menu");
 //        stage.setMaximized(true);
         stage.setResizable(false);
         stage.show();
