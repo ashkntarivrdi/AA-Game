@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -13,12 +10,11 @@
             styleClass="BackGroundColor"
             prefHeight="600.0" prefWidth="500.0">
     <!--            styleClass="BackGround"-->
-    <center>
-        <VBox alignment="CENTER" spacing="15">
-            <Label text="ScoreBoard" styleClass="Title"/>
+    <bottom>
+        <VBox alignment="BOTTOM_CENTER" spacing="15">
             <Button text="Back" onMouseClicked="#enterMainMenu" maxWidth="150"/>
         </VBox>
 
-    </center>
+    </bottom>
 
 </BorderPane>

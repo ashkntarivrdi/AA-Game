@@ -9,6 +9,7 @@ public class User {
     private int score;
     private Avatar avatar;
     private String path;
+    private double time;
 
     public User(String name, String password) {
         this.name = name;
@@ -16,6 +17,7 @@ public class User {
         this.score = 0;
         this.avatar = Avatar.getRandomAvatar();
         this.path = "";
+        this.time = 0;
     }
 
     public String getName() {
@@ -34,6 +36,14 @@ public class User {
         this.avatar = avatar;
     }
 
+    public Double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
     public String getPath() {
         return path;
     }
@@ -50,7 +60,7 @@ public class User {
         this.password = password;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 

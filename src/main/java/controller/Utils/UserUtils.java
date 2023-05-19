@@ -19,6 +19,7 @@ public class UserUtils {
     }
 
     public static void setGuestPlayerTrue() {
+        Database.loadUsers();
         guestPlayer = true;
     }
     public static String getCurrentUsername() {

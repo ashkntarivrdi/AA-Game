@@ -8,8 +8,11 @@
 .BackGround{
     -fx-background-image: url("../images/lightBlue2.jpg");
 
-
 }
 .BackGroundColor {
     -fx-background-color: #818c94;
+}
+
+Button {
+    -fx-background-color: #f1ca75;
 }
