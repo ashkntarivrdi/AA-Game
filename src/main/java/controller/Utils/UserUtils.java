@@ -1,5 +1,7 @@
 package controller.Utils;
+import enums.Avatar;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import model.Database;
 
 import static model.CurrentGame.guestPlayer;
@@ -36,5 +38,9 @@ public class UserUtils {
         alert.setHeaderText("Logout Successful");
         alert.setContentText("User logged out successfully");
         return alert;
+    }
+
+    public static Avatar getCurrentUserAvatar() {
+        return Database.getCurrentUser().getAvatar();
     }
 }

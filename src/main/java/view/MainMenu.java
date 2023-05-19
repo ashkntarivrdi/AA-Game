@@ -5,10 +5,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -25,14 +24,24 @@ public class MainMenu extends Application {
         Font font = Font.font("serif", FontWeight.BOLD, FontPosture.ITALIC, 12);
         text.setFont(font);
 
-        if(UserUtils.isGuestPlayer())
+        if(UserUtils.isGuestPlayer()) {
             text.setText("You have entered as guest!");
-        else
+            vBox.getChildren().add(text);
+        }
+        else {
             text.setText("Username: " + UserUtils.getCurrentUsername() +
-                     " | Score: " + UserUtils.getCurrentUserScore());
+                    " | Score: " + UserUtils.getCurrentUserScore());
+            ImageView imageView = new ImageView(UserUtils.getCurrentUserAvatar().image);
+            imageView.setFitWidth(50);
+            imageView.setPreserveRatio(true);
+            imageView.setSmooth(true);
+            imageView.setCache(true);
+            HBox hBox = new HBox(text, imageView);
+            hBox.setSpacing(310);
+            vBox.getChildren().add(hBox);
+        }
 
         vBox.setAlignment(Pos.BASELINE_LEFT);
-        vBox.getChildren().add(text);
         mainMenuPane.getChildren().add(vBox);
 
         Scene scene = new Scene(mainMenuPane);
