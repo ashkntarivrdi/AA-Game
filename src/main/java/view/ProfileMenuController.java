@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -24,9 +23,6 @@ import javafx.stage.FileChooser;
 
 import java.awt.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,21 +89,8 @@ public class ProfileMenuController {
         vBox.setAlignment(Pos.BASELINE_LEFT);
         vBox.setSpacing(15);
 
-        //start of file chooser
-        FileChooser fileChooser  = new FileChooser();
-        //
-        FileChooser.ExtensionFilter extFilterJPG
-                = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
-        FileChooser.ExtensionFilter extFilterjpg
-                = new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg");
-        FileChooser.ExtensionFilter extFilterPNG
-                = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
-        FileChooser.ExtensionFilter extFilterpng
-                = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
-        fileChooser.getExtensionFilters()
-                .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
-        //
-        fileChooser.setTitle("resource files");
+        FileChooser fileChooser  = getFileChooser();
+
         Button button = new Button("Open a Picture...");
         button.setOnAction(
                 new EventHandler<ActionEvent>() {
@@ -115,18 +98,7 @@ public class ProfileMenuController {
                     public void handle(ActionEvent actionEvent) {
                         File file = fileChooser.showOpenDialog(LoginMenu.stage);
                         if(file != null) {
-                            System.out.println(file.getAbsolutePath());
                             profileController.setAvatarFromChooseFile(file.getAbsolutePath());
-//                            String fileName = file.getName();
-//                            Path target = Paths.get("D:/Programming/AP/AA/src/main/resources/avatars", fileName);
-//                            try {
-//                                File tmpFile = new File("D:/Programming/AP/AA/src/main/resources/avatars/" + fileName);
-//                                if(!tmpFile.exists())
-//                                    Files.copy(file.toPath(), target);
-//                            } catch (IOException e) {
-//                                throw new RuntimeException(e);
-//                            }
-//                            profileController.setAvatarFromChooseFile("/avatars/" + fileName);
                         }
                     }
                 }
@@ -148,6 +120,23 @@ public class ProfileMenuController {
         Scene scene = new Scene(pane);
         LoginMenu.stage.setScene(scene);
         LoginMenu.stage.show();
+    }
+
+    public FileChooser getFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilterJPG
+                = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterjpg
+                = new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter extFilterPNG
+                = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
+        FileChooser.ExtensionFilter extFilterpng
+                = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
+        fileChooser.getExtensionFilters()
+                .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
+        fileChooser.setTitle("Open File");
+        return fileChooser;
     }
 
 
