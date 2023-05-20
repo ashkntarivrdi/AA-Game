@@ -17,25 +17,23 @@ public class SettingMenuController {
     public RadioButton easy = new RadioButton();
     public RadioButton medium = new RadioButton();
     public RadioButton hard = new RadioButton();
-    public RadioButton mute = new RadioButton();
-    public RadioButton darkMode = new RadioButton();
 
     public void chooseMap(MouseEvent mouseEvent) {
         //TODO
 
     }
 
-    public void muteSound(MouseEvent mouseEvent) {
-        settingController.setMute(mute.isSelected());
-    }
+//    public void muteSound(MouseEvent mouseEvent) {
+//        settingController.setMute(mute.isSelected());
+//    }
 
     public void changeBallsCount(MouseEvent mouseEvent) {
         //TODO
     }
 
-    public void changeTheme(MouseEvent mouseEvent) {
-        settingController.setDarkMode(darkMode.isSelected());
-    }
+//    public void changeTheme(MouseEvent mouseEvent) {
+//        settingController.setDarkMode(darkMode.isSelected());
+//    }
 
     public void changeDifficultyRate(MouseEvent mouseEvent) throws Exception{
         Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/DifficultyRate.fxml"));

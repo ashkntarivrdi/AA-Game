@@ -12,12 +12,12 @@ public class SettingController {
         CurrentGame.setDifficultyRate(level);
     }
 
-    public void setDarkMode(boolean darkMode) {
+    public static void setDarkMode(boolean darkMode) {
         CurrentGame.setDarkMode(darkMode);
         System.out.println(CurrentGame.isDarkMode());
     }
 
-    public void setMute(boolean mute) {
+    public static void setMute(boolean mute) {
         CurrentGame.setMute(mute);
         System.out.println(CurrentGame.isMute());
     }

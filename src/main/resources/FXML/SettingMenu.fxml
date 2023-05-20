@@ -19,10 +19,10 @@
             <Button text="Difficulty Rate" onMouseClicked="#changeDifficultyRate" maxWidth="150"/>
             <Button text="Balls Count" onMouseClicked="#changeBallsCount" maxWidth="150"/>
             <Button text="Maps" onMouseClicked="#chooseMap" maxWidth="150"/>
-            <HBox alignment="BOTTOM_CENTER" spacing="10">
-                <RadioButton text="Mute Sound" fx:id="mute" onMouseClicked="#muteSound"/>
-                <RadioButton text="Dark Mode" fx:id="darkMode" onMouseClicked="#changeTheme"/>
-            </HBox>
+<!--            <HBox alignment="BOTTOM_CENTER" spacing="10">-->
+<!--                <RadioButton text="Mute Sound" fx:id="mute" onMouseClicked="#muteSound"/>-->
+<!--                <RadioButton text="Dark Mode" fx:id="darkMode" onMouseClicked="#changeTheme"/>-->
+<!--            </HBox>-->
         </VBox>
     </center>
     <bottom>
