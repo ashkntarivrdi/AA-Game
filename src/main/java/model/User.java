@@ -10,6 +10,7 @@ public class User {
     private Avatar avatar;
     private String path;
     private double time;
+    private CurrentGame currentGame;
 
     public User(String name, String password) {
         this.name = name;
@@ -36,7 +37,7 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Double getTime() {
+    public double getTime() {
         return time;
     }
 
@@ -60,7 +61,7 @@ public class User {
         this.password = password;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 

@@ -1,17 +1,22 @@
 package controller;
 
+import javafx.scene.chart.PieChart;
 import model.Database;
 import model.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class ScoreBoardController {
     public ArrayList<User> getSortedUsers() {
-        Comparator<User> scoreComparator = (user1, user2) -> user1.getScore().compareTo(user2.getScore());
-        Comparator<User> timeComparator = (user1, user2) -> user1.getTime().compareTo(user2.getTime());
-        return (ArrayList<User>) Database.getUsers().stream().sorted(scoreComparator.thenComparing(timeComparator).reversed()).collect(Collectors.toList());
+        Database.getUsers().sort((user1, user2) -> {
+            if (user1.getScore() != user2.getScore())
+                return user1.getScore() - user2.getScore();
+            return (int) (user1.getTime() - user2.getTime());
+        });
+        return Database.getUsers();
     }
 
     public String getHighRanks() {

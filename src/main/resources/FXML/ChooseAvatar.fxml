@@ -6,10 +6,9 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.ProfileMenuController"
-            stylesheets="@../CSS/RegistrationStyle.css"
             styleClass="BackGroundColor"
-            prefHeight="600.0" prefWidth="500.0">
-    <!--            styleClass="BackGround"-->
+        prefHeight="600.0" prefWidth="500.0">
+<!--            stylesheets="@../CSS/DefaultStyle.css"-->
 
     <center>
         <VBox alignment="CENTER" spacing="15">

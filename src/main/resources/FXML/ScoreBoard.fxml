@@ -6,9 +6,9 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.ScoreBoardController"
-            stylesheets="@../CSS/RegistrationStyle.css"
             styleClass="BackGroundColor"
             prefHeight="600.0" prefWidth="500.0">
+    <!--            stylesheets="@../CSS/DefaultStyle.css"-->
     <!--            styleClass="BackGround"-->
     <bottom>
         <VBox alignment="BOTTOM_CENTER" spacing="15">

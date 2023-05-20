@@ -11,9 +11,9 @@
         xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.ProfileMenuController"
-            stylesheets="@../CSS/RegistrationStyle.css"
             styleClass="BackGroundColor"
-            prefHeight="600.0" prefWidth="500.0">
+        prefHeight="600.0" prefWidth="500.0">
+    <!--            stylesheets="@../CSS/DefaultStyle.css"-->
     <!--            styleClass="BackGround"-->
     <center>
         <VBox alignment="CENTER" spacing="20">

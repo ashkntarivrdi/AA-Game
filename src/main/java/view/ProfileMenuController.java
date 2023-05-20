@@ -1,10 +1,9 @@
 package view;
 
 import controller.ProfileController;
+import controller.SettingController;
 import controller.Utils.UserUtils;
 import enums.Avatar;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,9 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.*;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 
 import java.awt.*;
@@ -36,6 +32,9 @@ public class ProfileMenuController {
     public void changeUsername(MouseEvent mouseEvent) throws Exception{
         Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChangeUsername.fxml"));
         Scene scene = new Scene(pane);
+        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+
         LoginMenu.stage.setScene(scene);
         LoginMenu.stage.show();
     }
@@ -43,6 +42,9 @@ public class ProfileMenuController {
     public void changePassword(MouseEvent mouseEvent) throws Exception{
         Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChangePassword.fxml"));
         Scene scene = new Scene(pane);
+        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+
         LoginMenu.stage.setScene(scene);
         LoginMenu.stage.show();
     }
@@ -92,6 +94,9 @@ public class ProfileMenuController {
         pane.getChildren().add(vBox);
 
         Scene scene = new Scene(pane);
+        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+
         LoginMenu.stage.setScene(scene);
         LoginMenu.stage.show();
     }

@@ -1,5 +1,6 @@
 package view;
 
+import controller.SettingController;
 import controller.Utils.UserUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +42,9 @@ public class MainMenu extends Application {
         mainMenuPane.getChildren().add(vBox);
 
         Scene scene = new Scene(mainMenuPane);
+        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+
         stage.setScene(scene);
         stage.setTitle("Main Menu");
         stage.show();

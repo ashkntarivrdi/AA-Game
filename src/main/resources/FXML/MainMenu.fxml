@@ -9,16 +9,16 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.MainMenuController"
-            stylesheets="@../CSS/RegistrationStyle.css"
             styleClass="BackGroundColor"
-            prefHeight="600.0" prefWidth="500.0">
+        prefHeight="600.0" prefWidth="500.0">
+    <!--            stylesheets="@../CSS/DefaultStyle.css"-->
     <!--            styleClass="BackGround"-->
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Main Menu" styleClass="Title" alignment="CENTER"/>
-            <Button text="Start new game" onMouseClicked="#startNewGame" maxWidth="150"/>
-            <Button text="Continue playing" onMouseClicked="#playPreviousGame" maxWidth="150"/>
-            <Button text="Profile Menu" onMouseClicked="#enterProfileMenu" maxWidth="150"/>
+            <Button text="Start Game" onMouseClicked="#startNewGame" maxWidth="150"/>
+            <Button text="Continue" onMouseClicked="#playPreviousGame" maxWidth="150"/>
+            <Button text="Profile" onMouseClicked="#enterProfileMenu" maxWidth="150"/>
             <Button text="ScoreBoard" onMouseClicked="#enterScoreBoardMenu" maxWidth="150"/>
             <Button text="Setting" onMouseClicked="#enterSetting" maxWidth="150"/>
             <Button text="Logout" onMouseClicked="#logout" maxWidth="150"/>

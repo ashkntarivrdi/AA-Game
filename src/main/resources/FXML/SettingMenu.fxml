@@ -7,9 +7,9 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.SettingMenuController"
-            stylesheets="@../CSS/RegistrationStyle.css"
             styleClass="BackGroundColor"
-            prefHeight="600.0" prefWidth="500.0">
+        prefHeight="600.0" prefWidth="500.0">
+<!--            stylesheets="@../CSS/DefaultStyle.css"-->
 
     <center>
         <VBox alignment="CENTER" spacing="15">
@@ -20,7 +20,7 @@
             <Button text="Balls Count" onMouseClicked="#changeBallsCount" maxWidth="150"/>
             <Button text="Maps" onMouseClicked="#chooseMap" maxWidth="150"/>
             <HBox alignment="BOTTOM_CENTER" spacing="10">
-                <RadioButton text="Mute" fx:id="sound" onMouseClicked="#muteSound"/>
+                <RadioButton text="Mute Sound" fx:id="mute" onMouseClicked="#muteSound"/>
                 <RadioButton text="Dark Mode" fx:id="darkMode" onMouseClicked="#changeTheme"/>
             </HBox>
         </VBox>
