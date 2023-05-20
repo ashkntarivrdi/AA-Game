@@ -8,8 +8,8 @@ import javafx.scene.input.MouseEvent;
 
 public class MainMenuController {
     private MainController mainController = new MainController();
-    public void startNewGame(MouseEvent mouseEvent) {
-        //TODO
+    public void startNewGame(MouseEvent mouseEvent) throws Exception{
+        new GameMenu().start(LoginMenu.stage);
     }
 
     public void playPreviousGame(MouseEvent mouseEvent) {

@@ -34,4 +34,5 @@ public class SettingController {
     public static Level getDifficultyRate() {
         return CurrentGame.getDifficultyRate();
     }
+    //TODO: change number of balls
 }
