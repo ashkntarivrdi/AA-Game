@@ -16,13 +16,19 @@
             <Label text="Setting" styleClass="Title"/>
             <Button text="Change Control Keys" onMouseClicked="#changeControlKeys" maxWidth="150"/>
             <Button text="Change Language" onMouseClicked="#changeLanguage" maxWidth="150"/>
-            <Button text="Change Theme" onMouseClicked="#changeTheme" maxWidth="150"/>
             <Button text="Difficulty Rate" onMouseClicked="#changeDifficultyRate" maxWidth="150"/>
-            <Button text="Mute Sound" onMouseClicked="#muteSound" maxWidth="150"/>
             <Button text="Balls Count" onMouseClicked="#changeBallsCount" maxWidth="150"/>
             <Button text="Maps" onMouseClicked="#chooseMap" maxWidth="150"/>
-            <Button text="Back" onMouseClicked="#enterMainMenu" maxWidth="150"/>
+            <HBox alignment="BOTTOM_CENTER" spacing="10">
+                <RadioButton text="Mute" fx:id="sound" onMouseClicked="#muteSound"/>
+                <RadioButton text="Dark Mode" fx:id="darkMode" onMouseClicked="#changeTheme"/>
+            </HBox>
         </VBox>
     </center>
+    <bottom>
+        <VBox alignment="BOTTOM_CENTER">
+            <Button text="Back" onMouseClicked="#enterMainMenu" maxWidth="150"/>
+        </VBox>
+    </bottom>
 
 </BorderPane>

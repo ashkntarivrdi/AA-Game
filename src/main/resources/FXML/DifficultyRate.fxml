@@ -24,7 +24,7 @@
     </center>
     <bottom>
         <VBox alignment="CENTER">
-            <Button text="Back" onMouseClicked="#enterMainMenu" maxWidth="150"/>
+            <Button text="Back" onMouseClicked="#enterSettingMenu" maxWidth="150"/>
         </VBox>
     </bottom>
 

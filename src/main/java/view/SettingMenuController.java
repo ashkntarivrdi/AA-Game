@@ -5,6 +5,7 @@ import enums.Level;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.CurrentGame;
@@ -14,6 +15,8 @@ public class SettingMenuController {
     public RadioButton easy;
     public RadioButton medium;
     public RadioButton hard;
+    public RadioButton sound;
+    public RadioButton darkMode;
 
     public void chooseMap(MouseEvent mouseEvent) {
         //TODO
@@ -50,6 +53,10 @@ public class SettingMenuController {
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {
         new MainMenu().start(LoginMenu.stage);
+    }
+
+    public void enterSettingMenu(MouseEvent mouseEvent) throws Exception {
+        new SettingMenu().start(LoginMenu.stage);
     }
 
     public void setNewDifficultyRate(MouseEvent mouseEvent) {

@@ -74,7 +74,7 @@ public class ProfileMenuController {
     }
 
     public void chooseAvatar(MouseEvent mouseEvent) throws Exception{
-        Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChooseAvatar.fxml"));
+        BorderPane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/ChooseAvatar.fxml"));
 
         ArrayList<ImageView> imageViews = createImageView();
         Alert alert = getAlertForChoosingAvatar();
@@ -89,7 +89,6 @@ public class ProfileMenuController {
         vBox.setSpacing(15);
 
         vBox.getChildren().add(hBox);
-
         pane.getChildren().add(vBox);
 
         Scene scene = new Scene(pane);
