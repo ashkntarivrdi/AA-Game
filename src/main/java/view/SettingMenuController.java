@@ -3,58 +3,122 @@ package view;
 import controller.SettingController;
 import enums.Level;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import model.CurrentGame;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+import java.awt.event.ActionEvent;
 import java.util.Set;
 
 public class SettingMenuController {
     public SettingController settingController = new SettingController();
-    public RadioButton easy = new RadioButton();
-    public RadioButton medium = new RadioButton();
-    public RadioButton hard = new RadioButton();
+
 
     public void chooseMap(MouseEvent mouseEvent) {
         //TODO
 
     }
 
-//    public void muteSound(MouseEvent mouseEvent) {
-//        settingController.setMute(mute.isSelected());
-//    }
-
     public void changeBallsCount(MouseEvent mouseEvent) {
         //TODO
     }
 
-//    public void changeTheme(MouseEvent mouseEvent) {
-//        settingController.setDarkMode(darkMode.isSelected());
-//    }
-
     public void changeDifficultyRate(MouseEvent mouseEvent) throws Exception{
-        Pane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/DifficultyRate.fxml"));
+        BorderPane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/DifficultyRate.fxml"));
+
+        ToggleButton easy = new ToggleButton("easy");
+        ToggleButton medium = new ToggleButton("medium");
+        ToggleButton hard = new ToggleButton("hard");
+        easy.setMaxWidth(100);
+        medium.setMaxWidth(100);
+        hard.setMaxWidth(100);
+
+        setSelectedButtons(easy, medium, hard);
+
+        easy.setOnAction(response -> {
+            SettingController.setDifficultyRate(Level.EASY);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        medium.setOnAction(response -> {
+            SettingController.setDifficultyRate(Level.MEDIUM);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        hard.setOnAction(response -> {
+            SettingController.setDifficultyRate(Level.HARD);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        TextField textField = getCurrentDifficultyRate();
+
+        VBox vBox = new VBox(easy, medium, hard, textField);
+        vBox.setSpacing(10);
+        vBox.setAlignment(Pos.CENTER);
+
+        Button back = new Button("Back");
+        back.setOnAction(response -> {
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        back.setMaxWidth(150);
+        VBox vBox1 = new VBox(back);
+        vBox1.setAlignment(Pos.CENTER);
+
+        pane.setCenter(vBox);
+        pane.setBottom(vBox1);
+
         Scene scene = new Scene(pane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
         else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
 
-//        switch (SettingController.getDifficultyRate().getName()) {
-//            case "easy":
-//                easy.setSelected(true);
-//                break;
-//            case "medium":
-//                medium.setSelected(true);
-//                break;
-//            case "hard":
-//                hard.setSelected(true);
-//                break;
-//        }
-
         LoginMenu.stage.setScene(scene);
         LoginMenu.stage.show();
+    }
+
+    public TextField getCurrentDifficultyRate() {
+        TextField textField = new TextField();
+        textField.setMaxWidth(200);
+        textField.setAlignment(Pos.CENTER);
+        textField.setOpacity(0.8);
+        textField.setText("Current Difficulty Rate : " + SettingController.getDifficultyRate());
+        return textField;
+    }
+
+    public void setSelectedButtons(ToggleButton easy, ToggleButton medium, ToggleButton hard) {
+        switch (SettingController.getDifficultyRate()) {
+            case EASY:
+                easy.setSelected(true);
+                break;
+            case MEDIUM:
+                medium.setSelected(true);
+                break;
+            case HARD:
+                hard.setSelected(true);
+                break;
+        }
     }
 
     public void changeLanguage(MouseEvent mouseEvent) {
@@ -69,41 +133,7 @@ public class SettingMenuController {
         new MainMenu().start(LoginMenu.stage);
     }
 
-    public void enterSettingMenu(MouseEvent mouseEvent) throws Exception {
+    private void enterSettingMenu(javafx.event.ActionEvent actionEvent) throws Exception{
         new SettingMenu().start(LoginMenu.stage);
-    }
-
-    public void setNewDifficultyRate(MouseEvent mouseEvent) {
-//        if(easy.isSelected()) easy.setSelected(true);
-//        else if(hard.isSelected()) hard.setSelected(true);
-//        else medium.setSelected(true);
-//        switch (SettingController.getDifficultyRate().getName()) {
-//            case "easy":
-//                easy.setSelected(true);
-//                break;
-//            case "medium":
-//                medium.setSelected(true);
-//                break;
-//            case "hard":
-//                hard.setSelected(true);
-//                break;
-//        }
-
-        if(easy.isSelected()) {
-            hard.setSelected(false);
-            medium.setSelected(false);
-            settingController.setDifficultyRate(Level.EASY);
-        }
-        else if(hard.isSelected()) {
-            easy.setSelected(false);
-            medium.setSelected(false);
-            settingController.setDifficultyRate(Level.HARD);
-        }
-        else {
-            easy.setSelected(false);
-            hard.setSelected(false);
-            settingController.setDifficultyRate(Level.MEDIUM);
-        }
-        System.out.println(CurrentGame.getDifficultyRate());
     }
 }

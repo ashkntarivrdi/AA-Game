@@ -6,7 +6,7 @@ public class CurrentGame {
     private static Level difficultyRate = Level.MEDIUM;
     public static boolean guestPlayer;
     public static boolean mute = false;
-    public static boolean darkMode = true;
+    public static boolean darkMode = false;
 
     public static Level getDifficultyRate() {
         return difficultyRate;

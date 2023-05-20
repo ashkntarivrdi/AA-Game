@@ -8,8 +8,9 @@ import javax.swing.*;
 import javax.swing.plaf.IconUIResource;
 
 public class SettingController {
-    public void setDifficultyRate(Level level) {
+    public static void setDifficultyRate(Level level) {
         CurrentGame.setDifficultyRate(level);
+        System.out.println(CurrentGame.getDifficultyRate());
     }
 
     public static void setDarkMode(boolean darkMode) {
