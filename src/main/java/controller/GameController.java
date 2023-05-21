@@ -11,6 +11,7 @@ import view.Animations.RotateAnimation;
 import view.Animations.ShootAnimation;
 
 public class GameController {
+//    public static RotateAnimation rotateAnimation;
 
     public int getCurrentGamePhase() {
         return CurrentGame.getPhase().getPhase();
@@ -37,21 +38,14 @@ public class GameController {
         if(CurrentGame.getNumberOfBallsInEachPhase() > 0) {
             Ball shootedBall = new Ball(ball.getCenterX(), ball.getCenterY(), ball.getRadius(), Color.BLACK);
 
-            Text staticNumber = new Text("" + CurrentGame.getNumberOfBallsInEachPhase());
-            staticNumber.setFill(Color.WHITE);
-            staticNumber.setX(shootedBall.getCenterX() - 5);
-            staticNumber.setY(shootedBall.getCenterY() + 5);
+            Text numberOfBallsLeft = new Text("" + CurrentGame.getNumberOfBallsInEachPhase());
+            numberOfBallsLeft.setFill(Color.WHITE);
+            numberOfBallsLeft.setX(shootedBall.getCenterX() - 5);
+            numberOfBallsLeft.setY(shootedBall.getCenterY() + 5);
 
+            gamePane.getChildren().addAll(shootedBall, numberOfBallsLeft);
 
-            Text number = new Text();
-            number.setText("" + CurrentGame.getNumberOfBallsInEachPhase());
-            number.setFill(Color.WHITE);
-            number.setX(ball.getCenterX() - 5);
-            number.setY(ball.getCenterY() - 145);
-
-            gamePane.getChildren().addAll(shootedBall, number, staticNumber);
-
-            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, number, staticNumber);
+            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, numberOfBallsLeft);
             shootingAnimation.play();
             CurrentGame.decreaseNumberOfBallsInEachPhase();
             if(CurrentGame.getNumberOfBallsInEachPhase() == 0)
@@ -64,4 +58,8 @@ public class GameController {
         RotateAnimation rotateAnimation = new RotateAnimation(gamePane, ball, outerBall, line, number);
         rotateAnimation.play();
     }
+
+//    public static void createRotationAnimation() {
+//        rotateAnimation = new RotateAnimation()
+//    }
 }

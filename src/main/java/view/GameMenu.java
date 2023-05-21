@@ -45,24 +45,19 @@ public class GameMenu extends Application{
     }
 
     private Ball initializeGame(Pane gamePane, CenterBall outerBall) {
-
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);
-
 
             gamePane.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
                     String keyName = event.getCode().getName();
-
                     if(keyName.equals("Space")) {
                         gameController.shoot(ball, gamePane, outerBall);
                     }
                 }
 
             });
-
-
         return ball;
     }
 }
