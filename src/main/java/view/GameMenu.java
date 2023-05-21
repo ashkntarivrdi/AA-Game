@@ -28,23 +28,19 @@ public class GameMenu extends Application{
 
         gamePane.getChildren().add(innerBall);
 
-
         Scene scene = new Scene(gamePane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
         else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
 
-        Ball ball = initializeGame(gamePane, outerBall);
-//        gamePane.getChildren().add(ball);
+        initializeGame(gamePane, outerBall);
 
         gamePane.requestFocus();
         stage.setTitle("Game Menu");
         stage.setScene(scene);
-
-
         stage.show();
     }
 
-    private Ball initializeGame(Pane gamePane, CenterBall outerBall) {
+    private void initializeGame(Pane gamePane, CenterBall outerBall) {
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);
 
@@ -58,6 +54,5 @@ public class GameMenu extends Application{
                 }
 
             });
-        return ball;
     }
 }
