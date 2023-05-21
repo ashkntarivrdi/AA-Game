@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CurrentGame {
     private static Level difficultyRate = Level.EASY;
-    private static Phase phase;
+    private static Phase phase = Phase.ONE;
     private static ArrayList<Ball> balls = new ArrayList<>();
     private static String shootKey = "Space";
     private static String freezeKey = "Tab";

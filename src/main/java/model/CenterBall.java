@@ -11,5 +11,6 @@ public class CenterBall extends Circle {
 
     public CenterBall(double radius) {
         super(250, 250, radius, Color.TRANSPARENT);
+
     }
 }

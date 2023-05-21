@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Ball;
@@ -26,7 +27,9 @@ public class GameMenu extends Application{
         CenterBall innerBall = new CenterBall();
         CenterBall outerBall = new CenterBall(150);
 
-        gamePane.getChildren().add(innerBall);
+        Text phaseNumber = getPhaseNumber(outerBall);
+
+        gamePane.getChildren().addAll(innerBall, phaseNumber);
 
         Scene scene = new Scene(gamePane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
@@ -55,4 +58,13 @@ public class GameMenu extends Application{
 
             });
     }
+
+    public Text getPhaseNumber(CenterBall centerBall) {
+        Text phaseNumber = new Text(centerBall.getCenterX() - 18, centerBall.getCenterY() + 18,
+                "" + CurrentGame.getPhase().getPhase());
+        phaseNumber.setFill(Color.WHITE);
+        phaseNumber.setFont(new Font(65));
+        return phaseNumber;
+    }
+
 }
