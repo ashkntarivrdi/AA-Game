@@ -1,14 +1,9 @@
 package controller.Utils;
-import controller.GameController;
-import enums.Avatar;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import model.Database;
-import model.User;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static model.CurrentGame.guestPlayer;
@@ -27,7 +22,7 @@ public class UserUtils {
     }
 
     public static int getCurrentUserScore() {
-        return Database.getCurrentUser().getScore();
+        return Database.getCurrentUser().getEasyScore();
     }
 
     public static void userLogout() {

@@ -3,10 +3,14 @@ package view;
 import controller.ScoreBoardController;
 import controller.SettingController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,13 +19,49 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 public class ScoreBoard extends Application {
     ScoreBoardController scoreBoardController = new ScoreBoardController();
+    String level = "medium";
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane borderPane = FXMLLoader.load(ScoreBoard.class.getResource("/FXML/ScoreBoard.fxml"));
 
-        String[] sortedPlayers = scoreBoardController.getHighRanks().split(",");
+        ToggleButton easy = new ToggleButton("easy");
+        ToggleButton medium = new ToggleButton("medium");
+        ToggleButton hard = new ToggleButton("hard");
+        HBox hBox = new HBox(easy, medium, hard);
+        hBox.setSpacing(5);
+        hBox.setAlignment(Pos.CENTER);
+        borderPane.setRight(hBox);
+
+        easy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                level = "easy";
+                System.out.println("easy");
+            }
+        });
+
+        medium.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                level = "medium";
+            }
+        });
+
+        hard.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                level = "hard";
+            }
+        });
+
+        //TODO: change scoreboard by level doesn't work
+
+
+        String[] sortedPlayers = scoreBoardController.getHighRanks(level).split(",");
         VBox vBox = new VBox();
         Text text = new Text();
         text.setFill(Color.BLACK);
@@ -54,4 +94,6 @@ public class ScoreBoard extends Application {
         stage.setTitle("ScoreBoard");
         stage.show();
     }
+
+
 }

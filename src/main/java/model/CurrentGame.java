@@ -7,7 +7,7 @@ import java.security.Key;
 import java.util.ArrayList;
 
 public class CurrentGame {
-    private static Level difficultyRate = Level.MEDIUM;
+    private static Level difficultyRate = Level.EASY;
     private static Phase phase;
     private static ArrayList<Ball> balls = new ArrayList<>();
     private static String shootKey = "Space";

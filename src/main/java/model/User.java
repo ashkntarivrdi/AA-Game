@@ -1,12 +1,13 @@
 package model;
 
 import enums.Avatar;
-import javafx.scene.image.Image;
 
 public class User {
     private String name;
     private String password;
-    private int score;
+    private int easyScore;
+    private int mediumScore;
+    private int hardScore;
     private Avatar avatar;
     private String path;
     private double time;
@@ -15,7 +16,9 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.score = 0;
+        this.easyScore = 0;
+        this.mediumScore = 0;
+        this.hardScore = 0;
         this.avatar = Avatar.getRandomAvatar();
         this.path = "";
         this.time = 0;
@@ -61,11 +64,27 @@ public class User {
         this.password = password;
     }
 
-    public int getScore() {
-        return score;
+    public int getEasyScore() {
+        return easyScore;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setEasyScore(int easyScore) {
+        this.easyScore = easyScore;
+    }
+
+    public int getMediumScore() {
+        return mediumScore;
+    }
+
+    public void setMediumScore(int mediumScore) {
+        this.mediumScore = mediumScore;
+    }
+
+    public int getHardScore() {
+        return hardScore;
+    }
+
+    public void setHardScore(int hardScore) {
+        this.hardScore = hardScore;
     }
 }
