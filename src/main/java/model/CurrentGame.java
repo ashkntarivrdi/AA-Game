@@ -15,6 +15,7 @@ public class CurrentGame {
     private static String rightKey = "Right";
     private static String leftKey = "Left";
     private static int numberOfBalls = 80;
+    private static int numberOfBallsInEachPhase = numberOfBalls/4;
     public static boolean guestPlayer;
     public static boolean mute = false;
     public static boolean darkMode = false;
@@ -97,5 +98,13 @@ public class CurrentGame {
 
     public static void setNumberOfBalls(int numberOfBalls) {
         CurrentGame.numberOfBalls = numberOfBalls;
+    }
+
+    public static int getNumberOfBallsInEachPhase() {
+        return numberOfBallsInEachPhase;
+    }
+
+    public static void decreaseNumberOfBallsInEachPhase() {
+        CurrentGame.numberOfBallsInEachPhase--;
     }
 }

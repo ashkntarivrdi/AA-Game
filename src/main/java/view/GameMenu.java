@@ -1,40 +1,68 @@
 package view;
 
+import controller.GameController;
 import controller.SettingController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Ball;
+import model.CenterBall;
+import model.CurrentGame;
+
+import javax.swing.*;
 
 public class GameMenu extends Application{
+    GameController gameController = new GameController();
     @Override
     public void start(Stage stage) throws Exception {
-        BorderPane gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
+        Pane gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
 
-        Ball innerBall = createInnerBall();
-        Ball outerBall = createOuterBall(gamePane);
-        gamePane.getChildren().addAll(outerBall, innerBall);
+        CenterBall innerBall = new CenterBall();
+        CenterBall outerBall = new CenterBall(150);
+
+        gamePane.getChildren().add(innerBall);
+
 
         Scene scene = new Scene(gamePane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
         else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
 
+        Ball ball = initializeGame(gamePane, outerBall);
+//        gamePane.getChildren().add(ball);
+
+        gamePane.requestFocus();
         stage.setTitle("Game Menu");
         stage.setScene(scene);
+
+
         stage.show();
     }
 
-    private Ball createInnerBall() {
-        //TODO: make y center of the window for two players
-        Ball innerBall = new Ball(250, 250, 80, Color.WHEAT);
-        return innerBall;
-    }
+    private Ball initializeGame(Pane gamePane, CenterBall outerBall) {
 
-    private Ball createOuterBall(BorderPane gamePane) {
-        Ball outerBall = new Ball(250, 250, 100, Color.BLACK);
-        return outerBall;
+        Ball ball = new Ball();
+        gamePane.getChildren().add(ball);
+
+
+            gamePane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    String keyName = event.getCode().getName();
+
+                    if(keyName.equals("Space")) {
+                        gameController.shoot(ball, gamePane, outerBall);
+                    }
+                }
+
+            });
+
+
+        return ball;
     }
 }

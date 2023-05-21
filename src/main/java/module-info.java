@@ -13,4 +13,6 @@ module AA {
     opens model to com.google.gson;
     exports enums;
     exports controller;
+    exports view.Animations;
+    opens view.Animations to javafx.fxml;
 }
