@@ -46,8 +46,8 @@ public class GameMenu extends Application{
 
         initializeGame(gamePane, outerBall, progressBar);
 
-        if (CurrentGame.getPhase() == Phase.ONE)
-            initializeGamePhaseOne();
+//        if (CurrentGame.getPhase() == Phase.ONE)
+//            initializeGamePhaseOne();
 
         gamePane.requestFocus();
 
@@ -56,13 +56,15 @@ public class GameMenu extends Application{
         stage.show();
     }
 
-    private void initializeGamePhaseOne() {
-
-    }
+//    private void initializeGamePhaseOne() {
+//
+//    }
 
     private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar) {
-        CurrentGame.resetNumberOfBallsInEachPhase();
+        gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
         CurrentGame.resetBalls();
+//        gameController.pauseAnimations();
+//        gameController.pauseTimeLines();
 
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);

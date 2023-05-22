@@ -9,6 +9,9 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
+import model.CurrentGame;
+import view.Menus.GameMenu;
+import view.Menus.LoginMenu;
 
 public class ShootAnimation extends Transition {
     private Pane pane;

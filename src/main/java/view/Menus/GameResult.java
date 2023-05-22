@@ -24,7 +24,7 @@ public class GameResult extends Application {
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception{
         //TODO: reset static fields
-        CurrentGame.resetNumberOfBallsInEachPhase();
+//        CurrentGame.resetNumberOfBallsInEachPhase();
         new MainMenu().start(LoginMenu.stage);
     }
 }

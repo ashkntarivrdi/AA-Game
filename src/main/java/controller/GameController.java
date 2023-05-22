@@ -2,10 +2,7 @@ package controller;
 
 import enums.Phase;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -17,6 +14,7 @@ import model.CenterBall;
 import model.CurrentGame;
 import view.Animations.RotateAnimation;
 import view.Animations.ShootAnimation;
+import view.Menus.GameMenu;
 import view.Menus.GameResult;
 import view.Menus.LoginMenu;
 
@@ -24,6 +22,27 @@ import java.util.ArrayList;
 
 public class GameController {
     public static RotateAnimation rotateAnimation;
+    public static Timeline freezeTimeLine;
+    public static ArrayList<RotateAnimation> animations = new ArrayList<>();
+    public static ArrayList<Timeline> timelines = new ArrayList<>();
+    private int numberOfBallsLeft;
+
+    {
+        timelines.add(freezeTimeLine);
+        animations.add(rotateAnimation);
+    }
+
+    public int getNumberOfBallsLeft() {
+        return numberOfBallsLeft;
+    }
+
+    public  void setNumberOfBallsLeft(int numberOfBallsLeft) {
+        this.numberOfBallsLeft = numberOfBallsLeft;
+    }
+
+    private void decreaseNumberOfBallsLeft() {
+        this.numberOfBallsLeft--;
+    }
 
     public int getCurrentGamePhase() {
         return CurrentGame.getPhase().getPhase();
@@ -46,28 +65,30 @@ public class GameController {
     }
 
     public void shoot(Ball ball, Pane gamePane, CenterBall outerBall, ProgressBar progressBar) {
-        if(CurrentGame.getNumberOfBallsInEachPhase() > 0) {
+        if(numberOfBallsLeft > 0) {
             Ball shootedBall = new Ball(ball.getCenterX(), ball.getCenterY(), ball.getRadius(), Color.BLACK);
 
-            Text numberOfBallsLeft = getTextForNumber(shootedBall);
+            Text ballsNumber = getTextForNumber(shootedBall);
 
-            gamePane.getChildren().addAll(shootedBall, numberOfBallsLeft);
+            gamePane.getChildren().addAll(shootedBall, ballsNumber);
 
-            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, numberOfBallsLeft, progressBar);
+            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, ballsNumber, progressBar);
             shootingAnimation.play();
 
-            CurrentGame.decreaseNumberOfBallsInEachPhase();
-            if(CurrentGame.getNumberOfBallsInEachPhase() == 0)
+            decreaseNumberOfBallsLeft();
+            if(numberOfBallsLeft == 0) {
                 gamePane.getChildren().remove(ball);
+//                CurrentGame.decreaseNumberOfBallsInEachPhase();
+            }
         }
     }
 
     public Text getTextForNumber(Ball shootedBall) {
-        Text numberOfBallsLeft = new Text("" + CurrentGame.getNumberOfBallsInEachPhase());
-        numberOfBallsLeft.setFill(Color.WHITE);
-        numberOfBallsLeft.setX(shootedBall.getCenterX() - 7);
-        numberOfBallsLeft.setY(shootedBall.getCenterY() + 5);
-        return numberOfBallsLeft;
+        Text ballsNumber = new Text("" + numberOfBallsLeft);
+        ballsNumber.setFill(Color.WHITE);
+        ballsNumber.setX(shootedBall.getCenterX() - 7);
+        ballsNumber.setY(shootedBall.getCenterY() + 5);
+        return ballsNumber;
     }
 
     public static void rotate(Ball ball, Line line, Text number) throws Exception {
@@ -97,6 +118,8 @@ public class GameController {
 
     private static void showGameResult(int score) throws Exception{
         //TODO: score and username must added
+//        pauseAnimations();
+//        pauseTimeLines();
         CurrentGame.setPhase(Phase.ONE);
         new GameResult().start(LoginMenu.stage);
     }
@@ -128,11 +151,25 @@ public class GameController {
 
     public void freeze(ProgressBar progressBar) {
         GameController.rotateAnimation.setRotateFrequency(0.5);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(CurrentGame.getDifficultyRate().getFreezeTime() * 1000),
+        freezeTimeLine = new Timeline(new KeyFrame(Duration.millis(CurrentGame.getDifficultyRate().getFreezeTime() * 1000),
                 event -> GameController.rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate())));
-        timeline.setCycleCount(0);
-        timeline.play();
+        freezeTimeLine.setCycleCount(0);
+        freezeTimeLine.play();
         progressBar.setProgress(0);
     }
+
+//    public static void pauseAnimations() {
+//        for (RotateAnimation animation : animations) {
+//            animation.stop();
+//        }
+//    }
+//
+//    public static void pauseTimeLines() {
+//        for (Timeline timeline : timelines) {
+//            timeline.stop();
+//        }
+//    }
+
+
 
 }
