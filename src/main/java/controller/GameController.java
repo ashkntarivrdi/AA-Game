@@ -1,5 +1,6 @@
 package controller;
 
+import enums.Phase;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -69,8 +70,6 @@ public class GameController {
         return numberOfBallsLeft;
     }
 
-
-
     public static void rotate(Ball ball, Line line, Text number) throws Exception {
         ball.getTransforms().add(rotateAnimation.getRotationForDelay());
         line.getTransforms().add(rotateAnimation.getRotationForDelay());
@@ -98,6 +97,7 @@ public class GameController {
 
     private static void showGameResult(int score) throws Exception{
         //TODO: score and username must added
+        CurrentGame.setPhase(Phase.ONE);
         new GameResult().start(LoginMenu.stage);
     }
 

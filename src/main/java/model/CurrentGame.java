@@ -111,4 +111,8 @@ public class CurrentGame {
     public static void decreaseNumberOfBallsInEachPhase() {
         CurrentGame.numberOfBallsInEachPhase--;
     }
+
+    public static void resetBalls() {
+        balls.clear();
+    }
 }

@@ -2,6 +2,7 @@ package view.Menus;
 
 import controller.GameController;
 import controller.SettingController;
+import enums.Phase;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -37,15 +38,16 @@ public class GameMenu extends Application{
         VBox vBox = new VBox(getProgressBarText(), progressBar);
         vBox.setAlignment(Pos.TOP_LEFT);
 
-
         gamePane.getChildren().addAll(innerBall, phaseNumber, vBox);
-
 
         Scene scene = new Scene(gamePane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
         else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
 
         initializeGame(gamePane, outerBall, progressBar);
+
+        if (CurrentGame.getPhase() == Phase.ONE)
+            initializeGamePhaseOne();
 
         gamePane.requestFocus();
 
@@ -54,7 +56,14 @@ public class GameMenu extends Application{
         stage.show();
     }
 
+    private void initializeGamePhaseOne() {
+
+    }
+
     private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar) {
+        CurrentGame.resetNumberOfBallsInEachPhase();
+        CurrentGame.resetBalls();
+
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);
 
