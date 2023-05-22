@@ -127,18 +127,19 @@ public class GameController {
 
     public static void increaseRadius() throws Exception {
         for (Ball ball : CenterBall.getBalls()) {
-            ball.setRadius(15);
+            ball.setRadius(12);
         }
 
-        boolean isIntersect = false;
-        for (int i = 0; i < CenterBall.getBalls().size() - 3; i++) {
-            if(CenterBall.getBalls().get(i).getBoundsInParent().intersects(CenterBall.getBalls().get(i+1).getLayoutBounds())) {
-                isIntersect = true;
-                break;
-            }
-        }
-        if (isIntersect)
-            showGameResult(getGameScore());
+        //TODO: intersect between balls on the circle has bug
+//        boolean isIntersect = false;
+//        for (int i = 0; i < CenterBall.getBalls().size() - 3; i++) {
+//            if(CenterBall.getBalls().get(i).getBoundsInParent().intersects(CenterBall.getBalls().get(i+1).getLayoutBounds())) {
+//                isIntersect = true;
+//                break;
+//            }
+//        }
+//        if (isIntersect)
+//            showGameResult(getGameScore());
 
         increaseRadiusTimeLine = new Timeline(new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
             @Override
@@ -154,17 +155,18 @@ public class GameController {
 
     private static void showGameResult(int score) throws Exception{
         //TODO: score and username must added
+        rotateAnimation.pause();
         CurrentGame.setPhase(Phase.ONE);
-        new GameResult().start(LoginMenu.stage);
+//        new GameResult().start(LoginMenu.stage);
     }
 
 //    public static void createRotationAnimation(CenterBall outerBall) {
 //        rotateAnimation = new RotateAnimation(outerBall);
 //    }
 
-    public static void addBall(Ball ball) {
-        CenterBall.addBallToArray(ball);
-    }
+//    public static void addBall(Ball ball) {
+//        CenterBall.addBallToArray(ball);
+//    }
 
 //    public static ArrayList<Ball> getBall() {
 //        return CenterBall.getBalls();
