@@ -1,4 +1,4 @@
-package view;
+package view.Menus;
 
 import controller.SettingController;
 import controller.Utils.UserUtils;
@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;

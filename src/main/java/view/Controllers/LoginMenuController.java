@@ -1,4 +1,4 @@
-package view;
+package view.Controllers;
 
 import controller.LoginController;
 import controller.Utils.UserUtils;
@@ -7,6 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import view.Menus.LoginMenu;
+import view.Menus.MainMenu;
+import view.Menus.SignupMenu;
 
 public class LoginMenuController {
     private LoginController loginController = new LoginController();

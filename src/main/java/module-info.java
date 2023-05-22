@@ -7,12 +7,14 @@ module AA {
 
 
 
-    exports view;
-    opens view to javafx.fxml;
+    exports view.Menus;
     exports model;
     opens model to com.google.gson;
     exports enums;
     exports controller;
     exports view.Animations;
     opens view.Animations to javafx.fxml;
+    exports view.Controllers;
+    opens view.Controllers to javafx.fxml;
+    opens view.Menus to javafx.fxml;
 }

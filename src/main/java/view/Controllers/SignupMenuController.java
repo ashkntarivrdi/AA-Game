@@ -1,10 +1,10 @@
-package view;
+package view.Controllers;
 
 import controller.SignupController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
+import view.Menus.LoginMenu;
 
 public class SignupMenuController {
     SignupController signupController = new SignupController();

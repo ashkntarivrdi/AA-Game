@@ -1,4 +1,4 @@
-package view;
+package view.Menus;
 
 import controller.SettingController;
 import javafx.application.Application;

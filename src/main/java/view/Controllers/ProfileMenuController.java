@@ -1,4 +1,4 @@
-package view;
+package view.Controllers;
 
 import controller.ProfileController;
 import controller.SettingController;
@@ -17,6 +17,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import view.Menus.LoginMenu;
+import view.Menus.MainMenu;
+import view.Menus.ProfileMenu;
 
 import java.awt.*;
 import java.io.*;

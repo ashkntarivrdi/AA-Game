@@ -8,16 +8,15 @@
 
 <Pane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.GameMenuController"
+            fx:controller="view.Controllers.GameMenuController"
             styleClass="BackGroundColor"
             prefHeight="600.0" prefWidth="500.0">
 <!--    <BorderPane>-->
 
-<!--        <top>-->
-            <VBox>
-                <Button text="Back" onMouseClicked="#enterMainMenu" maxWidth="50"/>
+            <VBox translateX="415" translateY="1">
+                <Button text="Pause Menu" focusTraversable="false" onMouseClicked="#enterMainMenu" maxWidth="100"/>
             </VBox>
-<!--        </top>-->
+
 <!--    </BorderPane>-->
 
 

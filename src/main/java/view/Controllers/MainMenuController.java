@@ -1,10 +1,11 @@
-package view;
+package view.Controllers;
 
 import controller.MainController;
 import controller.Utils.UserUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import view.Menus.*;
 
 public class MainMenuController {
     private MainController mainController = new MainController();

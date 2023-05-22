@@ -1,22 +1,25 @@
-package view;
+package view.Menus;
 
 import controller.GameController;
 import controller.SettingController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
-
-import javax.swing.*;
 
 public class GameMenu extends Application{
     GameController gameController = new GameController();
@@ -29,21 +32,29 @@ public class GameMenu extends Application{
 
         Text phaseNumber = getPhaseNumber(outerBall);
 
-        gamePane.getChildren().addAll(innerBall, phaseNumber);
+        ProgressBar progressBar = new ProgressBar(0);
+
+        VBox vBox = new VBox(getProgressBarText(), progressBar);
+        vBox.setAlignment(Pos.TOP_LEFT);
+
+
+        gamePane.getChildren().addAll(innerBall, phaseNumber, vBox);
+
 
         Scene scene = new Scene(gamePane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
         else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
 
-        initializeGame(gamePane, outerBall);
+        initializeGame(gamePane, outerBall, progressBar);
 
         gamePane.requestFocus();
+
         stage.setTitle("Game Menu");
         stage.setScene(scene);
         stage.show();
     }
 
-    private void initializeGame(Pane gamePane, CenterBall outerBall) {
+    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar) {
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);
 
@@ -51,8 +62,13 @@ public class GameMenu extends Application{
                 @Override
                 public void handle(KeyEvent event) {
                     String keyName = event.getCode().getName();
-                    if(keyName.equals("Space")) {
-                        gameController.shoot(ball, gamePane, outerBall);
+                    if(keyName.equals(CurrentGame.getShootKey())) {
+                        gameController.shoot(ball, gamePane, outerBall, progressBar);
+                    }
+                    else if(keyName.equals(CurrentGame.getFreezeKey())) {
+                        System.out.println(progressBar.getProgress());
+                        if(progressBar.getProgress() >= 1)
+                            gameController.freeze(progressBar);
                     }
                 }
 
@@ -65,6 +81,14 @@ public class GameMenu extends Application{
         phaseNumber.setFill(Color.WHITE);
         phaseNumber.setFont(new Font(65));
         return phaseNumber;
+    }
+
+    public Text getProgressBarText() {
+        Text text = new Text("Freeze");
+        text.setFill(Color.LIGHTBLUE);
+        Font font = Font.font("serif", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 14);
+        text.setFont(font);
+        return text;
     }
 
 }

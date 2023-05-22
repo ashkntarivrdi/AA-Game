@@ -8,7 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.SignupMenuController"
+            fx:controller="view.Controllers.SignupMenuController"
             styleClass="BackGroundColor"
         prefHeight="600.0" prefWidth="500.0">
     <!--            stylesheets="@../CSS/DefaultStyle.css"-->

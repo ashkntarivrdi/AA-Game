@@ -1,4 +1,4 @@
-package view;
+package view.Controllers;
 
 import controller.SettingController;
 import enums.Level;
@@ -6,18 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import model.CurrentGame;
-
-import javax.print.attribute.SetOfIntegerSyntax;
-import java.awt.event.ActionEvent;
-import java.util.Set;
+import view.Menus.LoginMenu;
+import view.Menus.MainMenu;
+import view.Menus.ProfileMenu;
+import view.Menus.SettingMenu;
 
 public class SettingMenuController {
     public SettingController settingController = new SettingController();
