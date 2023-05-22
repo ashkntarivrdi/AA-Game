@@ -31,14 +31,14 @@ public class GameMenu extends Application{
         CenterBall innerBall = new CenterBall();
         CenterBall outerBall = new CenterBall(150);
 
-        Text phaseNumber = getPhaseNumber(outerBall);
+//        Text phaseNumber = getPhaseNumber(outerBall);
 
         ProgressBar progressBar = new ProgressBar(0);
 
         VBox vBox = new VBox(getProgressBarText(), progressBar);
         vBox.setAlignment(Pos.TOP_LEFT);
 
-        gamePane.getChildren().addAll(innerBall, phaseNumber, vBox);
+        gamePane.getChildren().addAll(innerBall, vBox);
 
         Scene scene = new Scene(gamePane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
@@ -68,30 +68,35 @@ public class GameMenu extends Application{
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);
 
-            gamePane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        gamePane.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
                     String keyName = event.getCode().getName();
                     if(keyName.equals(CurrentGame.getShootKey())) {
-                        gameController.shoot(ball, gamePane, outerBall, progressBar);
+                        try {
+                            gameController.shoot(ball, gamePane, outerBall, progressBar);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     else if(keyName.equals(CurrentGame.getFreezeKey())) {
                         System.out.println(progressBar.getProgress());
                         if(progressBar.getProgress() >= 1)
                             gameController.freeze(progressBar);
                     }
+//                    gameController.checkForIncreaseRadius();
                 }
 
             });
     }
 
-    public Text getPhaseNumber(CenterBall centerBall) {
-        Text phaseNumber = new Text(centerBall.getCenterX() - 18, centerBall.getCenterY() + 18,
-                "" + CurrentGame.getPhase().getPhase());
-        phaseNumber.setFill(Color.WHITE);
-        phaseNumber.setFont(new Font(65));
-        return phaseNumber;
-    }
+//    public Text getPhaseNumber(CenterBall centerBall) {
+//        Text phaseNumber = new Text(centerBall.getCenterX() - 18, centerBall.getCenterY() + 18,
+//                "" + CurrentGame.getPhase().getPhase());
+//        phaseNumber.setFill(Color.WHITE);
+//        phaseNumber.setFont(new Font(65));
+//        return phaseNumber;
+//    }
 
     public Text getProgressBarText() {
         Text text = new Text("Freeze");

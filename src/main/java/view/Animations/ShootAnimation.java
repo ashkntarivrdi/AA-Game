@@ -31,27 +31,29 @@ public class ShootAnimation extends Transition {
         this.progressBar = progressBar;
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
-        this.progressBar.setProgress(this.progressBar.getProgress() + 0.11);
+        this.progressBar.setProgress(this.progressBar.getProgress() + 0.15);
+        CenterBall.addBallToArray(this.ball);
     }
 
     @Override
     protected void interpolate(double frac) {
-        double y = ball.getCenterY() - 10;
-        double textY = numberOfBallsLeft.getY() - 10;
+        double y = ball.getCenterY() - 10;//TODO:10
+        double textY = numberOfBallsLeft.getY() - 10;//10
 
         //TODO: get ball from database?
         if(outerBall.getBoundsInParent().intersects(ball.getLayoutBounds())) {
             this.stop();
-            CenterBall.addBallToArray(ball);
+//            CenterBall.addBallToArray(ball);
 
             Line line = new Line(outerBall.getCenterX(), outerBall.getCenterY(), ball.getCenterX(), ball.getCenterY());
             pane.getChildren().add(0, line);
             try {
-                GameController.rotate(ball, line, numberOfBallsLeft, pane);
+                GameController.rotate(ball, line, numberOfBallsLeft);
 //                System.out.println(GameController.getBall());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+
         }
 
         if(y <= 20) {

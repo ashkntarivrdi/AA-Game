@@ -3,6 +3,8 @@ package controller;
 import enums.Phase;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 public class GameController {
     public static RotateAnimation rotateAnimation = new RotateAnimation(new CenterBall(150));
     public static Timeline freezeTimeLine;
+    public static Timeline increaseRadiusTimeLine;
     public static ArrayList<RotateAnimation> animations = new ArrayList<>();
     public static ArrayList<Timeline> timelines = new ArrayList<>();
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
@@ -64,7 +67,7 @@ public class GameController {
         return CurrentGame.getFreezeKey();
     }
 
-    public void shoot(Ball ball, Pane gamePane, CenterBall outerBall, ProgressBar progressBar) {
+    public void shoot(Ball ball, Pane gamePane, CenterBall outerBall, ProgressBar progressBar) throws Exception {
         if(numberOfBallsLeft > 0) {
             Ball shootedBall = new Ball(ball.getCenterX(), ball.getCenterY(), ball.getRadius(), Color.BLACK);
 
@@ -74,6 +77,10 @@ public class GameController {
 
             ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, ballsNumber, progressBar);
             shootingAnimation.play();
+
+            if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() * 3)/4) {
+                increaseRadius();
+            }
 
             decreaseNumberOfBallsLeft();
             if(numberOfBallsLeft == 0) {
@@ -91,7 +98,7 @@ public class GameController {
         return ballsNumber;
     }
 
-    public static void rotate(Ball ball, Line line, Text number, Pane gamePane) throws Exception {
+    public static void rotate(Ball ball, Line line, Text number) throws Exception {
         ball.getTransforms().add(rotateAnimation.getRotationForDelay());
         line.getTransforms().add(rotateAnimation.getRotationForDelay());
         number.getTransforms().add(rotateAnimation.getRotationForDelay());
@@ -118,6 +125,33 @@ public class GameController {
         return 0;
     }
 
+    public static void increaseRadius() throws Exception {
+        for (Ball ball : CenterBall.getBalls()) {
+            ball.setRadius(15);
+        }
+
+        boolean isIntersect = false;
+        for (int i = 0; i < CenterBall.getBalls().size() - 3; i++) {
+            if(CenterBall.getBalls().get(i).getBoundsInParent().intersects(CenterBall.getBalls().get(i+1).getLayoutBounds())) {
+                isIntersect = true;
+                break;
+            }
+        }
+        if (isIntersect)
+            showGameResult(getGameScore());
+
+        increaseRadiusTimeLine = new Timeline(new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for (Ball ball : CenterBall.getBalls()) {
+                    ball.setRadius(10);
+                }
+            }
+        }));
+        increaseRadiusTimeLine.setCycleCount(1);
+        increaseRadiusTimeLine.play();
+    }
+
     private static void showGameResult(int score) throws Exception{
         //TODO: score and username must added
         CurrentGame.setPhase(Phase.ONE);
@@ -136,18 +170,18 @@ public class GameController {
 //        return CenterBall.getBalls();
 //    }
 
-    public static void addDegree(double degree) {
-        CenterBall.addBallDegreeToArray(degree);
-    }
+//    public static void addDegree(double degree) {
+//        CenterBall.addBallDegreeToArray(degree);
+//    }
 
-    public static double getBallsAngle(Ball ball, CenterBall centerBall) {
-        double deltaX = ball.getCenterX() - centerBall.getCenterX();
-        double deltaY = ball.getCenterY() - centerBall.getCenterY();
-
-        double angleInDegrees = Math.atan2(deltaY, deltaX) * 180 /Math.PI;
-        if (angleInDegrees < 0) angleInDegrees += 360;
-        return angleInDegrees;
-    }
+//    public static double getBallsAngle(Ball ball, CenterBall centerBall) {
+//        double deltaX = ball.getCenterX() - centerBall.getCenterX();
+//        double deltaY = ball.getCenterY() - centerBall.getCenterY();
+//
+//        double angleInDegrees = Math.atan2(deltaY, deltaX) * 180 /Math.PI;
+//        if (angleInDegrees < 0) angleInDegrees += 360;
+//        return angleInDegrees;
+//    }
 
     public void freeze(ProgressBar progressBar) {
         GameController.rotateAnimation.setRotateFrequency(0.5);
@@ -164,21 +198,43 @@ public class GameController {
         Ball ball3 = new Ball(outerBall.getCenterX(), outerBall.getCenterY() - 150, 10, Color.BLACK);
         Ball ball4 = new Ball(outerBall.getCenterX() - 150, outerBall.getCenterY(), 10, Color.BLACK);
         Ball ball5 = new Ball(outerBall.getCenterX() + 150, outerBall.getCenterY(), 10, Color.BLACK);
-//        defaultBalls.addAll(List.of(ball1, ball2, ball3, ball4, ball5));
 
+        Line line1 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() + 50, outerBall.getCenterY() + 140);
+        Line line2 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() - 50, outerBall.getCenterY() + 140);
+        Line line3 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX(), outerBall.getCenterY() - 150);
+        Line line4 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() - 150, outerBall.getCenterY());
+        Line line5 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() + 150, outerBall.getCenterY());
+//        defaultBalls.addAll(List.of(ball1, ball2, ball3, ball4, ball5));
         gamePane.getChildren().addAll(ball1, ball2, ball3, ball4, ball5);
+        gamePane.getChildren().add(0, line1);
+        gamePane.getChildren().add(0, line2);
+        gamePane.getChildren().add(0, line3);
+        gamePane.getChildren().add(0, line4);
+        gamePane.getChildren().add(0, line5);
+
         ball1.getTransforms().add(rotateAnimation.getRotate());
         ball2.getTransforms().add(rotateAnimation.getRotate());
         ball3.getTransforms().add(rotateAnimation.getRotate());
         ball4.getTransforms().add(rotateAnimation.getRotate());
         ball5.getTransforms().add(rotateAnimation.getRotate());
+
+        line1.getTransforms().add(rotateAnimation.getRotate());
+        line2.getTransforms().add(rotateAnimation.getRotate());
+        line3.getTransforms().add(rotateAnimation.getRotate());
+        line4.getTransforms().add(rotateAnimation.getRotate());
+        line5.getTransforms().add(rotateAnimation.getRotate());
+
         CenterBall.addBallToArray(ball1);
         CenterBall.addBallToArray(ball2);
         CenterBall.addBallToArray(ball3);
         CenterBall.addBallToArray(ball4);
         CenterBall.addBallToArray(ball5);
-
     }
+
+//    public void checkForIncreaseRadius() {
+//        if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() * 3)/4)
+//            increaseRadius();
+//    }
 
 //    public static void clearDefaultBalls() {
 //        defaultBalls.clear();

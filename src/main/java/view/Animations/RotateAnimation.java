@@ -13,7 +13,7 @@ import model.CurrentGame;
 public class RotateAnimation extends Transition {
     private final Rotate rotate;
     private double rotateFrequency = CurrentGame.getDifficultyRate().getSpeedRate();
-    private Timeline timeline = new Timeline();
+//    private Timeline timeline = new Timeline();
 
     public RotateAnimation(CenterBall outerBall) {
         rotate = new Rotate(0, outerBall.getCenterX(), outerBall.getCenterY());
