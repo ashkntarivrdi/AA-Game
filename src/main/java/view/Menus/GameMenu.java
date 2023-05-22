@@ -44,6 +44,7 @@ public class GameMenu extends Application{
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
         else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
 
+        gameController.createDefaultBalls(gamePane, outerBall);
         initializeGame(gamePane, outerBall, progressBar);
 
 //        if (CurrentGame.getPhase() == Phase.ONE)
@@ -63,8 +64,6 @@ public class GameMenu extends Application{
     private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
         CurrentGame.resetBalls();
-//        gameController.pauseAnimations();
-//        gameController.pauseTimeLines();
 
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);

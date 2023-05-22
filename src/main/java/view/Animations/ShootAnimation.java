@@ -20,9 +20,9 @@ public class ShootAnimation extends Transition {
     private Text numberOfBallsLeft;
     private ProgressBar progressBar;
 
-    static {
-        GameController.createRotationAnimation(new CenterBall(150));
-    }
+//    static {
+//        GameController.createRotationAnimation(new CenterBall(150));
+//    }
     public ShootAnimation(Pane pane, Ball ball, CenterBall outerBall , Text numberOfBallsLeft, ProgressBar progressBar) {
         this.pane = pane;
         this.ball = ball;
@@ -42,12 +42,13 @@ public class ShootAnimation extends Transition {
         //TODO: get ball from database?
         if(outerBall.getBoundsInParent().intersects(ball.getLayoutBounds())) {
             this.stop();
-            GameController.addBall(ball);
+            CenterBall.addBallToArray(ball);
 
             Line line = new Line(outerBall.getCenterX(), outerBall.getCenterY(), ball.getCenterX(), ball.getCenterY());
             pane.getChildren().add(0, line);
             try {
-                GameController.rotate(ball, line, numberOfBallsLeft);
+                GameController.rotate(ball, line, numberOfBallsLeft, pane);
+//                System.out.println(GameController.getBall());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

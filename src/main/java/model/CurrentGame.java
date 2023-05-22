@@ -14,8 +14,7 @@ public class CurrentGame {
     private static String freezeKey = "Tab";
     private static String rightKey = "Right";
     private static String leftKey = "Left";
-    private static int numberOfBalls = 20;
-//    private static int numberOfBallsInEachPhase = numberOfBalls/4;
+    private static int numberOfBalls = 10;//TODO:20
     public static boolean guestPlayer;
     public static boolean mute = false;
     public static boolean darkMode = false;
@@ -23,10 +22,6 @@ public class CurrentGame {
     public static Level getDifficultyRate() {
         return difficultyRate;
     }
-
-//    public static void resetNumberOfBallsInEachPhase() {
-//        numberOfBallsInEachPhase = numberOfBalls/4;
-//    }
 
     public static void setDifficultyRate(Level difficultyRate) {
         CurrentGame.difficultyRate = difficultyRate;
@@ -103,14 +98,6 @@ public class CurrentGame {
     public static void setNumberOfBalls(int numberOfBalls) {
         CurrentGame.numberOfBalls = numberOfBalls;
     }
-
-//    public static int getNumberOfBallsInEachPhase() {
-//        return numberOfBallsInEachPhase;
-//    }
-
-//    public static void decreaseNumberOfBallsInEachPhase() {
-//        CurrentGame.numberOfBallsInEachPhase--;
-//    }
 
     public static void resetBalls() {
         balls.clear();
