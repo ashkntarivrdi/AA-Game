@@ -24,6 +24,10 @@ public class CurrentGame {
         return difficultyRate;
     }
 
+    public static void resetNumberOfBallsInEachPhase() {
+        numberOfBallsInEachPhase = numberOfBalls/4;
+    }
+
     public static void setDifficultyRate(Level difficultyRate) {
         CurrentGame.difficultyRate = difficultyRate;
     }
