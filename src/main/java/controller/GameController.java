@@ -1,6 +1,7 @@
 package controller;
 
 import enums.Phase;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Transform;
 import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
@@ -25,6 +27,7 @@ public class GameController {
     public static RotateAnimation rotateAnimation = new RotateAnimation(new CenterBall(150));
     public static Timeline freezeTimeLine;
     public static Timeline increaseRadiusTimeLine;
+    public static Timeline reverseRotateTimeLine;
     public static ArrayList<RotateAnimation> animations = new ArrayList<>();
     public static ArrayList<Timeline> timelines = new ArrayList<>();
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
@@ -80,6 +83,7 @@ public class GameController {
 
             if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() * 3)/4) {
                 increaseRadius();
+                reverseRotate();
             }
 
             decreaseNumberOfBallsLeft();
@@ -132,10 +136,15 @@ public class GameController {
 
         //TODO: intersect between balls on the circle has bug
 //        boolean isIntersect = false;
-//        for (int i = 0; i < CenterBall.getBalls().size() - 3; i++) {
-//            if(CenterBall.getBalls().get(i).getBoundsInParent().intersects(CenterBall.getBalls().get(i+1).getLayoutBounds())) {
-//                isIntersect = true;
-//                break;
+//        outerLoop:
+//        for (Ball ball : CenterBall.getBalls()) {
+//            for (Ball secondBall : CenterBall.getBalls()) {
+//                if (!ball.equals(secondBall)) {
+//                    if (ball.getBoundsInParent().intersects(secondBall.getLayoutBounds())) {
+//                       isIntersect = true;
+//                       break outerLoop;
+//                    }
+//                }
 //            }
 //        }
 //        if (isIntersect)
@@ -153,9 +162,22 @@ public class GameController {
         increaseRadiusTimeLine.play();
     }
 
+    public static void reverseRotate() throws Exception{
+        rotateAnimation.setRotateFrequency(-CurrentGame.getDifficultyRate().getSpeedRate());
+        reverseRotateTimeLine = new Timeline(new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate());
+            }
+        }));
+        reverseRotateTimeLine.setCycleCount(1);
+        reverseRotateTimeLine.play();
+    }
+
     private static void showGameResult(int score) throws Exception{
         //TODO: score and username must added
         rotateAnimation.pause();
+
         CurrentGame.setPhase(Phase.ONE);
 //        new GameResult().start(LoginMenu.stage);
     }
@@ -186,9 +208,9 @@ public class GameController {
 //    }
 
     public void freeze(ProgressBar progressBar) {
-        GameController.rotateAnimation.setRotateFrequency(0.5);
+        rotateAnimation.setRotateFrequency(0.5);
         freezeTimeLine = new Timeline(new KeyFrame(Duration.millis(CurrentGame.getDifficultyRate().getFreezeTime() * 1000),
-                event -> GameController.rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate())));
+                event -> rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate())));
         freezeTimeLine.setCycleCount(0);
         freezeTimeLine.play();
         progressBar.setProgress(0);

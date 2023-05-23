@@ -44,6 +44,9 @@ public class GameMenu extends Application{
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
         else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
 
+        if(GameController.rotateAnimation != null)
+            GameController.rotateAnimation.play();
+
         gameController.createDefaultBalls(gamePane, outerBall);
         initializeGame(gamePane, outerBall, progressBar);
 
