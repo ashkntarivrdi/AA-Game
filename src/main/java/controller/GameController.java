@@ -1,29 +1,26 @@
 package controller;
 
 import enums.Phase;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Transform;
 import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
 import view.Animations.RotateAnimation;
 import view.Animations.ShootAnimation;
-import view.Menus.GameResult;
-import view.Menus.LoginMenu;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameController {
     public static RotateAnimation rotateAnimation = new RotateAnimation(new CenterBall(150));
@@ -31,8 +28,12 @@ public class GameController {
     public static Timeline increaseRadiusTimeLine;
     public static Timeline reverseRotateTimeLine;
     public static Timeline invisibleTimeLine;
+
     public static Button button;
     public static Pane pane;
+    public static Timer visibilityTimer;
+    public static Timer reverseRotateTimer;
+    public static Boolean visibility = true;
     public static ArrayList<RotateAnimation> animations = new ArrayList<>();
     public static ArrayList<Timeline> timelines = new ArrayList<>();
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
@@ -96,7 +97,10 @@ public class GameController {
                 increaseRadius();
                 reverseRotate();
                 if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() /2)) {
-                    invisibleEffect();
+                    if (visibility) {
+                        invisibleEffect();
+                        visibility = false;
+                    }
                 }
             }
 
@@ -183,47 +187,69 @@ public class GameController {
     }
 
     public static void reverseRotate() throws Exception{
-        rotateAnimation.setRotateFrequency(-CurrentGame.getDifficultyRate().getSpeedRate());
-        reverseRotateTimeLine = new Timeline(new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
+        TimerTask timerTask = new TimerTask() {
             @Override
-            public void handle(ActionEvent event) {
-                rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate());
+            public void run() {
+                rotateAnimation.setRotateFrequency(-rotateAnimation.getRotateFrequency());
             }
-        }));
-        reverseRotateTimeLine.setCycleCount(0);
-        reverseRotateTimeLine.play();
+        };
+        reverseRotateTimer = new Timer();
+        reverseRotateTimer.scheduleAtFixedRate(timerTask, 0, 2000);
+
+//        rotateAnimation.setRotateFrequency(-CurrentGame.getDifficultyRate().getSpeedRate());
+//        reverseRotateTimeLine = new Timeline(new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate());
+//            }
+//        }));
+//        reverseRotateTimeLine.setCycleCount(0);
+//        reverseRotateTimeLine.play();
     }
 
     public static void invisibleEffect() {
-        for (Ball ball : CenterBall.getBalls()) {
-            ball.setVisible(false);
-        }
-        for (Line line : CenterBall.getLines()) {
-            line.setVisible(false);
-        }
-        for (Text text : CenterBall.getTexts()) {
-            text.setVisible(false);
-        }
-        invisibleTimeLine = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+        TimerTask timerTask = new TimerTask() {
+            boolean isVisible = true;
             @Override
-            public void handle(ActionEvent event) {
+            public void run() {
                 for (Ball ball : CenterBall.getBalls()) {
-                    ball.setVisible(true);
+                    ball.setVisible(!isVisible);
                 }
                 for (Line line : CenterBall.getLines()) {
-                    line.setVisible(true);
+                    line.setVisible(!isVisible);
                 }
                 for (Text text : CenterBall.getTexts()) {
-                    text.setVisible(true);
+                    text.setVisible(!isVisible);
                 }
+                isVisible = !isVisible; // toggle visibility
             }
-        }));
-        invisibleTimeLine.setCycleCount(0);
-        invisibleTimeLine.play();
+        };
+        visibilityTimer = new Timer();
+        visibilityTimer.scheduleAtFixedRate(timerTask, 0, 1000);
+    }
+
+    public static void makeEveryThingVisible() {
+        for (Ball ball : CenterBall.getBalls()) {
+            ball.setVisible(true);
+        }
+        for (Line line : CenterBall.getLines()) {
+            line.setVisible(true);
+        }
+        for (Text text : CenterBall.getTexts()) {
+            text.setVisible(true);
+        }
     }
 
     private static void showGameResult(int score, boolean isIntersect) throws Exception{
         //TODO: score and username must added
+        visibility = true;
+        if (visibilityTimer != null)  {
+            visibilityTimer.cancel();
+            makeEveryThingVisible();
+        }
+        if (reverseRotateTimer != null)
+            reverseRotateTimer.cancel();
+
         rotateAnimation.pause();
         button.requestFocus();
         CurrentGame.setPhase(Phase.ONE);
