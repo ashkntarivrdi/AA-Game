@@ -83,7 +83,9 @@ public class GameController {
             Ball shootedBall = new Ball(ball.getCenterX(), ball.getCenterY(), ball.getRadius(), Color.BLACK);
 
             Text ballsNumber = getTextForNumber(shootedBall);
-            Line line = getLineForBall(outerBall, shootedBall);
+            Line line = new Line();
+            line.setStartX(outerBall.getCenterX());
+            line.setStartY(outerBall.getCenterY());
 
             gamePane.getChildren().addAll(shootedBall, ballsNumber);
 
@@ -98,8 +100,6 @@ public class GameController {
                 }
             }
 
-
-
             decreaseNumberOfBallsLeft();
             if(numberOfBallsLeft == 0) {
                 gamePane.getChildren().remove(ball);
@@ -109,10 +109,6 @@ public class GameController {
         }
 //        if (numberOfBallsLeft == 0)
 //            showGameResult(getGameScore());
-    }
-
-    private Line getLineForBall(CenterBall outerBall, Ball shootedBall) {
-        return new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX(), outerBall.getCenterY() + 150);
     }
 
     public Text getTextForNumber(Ball shootedBall) {
@@ -315,6 +311,16 @@ public class GameController {
         CenterBall.addLineToArray(line4);
         CenterBall.addLineToArray(line5);
 
+    }
+
+    public void moveLeft(Ball ball) {
+        if (ball.getCenterX() > 150)
+            ball.setCenterX(ball.getCenterX() - 15);
+    }
+
+    public void moveRight(Ball ball) {
+        if (ball.getCenterX() < 350)
+            ball.setCenterX(ball.getCenterX() + 15);
     }
 
 //    public void checkForIncreaseRadius() {

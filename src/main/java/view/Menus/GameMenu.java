@@ -23,6 +23,8 @@ import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
 
+import javax.security.auth.login.AppConfigurationEntry;
+
 public class GameMenu extends Application{
     GameController gameController = new GameController();
     @Override
@@ -39,7 +41,7 @@ public class GameMenu extends Application{
         VBox vBox = new VBox(getProgressBarText(), progressBar);
         vBox.setAlignment(Pos.TOP_LEFT);
 
-        gamePane.getChildren().addAll(innerBall, vBox);
+        gamePane.getChildren().addAll(innerBall, outerBall, vBox);
 
         Scene scene = new Scene(gamePane);
         if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
@@ -50,6 +52,7 @@ public class GameMenu extends Application{
 
         Button button = new Button();
         button.setTranslateX(-50);
+        button.setFocusTraversable(false);
         gamePane.getChildren().add(button);
 
         gameController.createDefaultBalls(gamePane, outerBall);
@@ -93,6 +96,12 @@ public class GameMenu extends Application{
                             gameController.freeze(progressBar);
                     }
 //                    gameController.checkForIncreaseRadius();
+                    if (gameController.getNumberOfBallsLeft() <= CurrentGame.getNumberOfBalls()/4) {
+                        if (keyName.equals(CurrentGame.getRightKey()))
+                            gameController.moveRight(ball);
+                        else if (keyName.equals(CurrentGame.getLeftKey()))
+                            gameController.moveLeft(ball);
+                    }
                 }
 
             });
