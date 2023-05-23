@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
@@ -25,8 +26,71 @@ public class SettingMenuController {
 
     }
 
-    public void changeBallsCount(MouseEvent mouseEvent) {
-        //TODO
+    public void changeBallsCount(MouseEvent mouseEvent) throws Exception{
+        BorderPane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/BallsCount.fxml"));
+
+        RadioButton sixteen = new RadioButton("16");
+        RadioButton twenty = new RadioButton("20");
+        RadioButton twentyFour = new RadioButton("24");
+        sixteen.setMaxWidth(100);
+        twenty.setMaxWidth(100);
+        twentyFour.setMaxWidth(100);
+
+        setBallsCountSelectedButtons(sixteen, twenty, twentyFour);
+
+        sixteen.setOnAction(response -> {
+            SettingController.setBallsCount(16);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        twenty.setOnAction(response -> {
+            SettingController.setBallsCount(20);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        twentyFour.setOnAction(response -> {
+            SettingController.setBallsCount(24);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        TextField textField = getCurrentBallsCount();
+
+        VBox vBox = new VBox(sixteen, twenty, twentyFour, textField);
+        vBox.setSpacing(10);
+        vBox.setAlignment(Pos.CENTER);
+
+//        Button back = new Button("Back");
+//        back.setOnAction(response -> {
+//            try {
+//                enterSettingMenu(response);
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//        back.setMaxWidth(150);
+//        VBox vBox1 = new VBox(back);
+//        vBox1.setAlignment(Pos.CENTER);
+
+        pane.setCenter(vBox);
+        pane.setBottom(backButton());
+
+        Scene scene = new Scene(pane);
+        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
+
     }
 
     public void changeDifficultyRate(MouseEvent mouseEvent) throws Exception{
@@ -39,7 +103,7 @@ public class SettingMenuController {
         medium.setMaxWidth(100);
         hard.setMaxWidth(100);
 
-        setSelectedButtons(easy, medium, hard);
+        setDifficultyRateSelectedButtons(easy, medium, hard);
 
         easy.setOnAction(response -> {
             SettingController.setDifficultyRate(Level.EASY);
@@ -72,6 +136,30 @@ public class SettingMenuController {
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER);
 
+//        Button back = new Button("Back");
+//        back.setOnAction(response -> {
+//            try {
+//                enterSettingMenu(response);
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//        back.setMaxWidth(150);
+//        VBox vBox1 = new VBox(back);
+//        vBox1.setAlignment(Pos.CENTER);
+
+        pane.setCenter(vBox);
+        pane.setBottom(backButton());
+
+        Scene scene = new Scene(pane);
+        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
+    }
+
+    public VBox backButton() {
         Button back = new Button("Back");
         back.setOnAction(response -> {
             try {
@@ -81,18 +169,9 @@ public class SettingMenuController {
             }
         });
         back.setMaxWidth(150);
-        VBox vBox1 = new VBox(back);
-        vBox1.setAlignment(Pos.CENTER);
-
-        pane.setCenter(vBox);
-        pane.setBottom(vBox1);
-
-        Scene scene = new Scene(pane);
-        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
-        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
-
-        LoginMenu.stage.setScene(scene);
-        LoginMenu.stage.show();
+        VBox vBox = new VBox(back);
+        vBox.setAlignment(Pos.CENTER);
+        return vBox;
     }
 
     public TextField getCurrentDifficultyRate() {
@@ -104,7 +183,16 @@ public class SettingMenuController {
         return textField;
     }
 
-    public void setSelectedButtons(ToggleButton easy, ToggleButton medium, ToggleButton hard) {
+    public TextField getCurrentBallsCount() {
+        TextField textField = new TextField();
+        textField.setMaxWidth(200);
+        textField.setAlignment(Pos.CENTER);
+        textField.setOpacity(0.8);
+        textField.setText("Current Balls Count : " + SettingController.getBallsCount());
+        return textField;
+    }
+
+    public void setDifficultyRateSelectedButtons(ToggleButton easy, ToggleButton medium, ToggleButton hard) {
         switch (SettingController.getDifficultyRate()) {
             case EASY:
                 easy.setSelected(true);
@@ -114,6 +202,20 @@ public class SettingMenuController {
                 break;
             case HARD:
                 hard.setSelected(true);
+                break;
+        }
+    }
+
+    public void setBallsCountSelectedButtons(ToggleButton sixteen, ToggleButton twenty, ToggleButton twentyFour) {
+        switch (SettingController.getBallsCount()) {
+            case 16:
+                sixteen.setSelected(true);
+                break;
+            case 20:
+                twenty.setSelected(true);
+                break;
+            case 24:
+                twentyFour.setSelected(true);
                 break;
         }
     }

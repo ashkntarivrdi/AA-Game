@@ -1,6 +1,7 @@
 package controller;
 
 import enums.Phase;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -27,12 +28,12 @@ public class GameController {
     public static Timeline freezeTimeLine;
     public static Timeline increaseRadiusTimeLine;
     public static Timeline reverseRotateTimeLine;
-    public static Timeline invisibleTimeLine;
+//    public static Timeline invisibleTimeLine;
 
     public static Button button;
     public static Pane pane;
     public static Timer visibilityTimer;
-    public static Timer reverseRotateTimer;
+//    public static Timer reverseRotateTimer;
     public static Boolean visibility = true;
     public static ArrayList<RotateAnimation> animations = new ArrayList<>();
     public static ArrayList<Timeline> timelines = new ArrayList<>();
@@ -187,24 +188,15 @@ public class GameController {
     }
 
     public static void reverseRotate() throws Exception{
-        TimerTask timerTask = new TimerTask() {
+        rotateAnimation.setRotateFrequency(-CurrentGame.getDifficultyRate().getSpeedRate());
+        reverseRotateTimeLine = new Timeline(new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
             @Override
-            public void run() {
-                rotateAnimation.setRotateFrequency(-rotateAnimation.getRotateFrequency());
+            public void handle(ActionEvent event) {
+                rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate());
             }
-        };
-        reverseRotateTimer = new Timer();
-        reverseRotateTimer.scheduleAtFixedRate(timerTask, 0, 2000);
-
-//        rotateAnimation.setRotateFrequency(-CurrentGame.getDifficultyRate().getSpeedRate());
-//        reverseRotateTimeLine = new Timeline(new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate());
-//            }
-//        }));
-//        reverseRotateTimeLine.setCycleCount(0);
-//        reverseRotateTimeLine.play();
+        }));
+        reverseRotateTimeLine.setCycleCount(0);
+        reverseRotateTimeLine.play();
     }
 
     public static void invisibleEffect() {
@@ -242,21 +234,32 @@ public class GameController {
 
     private static void showGameResult(int score, boolean isIntersect) throws Exception{
         //TODO: score and username must added
+//        visibility = true;
+//        if (visibilityTimer != null)  {
+//            visibilityTimer.cancel();
+//            makeEveryThingVisible();
+//        }
+//        if (reverseRotateTimer != null) reverseRotateTimer.cancel();
+//
+//        rotateAnimation.pause();
+//        button.requestFocus();
+//        CurrentGame.setPhase(Phase.ONE);
+        resetEverything();
+        if (isIntersect) pane.setStyle("-fx-background-color: #ff0000");
+        else pane.setStyle("-fx-background-color: #32cd32");
+//        pane.setStyle("-fx-background-color: #ff0000");
+        //        new GameResult().start(LoginMenu.stage);
+    }
+
+    public static void resetEverything() {
         visibility = true;
         if (visibilityTimer != null)  {
             visibilityTimer.cancel();
             makeEveryThingVisible();
         }
-        if (reverseRotateTimer != null)
-            reverseRotateTimer.cancel();
-
         rotateAnimation.pause();
         button.requestFocus();
         CurrentGame.setPhase(Phase.ONE);
-        if (isIntersect) pane.setStyle("-fx-background-color: #ff0000");
-        else pane.setStyle("-fx-background-color: #32cd32");
-//        pane.setStyle("-fx-background-color: #ff0000");
-        //        new GameResult().start(LoginMenu.stage);
     }
 
 //    public static void createRotationAnimation(CenterBall outerBall) {
@@ -291,6 +294,10 @@ public class GameController {
         freezeTimeLine.setCycleCount(0);
         freezeTimeLine.play();
         progressBar.setProgress(0);
+    }
+
+    public static void rotateBackToNormal() {
+        rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate());
     }
 
     public void createDefaultBalls(Pane gamePane, CenterBall outerBall) {

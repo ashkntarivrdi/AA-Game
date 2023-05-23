@@ -1,5 +1,6 @@
 package view.Controllers;
 
+import controller.GameController;
 import enums.Phase;
 import javafx.scene.input.MouseEvent;
 import model.CurrentGame;
@@ -9,7 +10,7 @@ import view.Menus.MainMenu;
 public class GameMenuController {
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception{
         //TODO: reset static fields from currentGame
-        CurrentGame.setPhase(Phase.ONE);
+        GameController.resetEverything();
         new MainMenu().start(LoginMenu.stage);
     }
 }

@@ -10,7 +10,7 @@ import javax.swing.plaf.IconUIResource;
 public class SettingController {
     public static void setDifficultyRate(Level level) {
         CurrentGame.setDifficultyRate(level);
-        System.out.println(CurrentGame.getDifficultyRate());
+//        System.out.println(CurrentGame.getDifficultyRate());
     }
 
     public static void setDarkMode(boolean darkMode) {
@@ -33,6 +33,14 @@ public class SettingController {
 
     public static Level getDifficultyRate() {
         return CurrentGame.getDifficultyRate();
+    }
+
+    public static int getBallsCount() {
+        return CurrentGame.getNumberOfBalls();
+    }
+
+    public static void setBallsCount(int numberOfBalls) {
+        CurrentGame.setNumberOfBalls(numberOfBalls);
     }
     //TODO: change number of balls
 }
