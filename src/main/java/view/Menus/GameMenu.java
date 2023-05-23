@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -47,8 +48,12 @@ public class GameMenu extends Application{
         if(GameController.rotateAnimation != null)
             GameController.rotateAnimation.play();
 
+        Button button = new Button();
+        button.setTranslateX(-50);
+        gamePane.getChildren().add(button);
+
         gameController.createDefaultBalls(gamePane, outerBall);
-        initializeGame(gamePane, outerBall, progressBar);
+        initializeGame(gamePane, outerBall, progressBar, button, scene);
 
 //        if (CurrentGame.getPhase() == Phase.ONE)
 //            initializeGamePhaseOne();
@@ -64,7 +69,7 @@ public class GameMenu extends Application{
 //
 //    }
 
-    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar) {
+    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Scene scene) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
         CurrentGame.resetBalls();
 
@@ -77,7 +82,7 @@ public class GameMenu extends Application{
                     String keyName = event.getCode().getName();
                     if(keyName.equals(CurrentGame.getShootKey())) {
                         try {
-                            gameController.shoot(ball, gamePane, outerBall, progressBar);
+                            gameController.shoot(ball, gamePane, outerBall, progressBar, button);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

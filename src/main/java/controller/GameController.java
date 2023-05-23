@@ -6,6 +6,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -28,10 +30,13 @@ public class GameController {
     public static Timeline freezeTimeLine;
     public static Timeline increaseRadiusTimeLine;
     public static Timeline reverseRotateTimeLine;
+    public static Timeline invisibleTimeLine;
+    public static Button button;
+    public static Pane pane;
     public static ArrayList<RotateAnimation> animations = new ArrayList<>();
     public static ArrayList<Timeline> timelines = new ArrayList<>();
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
-    private int numberOfBallsLeft;
+    private static int numberOfBallsLeft;
 
 //    {
 //        timelines.add(freezeTimeLine);
@@ -43,11 +48,11 @@ public class GameController {
     }
 
     public  void setNumberOfBallsLeft(int numberOfBallsLeft) {
-        this.numberOfBallsLeft = numberOfBallsLeft;
+        GameController.numberOfBallsLeft = numberOfBallsLeft;
     }
 
     private void decreaseNumberOfBallsLeft() {
-        this.numberOfBallsLeft--;
+        numberOfBallsLeft--;
     }
 
     public int getCurrentGamePhase() {
@@ -70,28 +75,44 @@ public class GameController {
         return CurrentGame.getFreezeKey();
     }
 
-    public void shoot(Ball ball, Pane gamePane, CenterBall outerBall, ProgressBar progressBar) throws Exception {
+    public void shoot(Ball ball, Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button) throws Exception {
+        GameController.button = button;
+        GameController.pane = gamePane;
+
         if(numberOfBallsLeft > 0) {
             Ball shootedBall = new Ball(ball.getCenterX(), ball.getCenterY(), ball.getRadius(), Color.BLACK);
 
             Text ballsNumber = getTextForNumber(shootedBall);
+            Line line = getLineForBall(outerBall, shootedBall);
 
             gamePane.getChildren().addAll(shootedBall, ballsNumber);
 
-            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, ballsNumber, progressBar);
+            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, ballsNumber, progressBar, line);
             shootingAnimation.play();
 
             if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() * 3)/4) {
                 increaseRadius();
                 reverseRotate();
+                if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() /2)) {
+                    invisibleEffect();
+                }
             }
+
+
 
             decreaseNumberOfBallsLeft();
             if(numberOfBallsLeft == 0) {
                 gamePane.getChildren().remove(ball);
+//                showGameResult(getGameScore());
 //                CurrentGame.decreaseNumberOfBallsInEachPhase();
             }
         }
+//        if (numberOfBallsLeft == 0)
+//            showGameResult(getGameScore());
+    }
+
+    private Line getLineForBall(CenterBall outerBall, Ball shootedBall) {
+        return new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX(), outerBall.getCenterY() + 150);
     }
 
     public Text getTextForNumber(Ball shootedBall) {
@@ -121,7 +142,10 @@ public class GameController {
             }
         }
         if(isIntersect)
-            showGameResult(getGameScore());
+            showGameResult(getGameScore(), isIntersect);
+
+        if(numberOfBallsLeft == 0)
+            showGameResult(getGameScore(), isIntersect);
     }
 
     private static int getGameScore() {
@@ -170,16 +194,47 @@ public class GameController {
                 rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate());
             }
         }));
-        reverseRotateTimeLine.setCycleCount(1);
+        reverseRotateTimeLine.setCycleCount(0);
         reverseRotateTimeLine.play();
     }
 
-    private static void showGameResult(int score) throws Exception{
+    public static void invisibleEffect() {
+        for (Ball ball : CenterBall.getBalls()) {
+            ball.setVisible(false);
+        }
+        for (Line line : CenterBall.getLines()) {
+            line.setVisible(false);
+        }
+        for (Text text : CenterBall.getTexts()) {
+            text.setVisible(false);
+        }
+        invisibleTimeLine = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for (Ball ball : CenterBall.getBalls()) {
+                    ball.setVisible(true);
+                }
+                for (Line line : CenterBall.getLines()) {
+                    line.setVisible(true);
+                }
+                for (Text text : CenterBall.getTexts()) {
+                    text.setVisible(true);
+                }
+            }
+        }));
+        invisibleTimeLine.setCycleCount(0);
+        invisibleTimeLine.play();
+    }
+
+    private static void showGameResult(int score, boolean isIntersect) throws Exception{
         //TODO: score and username must added
         rotateAnimation.pause();
-
+        button.requestFocus();
         CurrentGame.setPhase(Phase.ONE);
-//        new GameResult().start(LoginMenu.stage);
+        if (isIntersect) pane.setStyle("-fx-background-color: #ff0000");
+        else pane.setStyle("-fx-background-color: #32cd32");
+//        pane.setStyle("-fx-background-color: #ff0000");
+        //        new GameResult().start(LoginMenu.stage);
     }
 
 //    public static void createRotationAnimation(CenterBall outerBall) {
@@ -253,6 +308,13 @@ public class GameController {
         CenterBall.addBallToArray(ball3);
         CenterBall.addBallToArray(ball4);
         CenterBall.addBallToArray(ball5);
+
+        CenterBall.addLineToArray(line1);
+        CenterBall.addLineToArray(line2);
+        CenterBall.addLineToArray(line3);
+        CenterBall.addLineToArray(line4);
+        CenterBall.addLineToArray(line5);
+
     }
 
 //    public void checkForIncreaseRadius() {
