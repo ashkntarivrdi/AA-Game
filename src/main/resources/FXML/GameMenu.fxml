@@ -13,8 +13,8 @@
             prefHeight="600.0" prefWidth="500.0">
 <!--    <BorderPane>-->
 
-            <VBox translateX="415" translateY="1">
-                <Button text="Pause Menu" focusTraversable="false" onMouseClicked="#enterMainMenu" maxWidth="100"/>
+            <VBox translateX="455" translateY="1">
+                <Button text="Back" focusTraversable="false" onMouseClicked="#enterMainMenu" maxWidth="100"/>
             </VBox>
 
 <!--    </BorderPane>-->

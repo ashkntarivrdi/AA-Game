@@ -47,6 +47,8 @@ public class GameController {
     public static Timer visibilityTimer;
 //    public static Timer reverseRotateTimer;
     public static Boolean visibility = true;
+    public static Boolean isPauseMenu = false;
+    public static Boolean isGameOver = false;
 //    public static ArrayList<RotateAnimation> animations = new ArrayList<>();
 //    public static ArrayList<Timeline> timelines = new ArrayList<>();
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
@@ -275,11 +277,14 @@ public class GameController {
 //        button.requestFocus();
 //        CurrentGame.setPhase(Phase.ONE);
         resetEverything();
+        isGameOver = true;
         if(!UserUtils.isGuestPlayer()) {
             Database.getUserByUsername(Database.getCurrentUser().getName()).setScore(score);
             Database.getCurrentUser().setScore(score);
             Database.saveUsers();
         }
+
+
 
         Text text = getResultText(isIntersect);
 
@@ -307,6 +312,7 @@ public class GameController {
 
     public static void resetEverything() {
         visibility = true;
+        isPauseMenu = false;
         if (visibilityTimer != null)  {
             visibilityTimer.cancel();
             makeEveryThingVisible();
@@ -517,4 +523,28 @@ public class GameController {
     }
 
 
+    public static void enterPauseMenu(Pane gamePane, Pane pausePane) {
+        if (isPauseMenu && !isGameOver) {
+            timerTimeLine.play();
+            if (freezeTimeLine != null) freezeTimeLine.play();
+            if (reverseRotateTimeLine != null) reverseRotateTimeLine.play();
+            if (increaseRadiusTimeLine != null) increaseRadiusTimeLine.play();
+            rotateAnimation.play();
+            gamePane.getChildren().remove(pausePane);
+            gamePane.requestFocus();
+            isPauseMenu = false;
+        }
+        else if (!isGameOver){
+            timerTimeLine.pause();
+            if (freezeTimeLine != null) freezeTimeLine.pause();
+            if (reverseRotateTimeLine != null) reverseRotateTimeLine.pause();
+            if (increaseRadiusTimeLine != null) increaseRadiusTimeLine.pause();
+//            visibilityTimer.cancel();
+            rotateAnimation.pause();
+            gamePane.getChildren().add(pausePane);
+            pausePane.requestFocus();
+            isPauseMenu = true;
+        }
+
+    }
 }

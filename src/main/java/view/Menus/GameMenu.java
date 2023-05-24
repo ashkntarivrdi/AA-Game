@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -35,9 +36,13 @@ import javax.security.auth.login.AppConfigurationEntry;
 public class GameMenu extends Application{
     GameController gameController = new GameController();
     public static MediaPlayer mediaPlayer;
+    public static Pane gamePane;
+    public static Pane pausePane;
     @Override
     public void start(Stage stage) throws Exception {
-        Pane gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
+        gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
+        pausePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/PauseMenu.fxml"));
+//        gamePane.getChildren().add(pausePane);
 
         CenterBall innerBall = new CenterBall();
         CenterBall outerBall = new CenterBall(150);
@@ -67,10 +72,12 @@ public class GameMenu extends Application{
 
         Media media = new Media(GameController.class.getResource("/musics/Music1.mp3").toExternalForm());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
+
+        if (!SettingController.isMute())
+            mediaPlayer.setAutoPlay(true);
 
         gameController.createDefaultBalls(gamePane, outerBall);
-        initializeGame(gamePane, outerBall, progressBar, button, score, scene);
+        initializeGame(gamePane, outerBall, progressBar, button, score, scene, pausePane);
 
 //        if (CurrentGame.getPhase() == Phase.ONE)
 //            initializeGamePhaseOne();
@@ -109,10 +116,11 @@ public class GameMenu extends Application{
 //        return timerLabel;
 //    }
 
-    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score, Scene scene) {
+    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score, Scene scene, Pane pausePane) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
         gameController.resetScore();
         CurrentGame.resetBalls();
+        GameController.isGameOver = false;
 
 
         Ball ball = new Ball();
@@ -133,6 +141,9 @@ public class GameMenu extends Application{
 //                        System.out.println(progressBar.getProgress());
                         if(progressBar.getProgress() >= 1)
                             gameController.freeze(progressBar, scene);
+                    }
+                    else if(keyName.equals(KeyCode.ESCAPE.getName())) {
+                        gameController.enterPauseMenu(gamePane, pausePane);
                     }
 //                    gameController.checkForIncreaseRadius();
                     if (gameController.getNumberOfBallsLeft() <= CurrentGame.getNumberOfBalls()/4) {
