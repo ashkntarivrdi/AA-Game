@@ -3,12 +3,16 @@ package view.Menus;
 import controller.GameController;
 import controller.SettingController;
 import enums.Phase;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -19,6 +23,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
@@ -38,8 +43,9 @@ public class GameMenu extends Application{
 
         ProgressBar progressBar = new ProgressBar(0);
         Text score = new Text();
+        Label timeLabel = generateTimer();
 
-        VBox vBox = new VBox(getProgressBarText(), progressBar, score);
+        VBox vBox = new VBox(getProgressBarText(), progressBar, score, timeLabel);
         vBox.setAlignment(Pos.TOP_LEFT);
 
         gamePane.getChildren().addAll(innerBall, outerBall, vBox);
@@ -69,9 +75,32 @@ public class GameMenu extends Application{
         stage.show();
     }
 
-//    private void initializeGamePhaseOne() {
-//
-//    }
+    private Label generateTimer() {
+        Timeline timeline = new Timeline();
+        Label timerLabel = new Label();
+        final int[] timeSeconds = {120};
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.millis(1000), event -> {
+                    timeSeconds[0]--;
+                    int minutes = timeSeconds[0] / 60;
+                    int seconds = timeSeconds[0] % 60;
+                    String timeString = String.format("%02d:%02d", minutes, seconds);
+                    timerLabel.setText(timeString);
+                    if(timeSeconds[0] <= 0) {
+                        timeline.stop();
+                        try {
+                            GameController.showGameResult(GameController.getGameScore(), true);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                })
+        );
+        timeline.playFromStart();
+        return timerLabel;
+    }
 
     private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());

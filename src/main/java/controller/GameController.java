@@ -168,7 +168,7 @@ public class GameController {
             showGameResult(getGameScore(), isIntersect);
     }
 
-    private static int getGameScore() {
+    public static int getGameScore() {
         return score;
     }
 
@@ -250,7 +250,7 @@ public class GameController {
         }
     }
 
-    private static void showGameResult(int score, boolean isIntersect) throws Exception{
+    public static void showGameResult(int score, boolean isIntersect) throws Exception{
         //TODO: score and username must added
 //        visibility = true;
 //        if (visibilityTimer != null)  {

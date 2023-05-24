@@ -14,7 +14,7 @@ public class CurrentGame {
     private static String freezeKey = "Tab";
     private static String rightKey = "Right";
     private static String leftKey = "Left";
-    private static int numberOfBalls = 8;//TODO:20
+    private static int numberOfBalls = 4;//TODO:20
     private static int defaultBallsCount = 5;
     public static boolean guestPlayer;
     public static boolean mute = false;
