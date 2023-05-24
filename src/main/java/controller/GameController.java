@@ -1,5 +1,6 @@
 package controller;
 
+import controller.Utils.UserUtils;
 import enums.Phase;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -16,6 +17,7 @@ import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
+import model.Database;
 import view.Animations.RotateAnimation;
 import view.Animations.ShootAnimation;
 
@@ -54,13 +56,17 @@ public class GameController {
         GameController.numberOfBallsLeft = numberOfBallsLeft;
     }
 
-//    public int getScore() {
-//        return score;
-//    }
-//
-//    public void resetScore() {
-//        score = 0;
-//    }
+    public int getScore() {
+        return score;
+    }
+
+    public void resetScore() {
+        score = 0;
+    }
+
+    public void setScore(int score) {
+        GameController.score = score;
+    }
 
     private void decreaseNumberOfBallsLeft() {
         numberOfBallsLeft--;
@@ -163,8 +169,7 @@ public class GameController {
     }
 
     private static int getGameScore() {
-        //TODO
-        return 0;
+        return score;
     }
 
     public static void increaseRadius() throws Exception {
@@ -258,6 +263,11 @@ public class GameController {
 //        button.requestFocus();
 //        CurrentGame.setPhase(Phase.ONE);
         resetEverything();
+        if(!UserUtils.isGuestPlayer()) {
+            Database.getUserByUsername(Database.getCurrentUser().getName()).setScore(score);
+            Database.getCurrentUser().setScore(score);
+            Database.saveUsers();
+        }
         if (isIntersect) pane.setStyle("-fx-background-color: #ff0000");
         else pane.setStyle("-fx-background-color: #32cd32");
 //        pane.setStyle("-fx-background-color: #ff0000");

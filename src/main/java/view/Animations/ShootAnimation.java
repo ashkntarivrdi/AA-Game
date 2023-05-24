@@ -78,18 +78,14 @@ public class ShootAnimation extends Transition {
             pane.getChildren().add(0, line);
 
             if(!UserUtils.isGuestPlayer()) {
-                Database.getCurrentUser().setScore(Database.getCurrentUser().getScore() + CurrentGame.getPhase().getPhase() * 2);
-                Database.getUserByUsername(Database.getCurrentUser().getName()).setScore(
-                        Database.getCurrentUser().getScore() + CurrentGame.getPhase().getPhase() * 2);
-                score.setText("" + Database.getCurrentUser().getScore());
+                gameController.setScore((CurrentGame.getPhase().getPhase() * 2) + gameController.getScore());
+                score.setText("" + gameController.getScore());
             }else {
                 score.setText("" + (CurrentGame.getNumberOfBalls() - gameController.getNumberOfBallsLeft()) * 2 * CurrentGame.getPhase().getPhase());
             }
-            Database.saveUsers();
 
             try {
                 GameController.rotate(ball, line, numberOfBallsLeft);
-//                System.out.println(GameController.getBall());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

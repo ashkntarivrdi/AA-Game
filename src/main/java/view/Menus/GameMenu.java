@@ -75,6 +75,7 @@ public class GameMenu extends Application{
 
     private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
+        gameController.resetScore();
         CurrentGame.resetBalls();
 
 
