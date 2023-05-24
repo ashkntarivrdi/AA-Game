@@ -82,6 +82,7 @@ public class ShootAnimation extends Transition {
                 score.setText("" + gameController.getScore());
             }else {
                 score.setText("" + (CurrentGame.getNumberOfBalls() - gameController.getNumberOfBallsLeft()) * 2 * CurrentGame.getPhase().getPhase());
+                gameController.setScore((CurrentGame.getNumberOfBalls() - gameController.getNumberOfBallsLeft()) * 2 * CurrentGame.getPhase().getPhase());
             }
 
             try {

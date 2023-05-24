@@ -7,11 +7,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Ball;
@@ -268,10 +273,29 @@ public class GameController {
             Database.getCurrentUser().setScore(score);
             Database.saveUsers();
         }
+
+        Text text = getResultText(isIntersect);
+
         if (isIntersect) pane.setStyle("-fx-background-color: #ff0000");
         else pane.setStyle("-fx-background-color: #32cd32");
+
+        pane.getChildren().add(text);
 //        pane.setStyle("-fx-background-color: #ff0000");
         //        new GameResult().start(LoginMenu.stage);
+    }
+
+    public static Text getResultText(boolean isIntersect) {
+        Text text = new Text();
+
+        text.setFill(Color.WHITE);
+        Font font = Font.font("serif", FontWeight.BOLD, FontPosture.REGULAR, 40);
+        text.setFont(font);
+        text.setTranslateX(300);
+        text.setTranslateY(400);
+        if (isIntersect) text.setText("You Lost\nScore : " + score);
+        else text.setText("You Won\nScore : " + score);
+
+        return text;
     }
 
     public static void resetEverything() {
