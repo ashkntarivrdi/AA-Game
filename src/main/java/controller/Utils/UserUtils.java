@@ -22,7 +22,7 @@ public class UserUtils {
     }
 
     public static int getCurrentUserScore() {
-        return Database.getCurrentUser().getEasyScore();
+        return Database.getCurrentUser().getScore();
     }
 
     public static void userLogout() {

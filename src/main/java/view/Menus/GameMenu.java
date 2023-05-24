@@ -37,8 +37,9 @@ public class GameMenu extends Application{
 //        Text phaseNumber = getPhaseNumber(outerBall);
 
         ProgressBar progressBar = new ProgressBar(0);
+        Text score = new Text();
 
-        VBox vBox = new VBox(getProgressBarText(), progressBar);
+        VBox vBox = new VBox(getProgressBarText(), progressBar, score);
         vBox.setAlignment(Pos.TOP_LEFT);
 
         gamePane.getChildren().addAll(innerBall, outerBall, vBox);
@@ -56,7 +57,7 @@ public class GameMenu extends Application{
         gamePane.getChildren().add(button);
 
         gameController.createDefaultBalls(gamePane, outerBall);
-        initializeGame(gamePane, outerBall, progressBar, button, scene);
+        initializeGame(gamePane, outerBall, progressBar, button, score);
 
 //        if (CurrentGame.getPhase() == Phase.ONE)
 //            initializeGamePhaseOne();
@@ -72,9 +73,10 @@ public class GameMenu extends Application{
 //
 //    }
 
-    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Scene scene) {
+    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
         CurrentGame.resetBalls();
+
 
         Ball ball = new Ball();
         gamePane.getChildren().add(ball);
@@ -85,7 +87,7 @@ public class GameMenu extends Application{
                     String keyName = event.getCode().getName();
                     if(keyName.equals(CurrentGame.getShootKey())) {
                         try {
-                            gameController.shoot(ball, gamePane, outerBall, progressBar, button);
+                            gameController.shoot(ball, gamePane, outerBall, progressBar, button, score);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

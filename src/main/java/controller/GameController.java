@@ -35,10 +35,11 @@ public class GameController {
     public static Timer visibilityTimer;
 //    public static Timer reverseRotateTimer;
     public static Boolean visibility = true;
-    public static ArrayList<RotateAnimation> animations = new ArrayList<>();
-    public static ArrayList<Timeline> timelines = new ArrayList<>();
+//    public static ArrayList<RotateAnimation> animations = new ArrayList<>();
+//    public static ArrayList<Timeline> timelines = new ArrayList<>();
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
     private static int numberOfBallsLeft;
+    private static int score;
 
 //    {
 //        timelines.add(freezeTimeLine);
@@ -49,9 +50,17 @@ public class GameController {
         return numberOfBallsLeft;
     }
 
-    public  void setNumberOfBallsLeft(int numberOfBallsLeft) {
+    public void setNumberOfBallsLeft(int numberOfBallsLeft) {
         GameController.numberOfBallsLeft = numberOfBallsLeft;
     }
+
+//    public int getScore() {
+//        return score;
+//    }
+//
+//    public void resetScore() {
+//        score = 0;
+//    }
 
     private void decreaseNumberOfBallsLeft() {
         numberOfBallsLeft--;
@@ -77,7 +86,7 @@ public class GameController {
         return CurrentGame.getFreezeKey();
     }
 
-    public void shoot(Ball ball, Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button) throws Exception {
+    public void shoot(Ball ball, Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score) throws Exception {
         GameController.button = button;
         GameController.pane = gamePane;
 
@@ -91,17 +100,21 @@ public class GameController {
 
             gamePane.getChildren().addAll(shootedBall, ballsNumber);
 
-            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, ballsNumber, progressBar, line);
+            ShootAnimation shootingAnimation = new ShootAnimation(gamePane, shootedBall, outerBall, ballsNumber, progressBar, line, score);
             shootingAnimation.play();
 
             if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() * 3)/4) {
+                CurrentGame.setPhase(Phase.TW0);
                 increaseRadius();
                 reverseRotate();
-                if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls() /2)) {
+                if (numberOfBallsLeft <= (CurrentGame.getNumberOfBalls()/2)) {
+                    CurrentGame.setPhase(Phase.THREE);
                     if (visibility) {
                         invisibleEffect();
                         visibility = false;
                     }
+                    if (numberOfBallsLeft <= CurrentGame.getNumberOfBalls()/4)
+                        CurrentGame.setPhase(Phase.FOUR);
                 }
             }
 

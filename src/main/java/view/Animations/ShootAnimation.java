@@ -1,15 +1,19 @@
 package view.Animations;
 
 import controller.GameController;
+import controller.Utils.UserUtils;
 import javafx.animation.*;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
+import model.Database;
 import view.Menus.GameMenu;
 import view.Menus.LoginMenu;
 
@@ -20,18 +24,21 @@ public class ShootAnimation extends Transition {
     private CenterBall outerBall;
     private Text numberOfBallsLeft;
     private Line line;
+    private Text score;
     private ProgressBar progressBar;
+    private int guestScore = 0;
 
 //    static {
 //        GameController.createRotationAnimation(new CenterBall(150));
 //    }
-    public ShootAnimation(Pane pane, Ball ball, CenterBall outerBall , Text numberOfBallsLeft, ProgressBar progressBar, Line line) {
+    public ShootAnimation(Pane pane, Ball ball, CenterBall outerBall , Text numberOfBallsLeft, ProgressBar progressBar, Line line, Text score) {
         this.pane = pane;
         this.ball = ball;
         this.outerBall = outerBall;
         this.numberOfBallsLeft = numberOfBallsLeft;
         this.line = line;
         this.progressBar = progressBar;
+        this.score = score;
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
         this.progressBar.setProgress(this.progressBar.getProgress() + 0.15);
@@ -69,6 +76,16 @@ public class ShootAnimation extends Transition {
             line.setEndX(ball.getCenterX());
             line.setEndY(ball.getCenterY());
             pane.getChildren().add(0, line);
+
+            if(!UserUtils.isGuestPlayer()) {
+                Database.getCurrentUser().setScore(Database.getCurrentUser().getScore() + CurrentGame.getPhase().getPhase() * 2);
+                Database.getUserByUsername(Database.getCurrentUser().getName()).setScore(
+                        Database.getCurrentUser().getScore() + CurrentGame.getPhase().getPhase() * 2);
+                score.setText("" + Database.getCurrentUser().getScore());
+            }else {
+                score.setText("" + (CurrentGame.getNumberOfBalls() - gameController.getNumberOfBallsLeft()) * 2 * CurrentGame.getPhase().getPhase());
+            }
+            Database.saveUsers();
 
             try {
                 GameController.rotate(ball, line, numberOfBallsLeft);
