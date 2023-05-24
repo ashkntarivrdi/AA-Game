@@ -21,9 +21,58 @@ public class SettingMenuController {
     public SettingController settingController = new SettingController();
 
 
-    public void chooseMap(MouseEvent mouseEvent) {
-        //TODO
+    public void chooseMap(MouseEvent mouseEvent) throws Exception{
+        BorderPane pane = FXMLLoader.load(ProfileMenu.class.getResource("/FXML/DefaultMap.fxml"));
 
+        RadioButton five = new RadioButton("5");
+        RadioButton six = new RadioButton("6");
+        RadioButton seven = new RadioButton("7");
+        five.setMaxWidth(100);
+        six.setMaxWidth(100);
+        seven.setMaxWidth(100);
+
+        setDefaultBallsCountSelectedButtons(five, six, seven);
+
+        five.setOnAction(response -> {
+            SettingController.setDefaultBallsCount(5);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        six.setOnAction(response -> {
+            SettingController.setDefaultBallsCount(6);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        seven.setOnAction(response -> {
+            SettingController.setDefaultBallsCount(7);
+            try {
+                enterSettingMenu(response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        TextField textField = getCurrentDefaultBallsCount();
+
+        VBox vBox = new VBox(five, six, seven, textField);
+        vBox.setSpacing(10);
+        vBox.setAlignment(Pos.CENTER);
+
+        pane.setCenter(vBox);
+        pane.setBottom(backButton());
+
+        Scene scene = new Scene(pane);
+        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+
+        LoginMenu.stage.setScene(scene);
+        LoginMenu.stage.show();
     }
 
     public void changeBallsCount(MouseEvent mouseEvent) throws Exception{
@@ -192,6 +241,15 @@ public class SettingMenuController {
         return textField;
     }
 
+    public TextField getCurrentDefaultBallsCount() {
+        TextField textField = new TextField();
+        textField.setMaxWidth(200);
+        textField.setAlignment(Pos.CENTER);
+        textField.setOpacity(0.8);
+        textField.setText("Current Default Balls Count : " + SettingController.getDefaultBallsCount());
+        return textField;
+    }
+
     public void setDifficultyRateSelectedButtons(ToggleButton easy, ToggleButton medium, ToggleButton hard) {
         switch (SettingController.getDifficultyRate()) {
             case EASY:
@@ -206,7 +264,7 @@ public class SettingMenuController {
         }
     }
 
-    public void setBallsCountSelectedButtons(ToggleButton sixteen, ToggleButton twenty, ToggleButton twentyFour) {
+    public void setBallsCountSelectedButtons(RadioButton sixteen, RadioButton twenty, RadioButton twentyFour) {
         switch (SettingController.getBallsCount()) {
             case 16:
                 sixteen.setSelected(true);
@@ -216,6 +274,20 @@ public class SettingMenuController {
                 break;
             case 24:
                 twentyFour.setSelected(true);
+                break;
+        }
+    }
+
+    public void setDefaultBallsCountSelectedButtons(RadioButton five, RadioButton six, RadioButton seven) {
+        switch (SettingController.getDefaultBallsCount()) {
+            case 5:
+                five.setSelected(true);
+                break;
+            case 6:
+                six.setSelected(true);
+                break;
+            case 7:
+                seven.setSelected(true);
                 break;
         }
     }

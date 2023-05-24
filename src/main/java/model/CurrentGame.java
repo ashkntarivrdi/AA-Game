@@ -14,10 +14,19 @@ public class CurrentGame {
     private static String freezeKey = "Tab";
     private static String rightKey = "Right";
     private static String leftKey = "Left";
-    private static int numberOfBalls = 20;//TODO:20
+    private static int numberOfBalls = 4;//TODO:20
+    private static int defaultBallsCount = 5;
     public static boolean guestPlayer;
     public static boolean mute = false;
     public static boolean darkMode = false;
+
+    public static int getDefaultBallsCount() {
+        return defaultBallsCount;
+    }
+
+    public static void setDefaultBallsCount(int defaultBallsCount) {
+        CurrentGame.defaultBallsCount = defaultBallsCount;
+    }
 
     public static Level getDifficultyRate() {
         return difficultyRate;

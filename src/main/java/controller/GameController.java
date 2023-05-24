@@ -30,7 +30,7 @@ public class GameController {
     public static Timeline reverseRotateTimeLine;
 //    public static Timeline invisibleTimeLine;
 
-    public static Button button;
+    public static Button button = new Button();
     public static Pane pane;
     public static Timer visibilityTimer;
 //    public static Timer reverseRotateTimer;
@@ -306,19 +306,26 @@ public class GameController {
         Ball ball3 = new Ball(outerBall.getCenterX(), outerBall.getCenterY() - 150, 10, Color.BLACK);
         Ball ball4 = new Ball(outerBall.getCenterX() - 150, outerBall.getCenterY(), 10, Color.BLACK);
         Ball ball5 = new Ball(outerBall.getCenterX() + 150, outerBall.getCenterY(), 10, Color.BLACK);
-
-        Line line1 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() + 50, outerBall.getCenterY() + 140);
-        Line line2 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() - 50, outerBall.getCenterY() + 140);
-        Line line3 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX(), outerBall.getCenterY() - 150);
-        Line line4 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() - 150, outerBall.getCenterY());
-        Line line5 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() + 150, outerBall.getCenterY());
+        Ball ball6 = new Ball(outerBall.getCenterX() + 50, outerBall.getCenterY() - 140, 10, Color.BLACK);
+        Ball ball7 = new Ball(outerBall.getCenterX() - 50, outerBall.getCenterY() - 140, 10, Color.BLACK);
 //        defaultBalls.addAll(List.of(ball1, ball2, ball3, ball4, ball5));
         gamePane.getChildren().addAll(ball1, ball2, ball3, ball4, ball5);
-        gamePane.getChildren().add(0, line1);
-        gamePane.getChildren().add(0, line2);
-        gamePane.getChildren().add(0, line3);
-        gamePane.getChildren().add(0, line4);
-        gamePane.getChildren().add(0, line5);
+
+        if (CurrentGame.getDefaultBallsCount() > 5) {
+            gamePane.getChildren().add(ball6);
+            ball6.getTransforms().add(rotateAnimation.getRotate());
+            CenterBall.addBallToArray(ball6);
+            if (CurrentGame.getDefaultBallsCount() > 6) {
+                gamePane.getChildren().add(ball7);
+                ball7.getTransforms().add(rotateAnimation.getRotate());
+                CenterBall.addBallToArray(ball7);
+            }
+        } else {
+            gamePane.getChildren().remove(ball6);
+            gamePane.getChildren().remove(ball7);
+        }
+
+        createDefaultLines(gamePane, outerBall);
 
         ball1.getTransforms().add(rotateAnimation.getRotate());
         ball2.getTransforms().add(rotateAnimation.getRotate());
@@ -326,24 +333,55 @@ public class GameController {
         ball4.getTransforms().add(rotateAnimation.getRotate());
         ball5.getTransforms().add(rotateAnimation.getRotate());
 
-        line1.getTransforms().add(rotateAnimation.getRotate());
-        line2.getTransforms().add(rotateAnimation.getRotate());
-        line3.getTransforms().add(rotateAnimation.getRotate());
-        line4.getTransforms().add(rotateAnimation.getRotate());
-        line5.getTransforms().add(rotateAnimation.getRotate());
-
         CenterBall.addBallToArray(ball1);
         CenterBall.addBallToArray(ball2);
         CenterBall.addBallToArray(ball3);
         CenterBall.addBallToArray(ball4);
         CenterBall.addBallToArray(ball5);
 
+    }
+
+    public void createDefaultLines(Pane gamePane, CenterBall outerBall) {
+        Line line1 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() + 50, outerBall.getCenterY() + 140);
+        Line line2 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() - 50, outerBall.getCenterY() + 140);
+        Line line3 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX(), outerBall.getCenterY() - 150);
+        Line line4 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() - 150, outerBall.getCenterY());
+        Line line5 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() + 150, outerBall.getCenterY());
+        Line line6 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() + 50, outerBall.getCenterY() - 140);
+        Line line7 = new Line(outerBall.getCenterX(), outerBall.getCenterY(), outerBall.getCenterX() - 50, outerBall.getCenterY() - 140);
+
+
+        gamePane.getChildren().add(0, line1);
+        gamePane.getChildren().add(0, line2);
+        gamePane.getChildren().add(0, line3);
+        gamePane.getChildren().add(0, line4);
+        gamePane.getChildren().add(0, line5);
+
+        if (CurrentGame.getDefaultBallsCount() > 5) {
+            gamePane.getChildren().add(line6);
+            line6.getTransforms().add(rotateAnimation.getRotate());
+            CenterBall.addLineToArray(line6);
+            if (CurrentGame.getDefaultBallsCount() > 6) {
+                gamePane.getChildren().add(line7);
+                line7.getTransforms().add(rotateAnimation.getRotate());
+                CenterBall.addLineToArray(line7);
+            }
+        } else {
+            gamePane.getChildren().remove(line6);
+            gamePane.getChildren().remove(line7);
+        }
+
+        line1.getTransforms().add(rotateAnimation.getRotate());
+        line2.getTransforms().add(rotateAnimation.getRotate());
+        line3.getTransforms().add(rotateAnimation.getRotate());
+        line4.getTransforms().add(rotateAnimation.getRotate());
+        line5.getTransforms().add(rotateAnimation.getRotate());
+
         CenterBall.addLineToArray(line1);
         CenterBall.addLineToArray(line2);
         CenterBall.addLineToArray(line3);
         CenterBall.addLineToArray(line4);
         CenterBall.addLineToArray(line5);
-
     }
 
     public void moveLeft(Ball ball) {

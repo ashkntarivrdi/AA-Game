@@ -42,5 +42,13 @@ public class SettingController {
     public static void setBallsCount(int numberOfBalls) {
         CurrentGame.setNumberOfBalls(numberOfBalls);
     }
+
+    public static void setDefaultBallsCount(int defaultBallsCount) {
+        CurrentGame.setDefaultBallsCount(defaultBallsCount);
+    }
+
+    public static int getDefaultBallsCount() {
+        return CurrentGame.getDefaultBallsCount();
+    }
     //TODO: change number of balls
 }
