@@ -5,10 +5,10 @@
 }
 
 
-.BackGround{
-    -fx-background-image: url("../images/lightBlue2.jpg");
+/*.BackGround{*/
+/*    -fx-background-image: url("../images/lightBlue2.jpg");*/
 
-}
+/*}*/
 .BackGroundColor {
     -fx-background-color: #818c94;
 }

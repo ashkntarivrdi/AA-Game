@@ -2,16 +2,18 @@ package controller;
 
 import controller.Utils.UserUtils;
 import enums.Phase;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -25,8 +27,10 @@ import model.CurrentGame;
 import model.Database;
 import view.Animations.RotateAnimation;
 import view.Animations.ShootAnimation;
+import view.Menus.GameMenu;
+import view.Menus.LoginMenu;
 
-import java.util.ArrayList;
+import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,6 +39,7 @@ public class GameController {
     public static Timeline freezeTimeLine;
     public static Timeline increaseRadiusTimeLine;
     public static Timeline reverseRotateTimeLine;
+    public static Timeline timerTimeLine;
 //    public static Timeline invisibleTimeLine;
 
     public static Button button = new Button();
@@ -47,6 +52,7 @@ public class GameController {
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
     private static int numberOfBallsLeft;
     private static int score;
+    private static Scene scene;
 
 //    {
 //        timelines.add(freezeTimeLine);
@@ -124,8 +130,9 @@ public class GameController {
                         invisibleEffect();
                         visibility = false;
                     }
-                    if (numberOfBallsLeft <= CurrentGame.getNumberOfBalls()/4)
+                    if (numberOfBallsLeft <= CurrentGame.getNumberOfBalls()/4) {
                         CurrentGame.setPhase(Phase.FOUR);
+                    }
                 }
             }
 
@@ -306,6 +313,8 @@ public class GameController {
         }
         rotateAnimation.pause();
         button.requestFocus();
+        timerTimeLine.pause();
+        GameMenu.mediaPlayer.pause();
         CurrentGame.setPhase(Phase.ONE);
     }
 
@@ -334,12 +343,30 @@ public class GameController {
 //        return angleInDegrees;
 //    }
 
-    public void freeze(ProgressBar progressBar) {
+    public void freeze(ProgressBar progressBar, Scene scene) {
         rotateAnimation.setRotateFrequency(0.5);
         freezeTimeLine = new Timeline(new KeyFrame(Duration.millis(CurrentGame.getDifficultyRate().getFreezeTime() * 1000),
                 event -> rotateAnimation.setRotateFrequency(CurrentGame.getDifficultyRate().getSpeedRate())));
         freezeTimeLine.setCycleCount(0);
         freezeTimeLine.play();
+
+//        if(SettingController.isDarkMode()) scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DarkMode.css").toExternalForm());
+//        else scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/DefaultStyle.css").toExternalForm());
+//        Image image = new Image(getClass().getResource("/images/freeze.png").toExternalForm());
+//        ImageView imageView = new ImageView(image);
+//        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+//                BackgroundSize.DEFAULT);
+//        Background background = new Background(backgroundImage);
+//        pane.setBackground(background);
+//        scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/Freeze.css").toExternalForm());
+
+        scene.getStylesheets().add(LoginMenu.class.getResource("/CSS/freeze.css").toExternalForm());
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(CurrentGame.getDifficultyRate().getFreezeTime() * 1000),
+                event -> scene.getStylesheets().remove(LoginMenu.class.getResource("/CSS/freeze.css").toExternalForm())));
+
+        timeline.setCycleCount(0);
+        timeline.play();
+
         progressBar.setProgress(0);
     }
 
@@ -462,6 +489,32 @@ public class GameController {
 //        }
 //    }
 
+    public Label generateTimer() {
+        timerTimeLine = new Timeline();
+        Label timerLabel = new Label();
+        final int[] timeSeconds = {120};
+
+        timerTimeLine.setCycleCount(Timeline.INDEFINITE);
+        timerTimeLine.getKeyFrames().add(
+                new KeyFrame(Duration.millis(1000), event -> {
+                    timeSeconds[0]--;
+                    int minutes = timeSeconds[0] / 60;
+                    int seconds = timeSeconds[0] % 60;
+                    String timeString = String.format("%02d:%02d", minutes, seconds);
+                    timerLabel.setText(timeString);
+                    if(timeSeconds[0] <= 0) {
+                        timerTimeLine.stop();
+                        try {
+                            GameController.showGameResult(GameController.getGameScore(), true);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                })
+        );
+        timerTimeLine.playFromStart();
+        return timerLabel;
+    }
 
 
 }

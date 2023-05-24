@@ -17,6 +17,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -32,6 +34,7 @@ import javax.security.auth.login.AppConfigurationEntry;
 
 public class GameMenu extends Application{
     GameController gameController = new GameController();
+    public static MediaPlayer mediaPlayer;
     @Override
     public void start(Stage stage) throws Exception {
         Pane gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
@@ -43,7 +46,7 @@ public class GameMenu extends Application{
 
         ProgressBar progressBar = new ProgressBar(0);
         Text score = new Text();
-        Label timeLabel = generateTimer();
+        Label timeLabel = gameController.generateTimer();
 
         VBox vBox = new VBox(getProgressBarText(), progressBar, score, timeLabel);
         vBox.setAlignment(Pos.TOP_LEFT);
@@ -62,8 +65,12 @@ public class GameMenu extends Application{
         button.setFocusTraversable(false);
         gamePane.getChildren().add(button);
 
+        Media media = new Media(GameController.class.getResource("/musics/Music1.mp3").toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
         gameController.createDefaultBalls(gamePane, outerBall);
-        initializeGame(gamePane, outerBall, progressBar, button, score);
+        initializeGame(gamePane, outerBall, progressBar, button, score, scene);
 
 //        if (CurrentGame.getPhase() == Phase.ONE)
 //            initializeGamePhaseOne();
@@ -75,34 +82,34 @@ public class GameMenu extends Application{
         stage.show();
     }
 
-    private Label generateTimer() {
-        Timeline timeline = new Timeline();
-        Label timerLabel = new Label();
-        final int[] timeSeconds = {120};
+//    private Label generateTimer() {
+//        Timeline timeline = new Timeline();
+//        Label timerLabel = new Label();
+//        final int[] timeSeconds = {120};
+//
+//        timeline.setCycleCount(Timeline.INDEFINITE);
+//        timeline.getKeyFrames().add(
+//                new KeyFrame(Duration.millis(1000), event -> {
+//                    timeSeconds[0]--;
+//                    int minutes = timeSeconds[0] / 60;
+//                    int seconds = timeSeconds[0] % 60;
+//                    String timeString = String.format("%02d:%02d", minutes, seconds);
+//                    timerLabel.setText(timeString);
+//                    if(timeSeconds[0] <= 0) {
+//                        timeline.stop();
+//                        try {
+//                            GameController.showGameResult(GameController.getGameScore(), true);
+//                        } catch (Exception e) {
+//                            throw new RuntimeException(e);
+//                        }
+//                    }
+//                })
+//        );
+//        timeline.playFromStart();
+//        return timerLabel;
+//    }
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(1000), event -> {
-                    timeSeconds[0]--;
-                    int minutes = timeSeconds[0] / 60;
-                    int seconds = timeSeconds[0] % 60;
-                    String timeString = String.format("%02d:%02d", minutes, seconds);
-                    timerLabel.setText(timeString);
-                    if(timeSeconds[0] <= 0) {
-                        timeline.stop();
-                        try {
-                            GameController.showGameResult(GameController.getGameScore(), true);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                })
-        );
-        timeline.playFromStart();
-        return timerLabel;
-    }
-
-    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score) {
+    private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score, Scene scene) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
         gameController.resetScore();
         CurrentGame.resetBalls();
@@ -123,9 +130,9 @@ public class GameMenu extends Application{
                         }
                     }
                     else if(keyName.equals(CurrentGame.getFreezeKey())) {
-                        System.out.println(progressBar.getProgress());
+//                        System.out.println(progressBar.getProgress());
                         if(progressBar.getProgress() >= 1)
-                            gameController.freeze(progressBar);
+                            gameController.freeze(progressBar, scene);
                     }
 //                    gameController.checkForIncreaseRadius();
                     if (gameController.getNumberOfBallsLeft() <= CurrentGame.getNumberOfBalls()/4) {

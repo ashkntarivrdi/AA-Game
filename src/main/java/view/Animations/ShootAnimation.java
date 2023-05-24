@@ -6,6 +6,8 @@ import javafx.animation.*;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -41,7 +43,7 @@ public class ShootAnimation extends Transition {
         this.score = score;
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
-        this.progressBar.setProgress(this.progressBar.getProgress() + 0.15);
+        this.progressBar.setProgress(this.progressBar.getProgress() + 1);//TODO:0.15
         CenterBall.addBallToArray(this.ball);
         CenterBall.addTextToArray(this.numberOfBallsLeft);
         CenterBall.addLineToArray(this.line);
@@ -71,6 +73,10 @@ public class ShootAnimation extends Transition {
 
         //TODO: get ball from database?
         if(outerBall.getBoundsInParent().intersects(ball.getLayoutBounds())) {
+            Media media = new Media(getClass().getResource("/musics/shoot.wav").toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setAutoPlay(true);
+
             this.stop();
 
             line.setEndX(ball.getCenterX());
