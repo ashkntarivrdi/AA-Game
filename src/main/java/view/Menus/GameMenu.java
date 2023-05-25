@@ -32,10 +32,13 @@ import model.CenterBall;
 import model.CurrentGame;
 
 import javax.security.auth.login.AppConfigurationEntry;
+import java.util.ArrayList;
 
 public class GameMenu extends Application{
     GameController gameController = new GameController();
     public static MediaPlayer mediaPlayer;
+    public static ArrayList<Media> mediaList = new ArrayList<>();
+    public static int currentMediaIndex = 0;
     public static Pane gamePane;
     public static Pane pausePane;
     @Override
@@ -70,8 +73,11 @@ public class GameMenu extends Application{
         button.setFocusTraversable(false);
         gamePane.getChildren().add(button);
 
-        Media media = new Media(GameController.class.getResource("/musics/Music1.mp3").toExternalForm());
-        mediaPlayer = new MediaPlayer(media);
+        mediaList.add(new Media(GameController.class.getResource("/musics/Music1.mp3").toExternalForm()));
+        mediaList.add(new Media(GameController.class.getResource("/musics/Music2.mp3").toExternalForm()));
+        mediaList.add(new Media(GameController.class.getResource("/musics/Music3.mp3").toExternalForm()));
+
+        mediaPlayer = new MediaPlayer(mediaList.get(0));
 
         if (!SettingController.isMute())
             mediaPlayer.setAutoPlay(true);

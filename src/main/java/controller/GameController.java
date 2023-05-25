@@ -529,6 +529,7 @@ public class GameController {
             if (freezeTimeLine != null) freezeTimeLine.play();
             if (reverseRotateTimeLine != null) reverseRotateTimeLine.play();
             if (increaseRadiusTimeLine != null) increaseRadiusTimeLine.play();
+            visibilityTimer.cancel();
             rotateAnimation.play();
             gamePane.getChildren().remove(pausePane);
             gamePane.requestFocus();
@@ -542,7 +543,7 @@ public class GameController {
 //            visibilityTimer.cancel();
             rotateAnimation.pause();
             gamePane.getChildren().add(pausePane);
-            pausePane.requestFocus();
+            button.requestFocus();
             isPauseMenu = true;
         }
 
