@@ -17,7 +17,7 @@
         <VBox alignment="CENTER" spacing="20">
             <Label text="Main Menu" styleClass="Title" alignment="CENTER"/>
             <Button text="Start Game" onMouseClicked="#startNewGame" maxWidth="150"/>
-            <Button text="Continue" onMouseClicked="#playPreviousGame" maxWidth="150"/>
+            <Button text="Multiple Players" onMouseClicked="#startMultiplePlayers" maxWidth="150"/>
             <Button text="Profile" onMouseClicked="#enterProfileMenu" maxWidth="150"/>
             <Button text="ScoreBoard" onMouseClicked="#enterScoreBoardMenu" maxWidth="150"/>
             <Button text="Setting" onMouseClicked="#enterSetting" maxWidth="150"/>

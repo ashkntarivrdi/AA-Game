@@ -13,10 +13,6 @@ public class MainMenuController {
         new GameMenu().start(LoginMenu.stage);
     }
 
-    public void playPreviousGame(MouseEvent mouseEvent) {
-        //TODO
-    }
-
     public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
         if (!UserUtils.isGuestPlayer())
             new ProfileMenu().start(LoginMenu.stage);
@@ -50,5 +46,9 @@ public class MainMenuController {
                 }
             }
         });
+    }
+
+    public void startMultiplePlayers(MouseEvent mouseEvent) throws Exception{
+        new MultiplePlayersMenu().start(LoginMenu.stage);
     }
 }

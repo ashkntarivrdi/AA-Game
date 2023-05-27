@@ -14,11 +14,11 @@ public class CenterBall extends Circle {
     private static ArrayList<Text> texts;
     private static ArrayList<Double> ballsDegree;
 
-    public CenterBall() {
-        super(250, 250, 80, Color.BLACK);
+    public CenterBall(double centerX, double centerY) {
+        super(centerX, centerY, 80, Color.BLACK);
     }
 
-    public CenterBall(double radius) {
+    public CenterBall(double centerX, double centerY, double radius) {
         super(250, 250, radius, Color.TRANSPARENT);
         balls = new ArrayList<>();
         lines = new ArrayList<>();

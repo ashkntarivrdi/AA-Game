@@ -16,6 +16,7 @@ import model.CurrentGame;
 import view.Menus.GameMenu;
 import view.Menus.LoginMenu;
 import view.Menus.MainMenu;
+import view.Menus.MultiplePlayersMenu;
 
 import java.util.Set;
 
@@ -59,7 +60,10 @@ public class GameMenuController {
 
     public void restartGame(MouseEvent mouseEvent) throws Exception{
         mediaPlayer.stop();
-        new GameMenu().start(LoginMenu.stage);
+        if (MultiplePlayersMenu.isMultiplePlayer) {
+            new MultiplePlayersMenu().start(LoginMenu.stage);
+        }else
+            new GameMenu().start(LoginMenu.stage);
     }
 
     public void exitGame(MouseEvent mouseEvent) throws Exception{

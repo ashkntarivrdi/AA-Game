@@ -47,8 +47,8 @@ public class GameMenu extends Application{
         pausePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/PauseMenu.fxml"));
 //        gamePane.getChildren().add(pausePane);
 
-        CenterBall innerBall = new CenterBall();
-        CenterBall outerBall = new CenterBall(150);
+        CenterBall innerBall = new CenterBall(250, 250);
+        CenterBall outerBall = new CenterBall(250, 250, 150);
 
 //        Text phaseNumber = getPhaseNumber(outerBall);
 
@@ -171,7 +171,7 @@ public class GameMenu extends Application{
 //        return phaseNumber;
 //    }
 
-    public Text getProgressBarText() {
+    public static Text getProgressBarText() {
         Text text = new Text("Freeze");
         text.setFill(Color.LIGHTBLUE);
         Font font = Font.font("serif", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 14);

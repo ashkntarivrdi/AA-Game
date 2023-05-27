@@ -27,15 +27,17 @@ import model.CurrentGame;
 import model.Database;
 import view.Animations.RotateAnimation;
 import view.Animations.ShootAnimation;
+import view.Animations.UpperShootAnimation;
 import view.Menus.GameMenu;
 import view.Menus.LoginMenu;
+import view.Menus.MultiplePlayersMenu;
 
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameController {
-    public static RotateAnimation rotateAnimation = new RotateAnimation(new CenterBall(150));
+    public static RotateAnimation rotateAnimation = new RotateAnimation(new CenterBall(250, 250, 150));
     public static Timeline freezeTimeLine;
     public static Timeline increaseRadiusTimeLine;
     public static Timeline reverseRotateTimeLine;
@@ -53,6 +55,7 @@ public class GameController {
 //    public static ArrayList<Timeline> timelines = new ArrayList<>();
 //    private static ArrayList<Ball> defaultBalls = new ArrayList<>();
     private static int numberOfBallsLeft;
+    private static int numberOfUpperBallsLeft;
     private static int score;
     private static Scene scene;
 
@@ -69,6 +72,14 @@ public class GameController {
         GameController.numberOfBallsLeft = numberOfBallsLeft;
     }
 
+    public int getNumberOfUpperBallsLeft() {
+        return numberOfUpperBallsLeft;
+    }
+
+    public void setNumberOfUpperBallsLeft(int numberOfUpperBallsLeft) {
+        GameController.numberOfUpperBallsLeft = numberOfUpperBallsLeft;
+    }
+
     public int getScore() {
         return score;
     }
@@ -83,6 +94,10 @@ public class GameController {
 
     private void decreaseNumberOfBallsLeft() {
         numberOfBallsLeft--;
+    }
+
+    private void decreaseNumberOfUpperBallsLeft() {
+        numberOfUpperBallsLeft--;
     }
 
     public int getCurrentGamePhase() {
@@ -157,6 +172,14 @@ public class GameController {
         return ballsNumber;
     }
 
+    public Text getTextForUpperNumber(Ball shootedBall) {
+        Text ballsNumber = new Text("" + numberOfUpperBallsLeft);
+        ballsNumber.setFill(Color.BLACK);
+        ballsNumber.setX(shootedBall.getCenterX() - 7);
+        ballsNumber.setY(shootedBall.getCenterY() + 5);
+        return ballsNumber;
+    }
+
     public static void rotate(Ball ball, Line line, Text number) throws Exception {
         ball.getTransforms().add(rotateAnimation.getRotationForDelay());
         line.getTransforms().add(rotateAnimation.getRotationForDelay());
@@ -178,7 +201,7 @@ public class GameController {
         if(isIntersect)
             showGameResult(getGameScore(), isIntersect);
 
-        if(numberOfBallsLeft == 0)
+        if(numberOfBallsLeft == 0 && numberOfUpperBallsLeft == 0)
             showGameResult(getGameScore(), isIntersect);
     }
 
@@ -311,6 +334,7 @@ public class GameController {
     }
 
     public static void resetEverything() {
+        MultiplePlayersMenu.isMultiplePlayer = false;
         visibility = true;
         isPauseMenu = false;
         if (visibilityTimer != null)  {
@@ -529,7 +553,6 @@ public class GameController {
             if (freezeTimeLine != null) freezeTimeLine.play();
             if (reverseRotateTimeLine != null) reverseRotateTimeLine.play();
             if (increaseRadiusTimeLine != null) increaseRadiusTimeLine.play();
-            visibilityTimer.cancel();
             rotateAnimation.play();
             gamePane.getChildren().remove(pausePane);
             gamePane.requestFocus();
@@ -540,12 +563,56 @@ public class GameController {
             if (freezeTimeLine != null) freezeTimeLine.pause();
             if (reverseRotateTimeLine != null) reverseRotateTimeLine.pause();
             if (increaseRadiusTimeLine != null) increaseRadiusTimeLine.pause();
-//            visibilityTimer.cancel();
             rotateAnimation.pause();
             gamePane.getChildren().add(pausePane);
             button.requestFocus();
             isPauseMenu = true;
         }
+
+    }
+
+    public void upperShoot(Ball upperBall, Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score) throws Exception{
+        GameController.button = button;
+        GameController.pane = gamePane;
+
+        if(numberOfUpperBallsLeft > 0) {
+            Ball shootedBall = new Ball(upperBall.getCenterX(), upperBall.getCenterY(), upperBall.getRadius(), Color.WHITE);
+
+            Text ballsNumber = getTextForUpperNumber(shootedBall);
+            Line line = new Line();
+            line.setStartX(outerBall.getCenterX());
+            line.setStartY(outerBall.getCenterY());
+
+            gamePane.getChildren().addAll(shootedBall, ballsNumber);
+
+            UpperShootAnimation upperShootAnimation = new UpperShootAnimation(gamePane, shootedBall, outerBall, ballsNumber, progressBar, line, score);
+            upperShootAnimation.play();
+
+            if (numberOfUpperBallsLeft <= (CurrentGame.getNumberOfBalls() * 3)/4) {
+                CurrentGame.setPhase(Phase.TW0);
+                increaseRadius();
+                reverseRotate();
+                if (numberOfUpperBallsLeft <= (CurrentGame.getNumberOfBalls()/2)) {
+                    CurrentGame.setPhase(Phase.THREE);
+                    if (visibility) {
+                        invisibleEffect();
+                        visibility = false;
+                    }
+                    if (numberOfUpperBallsLeft <= CurrentGame.getNumberOfBalls()/4) {
+                        CurrentGame.setPhase(Phase.FOUR);
+                    }
+                }
+            }
+
+            decreaseNumberOfUpperBallsLeft();
+            if(numberOfUpperBallsLeft == 0) {
+                gamePane.getChildren().remove(upperBall);
+//                showGameResult(getGameScore());
+//                CurrentGame.decreaseNumberOfBallsInEachPhase();
+            }
+        }
+//        if (numberOfBallsLeft == 0)
+//            showGameResult(getGameScore());
 
     }
 }
