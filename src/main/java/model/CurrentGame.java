@@ -3,7 +3,6 @@ package model;
 import enums.Level;
 import enums.Phase;
 
-import java.security.Key;
 import java.util.ArrayList;
 
 public class CurrentGame {
@@ -14,7 +13,7 @@ public class CurrentGame {
     private static String freezeKey = "Tab";
     private static String rightKey = "Right";
     private static String leftKey = "Left";
-    private static int numberOfBalls = 4;//TODO:20
+    private static int numberOfBalls = 20;
     private static int defaultBallsCount = 5;
     public static boolean guestPlayer;
     public static boolean mute = false;
@@ -72,33 +71,21 @@ public class CurrentGame {
         return shootKey;
     }
 
-    public static void setShootKey(String shootKey) {
-        CurrentGame.shootKey = shootKey;
-    }
 
     public static String getFreezeKey() {
         return freezeKey;
     }
 
-    public static void setFreezeKey(String freezeKey) {
-        CurrentGame.freezeKey = freezeKey;
-    }
 
     public static String getRightKey() {
         return rightKey;
     }
 
-    public static void setRightKey(String rightKey) {
-        CurrentGame.rightKey = rightKey;
-    }
 
     public static String getLeftKey() {
         return leftKey;
     }
 
-    public static void setLeftKey(String leftKey) {
-        CurrentGame.leftKey = leftKey;
-    }
 
     public static int getNumberOfBalls() {
         return numberOfBalls;

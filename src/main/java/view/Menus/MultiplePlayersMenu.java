@@ -30,12 +30,9 @@ public class MultiplePlayersMenu extends Application {
     public void start(Stage stage) throws Exception {
         GameMenu.gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/MultiplePlayers.fxml"));
         GameMenu.pausePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/PauseMenu.fxml"));
-//        gamePane.getChildren().add(pausePane);
 
         CenterBall innerBall = new CenterBall(250, 250);
         CenterBall outerBall = new CenterBall(250, 300, 150);
-
-//        Text phaseNumber = getPhaseNumber(outerBall);
 
         ProgressBar progressBar = new ProgressBar(0);
         Text score = new Text();
@@ -70,9 +67,6 @@ public class MultiplePlayersMenu extends Application {
         isMultiplePlayer = true;
         gameController.createDefaultBalls(GameMenu.gamePane, outerBall);
         initializeGame(GameMenu.gamePane, outerBall, progressBar, button, score, scene, GameMenu.pausePane);
-
-//        if (CurrentGame.getPhase() == Phase.ONE)
-//            initializeGamePhaseOne();
 
         GameMenu.gamePane.requestFocus();
 
@@ -112,14 +106,12 @@ public class MultiplePlayersMenu extends Application {
                     }
                 }
                 else if(keyName.equals(CurrentGame.getFreezeKey())) {
-//                        System.out.println(progressBar.getProgress());
                     if(progressBar.getProgress() >= 1)
                         gameController.freeze(progressBar, scene);
                 }
                 else if(keyName.equals(KeyCode.ESCAPE.getName())) {
                     gameController.enterPauseMenu(gamePane, pausePane);
                 }
-//                    gameController.checkForIncreaseRadius();
                 if (gameController.getNumberOfBallsLeft() <= CurrentGame.getNumberOfBalls()/4) {
                     if (keyName.equals(CurrentGame.getRightKey()))
                         gameController.moveRight(ball);

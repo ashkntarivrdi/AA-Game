@@ -25,8 +25,6 @@ import static view.Menus.GameMenu.mediaPlayer;
 public class GameMenuController {
     GameController gameController = new GameController();
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception{
-        //TODO: reset static fields from currentGame
-//        GameController.enterPauseMenu();
         GameController.resetEverything();
         new MainMenu().start(LoginMenu.stage);
     }

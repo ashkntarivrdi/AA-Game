@@ -25,9 +25,6 @@ public class UpperShootAnimation extends Transition {
     private ProgressBar progressBar;
     private int guestScore = 0;
 
-    //    static {
-//        GameController.createRotationAnimation(new CenterBall(150));
-//    }
     public UpperShootAnimation(Pane pane, Ball ball, CenterBall outerBall , Text numberOfUpperBallsLeft, ProgressBar progressBar, Line line, Text score) {
         this.pane = pane;
         this.ball = ball;
@@ -38,7 +35,7 @@ public class UpperShootAnimation extends Transition {
         this.score = score;
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
-        this.progressBar.setProgress(this.progressBar.getProgress() + 1);//TODO:0.15
+        this.progressBar.setProgress(this.progressBar.getProgress() + 0.2);
         CenterBall.addBallToArray(this.ball);
         CenterBall.addTextToArray(this.numberOfUpperBallsLeft);
         CenterBall.addLineToArray(this.line);
@@ -46,8 +43,8 @@ public class UpperShootAnimation extends Transition {
 
     @Override
     protected void interpolate(double frac) {
-        double y = ball.getCenterY() + 10;//TODO:10
-        double textY = numberOfUpperBallsLeft.getY() + 10;//10
+        double y = ball.getCenterY() + 10;
+        double textY = numberOfUpperBallsLeft.getY() + 10;
 
         double x;
         double textX;
@@ -65,8 +62,6 @@ public class UpperShootAnimation extends Transition {
             textX = numberOfUpperBallsLeft.getX() - 4;
         }
 
-
-        //TODO: get ball from database?
         if(outerBall.getBoundsInParent().intersects(ball.getLayoutBounds())) {
             Media media = new Media(getClass().getResource("/musics/shoot.wav").toExternalForm());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -91,7 +86,6 @@ public class UpperShootAnimation extends Transition {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         }
 
         if(y >= 580) {

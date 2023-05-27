@@ -43,6 +43,4 @@ public class SignupMenuController {
     public void enterLoginMenu(MouseEvent mouseEvent) throws Exception {
         new LoginMenu().start(LoginMenu.stage);
     }
-
-    //TODO: give random avatar when signup
 }

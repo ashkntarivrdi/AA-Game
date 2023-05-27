@@ -1,19 +1,15 @@
 package view.Animations;
 
-import javafx.animation.*;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
+import javafx.animation.Interpolator;
+import javafx.animation.Transition;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
 
 public class RotateAnimation extends Transition {
     private final Rotate rotate;
     private double rotateFrequency = CurrentGame.getDifficultyRate().getSpeedRate();
-//    private Timeline timeline = new Timeline();
 
     public RotateAnimation(CenterBall outerBall) {
         rotate = new Rotate(0, outerBall.getCenterX(), outerBall.getCenterY());

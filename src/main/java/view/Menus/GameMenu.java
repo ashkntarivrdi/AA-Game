@@ -2,10 +2,6 @@ package view.Menus;
 
 import controller.GameController;
 import controller.SettingController;
-import enums.Phase;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -26,12 +22,10 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
 
-import javax.security.auth.login.AppConfigurationEntry;
 import java.util.ArrayList;
 
 public class GameMenu extends Application{
@@ -45,12 +39,9 @@ public class GameMenu extends Application{
     public void start(Stage stage) throws Exception {
         gamePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/GameMenu.fxml"));
         pausePane = FXMLLoader.load(GameMenu.class.getResource("/FXML/PauseMenu.fxml"));
-//        gamePane.getChildren().add(pausePane);
 
         CenterBall innerBall = new CenterBall(250, 250);
         CenterBall outerBall = new CenterBall(250, 250, 150);
-
-//        Text phaseNumber = getPhaseNumber(outerBall);
 
         ProgressBar progressBar = new ProgressBar(0);
         Text score = new Text();
@@ -85,42 +76,12 @@ public class GameMenu extends Application{
         gameController.createDefaultBalls(gamePane, outerBall);
         initializeGame(gamePane, outerBall, progressBar, button, score, scene, pausePane);
 
-//        if (CurrentGame.getPhase() == Phase.ONE)
-//            initializeGamePhaseOne();
-
         gamePane.requestFocus();
 
         stage.setTitle("Game Menu");
         stage.setScene(scene);
         stage.show();
     }
-
-//    private Label generateTimer() {
-//        Timeline timeline = new Timeline();
-//        Label timerLabel = new Label();
-//        final int[] timeSeconds = {120};
-//
-//        timeline.setCycleCount(Timeline.INDEFINITE);
-//        timeline.getKeyFrames().add(
-//                new KeyFrame(Duration.millis(1000), event -> {
-//                    timeSeconds[0]--;
-//                    int minutes = timeSeconds[0] / 60;
-//                    int seconds = timeSeconds[0] % 60;
-//                    String timeString = String.format("%02d:%02d", minutes, seconds);
-//                    timerLabel.setText(timeString);
-//                    if(timeSeconds[0] <= 0) {
-//                        timeline.stop();
-//                        try {
-//                            GameController.showGameResult(GameController.getGameScore(), true);
-//                        } catch (Exception e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    }
-//                })
-//        );
-//        timeline.playFromStart();
-//        return timerLabel;
-//    }
 
     private void initializeGame(Pane gamePane, CenterBall outerBall, ProgressBar progressBar, Button button, Text score, Scene scene, Pane pausePane) {
         gameController.setNumberOfBallsLeft(CurrentGame.getNumberOfBalls());
@@ -144,14 +105,12 @@ public class GameMenu extends Application{
                         }
                     }
                     else if(keyName.equals(CurrentGame.getFreezeKey())) {
-//                        System.out.println(progressBar.getProgress());
                         if(progressBar.getProgress() >= 1)
                             gameController.freeze(progressBar, scene);
                     }
                     else if(keyName.equals(KeyCode.ESCAPE.getName())) {
                         gameController.enterPauseMenu(gamePane, pausePane);
                     }
-//                    gameController.checkForIncreaseRadius();
                     if (gameController.getNumberOfBallsLeft() <= CurrentGame.getNumberOfBalls()/4) {
                         if (keyName.equals(CurrentGame.getRightKey()))
                             gameController.moveRight(ball);
@@ -162,14 +121,6 @@ public class GameMenu extends Application{
 
             });
     }
-
-//    public Text getPhaseNumber(CenterBall centerBall) {
-//        Text phaseNumber = new Text(centerBall.getCenterX() - 18, centerBall.getCenterY() + 18,
-//                "" + CurrentGame.getPhase().getPhase());
-//        phaseNumber.setFill(Color.WHITE);
-//        phaseNumber.setFont(new Font(65));
-//        return phaseNumber;
-//    }
 
     public static Text getProgressBarText() {
         Text text = new Text("Freeze");

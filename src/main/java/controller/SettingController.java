@@ -2,16 +2,10 @@ package controller;
 
 import enums.Level;
 import model.CurrentGame;
-import model.Database;
-import view.Menus.GameMenu;
-
-import javax.swing.*;
-import javax.swing.plaf.IconUIResource;
 
 public class SettingController {
     public static void setDifficultyRate(Level level) {
         CurrentGame.setDifficultyRate(level);
-//        System.out.println(CurrentGame.getDifficultyRate());
     }
 
     public static void setDarkMode(boolean darkMode) {
@@ -21,7 +15,6 @@ public class SettingController {
 
     public static void setMute(boolean mute) {
         CurrentGame.setMute(mute);
-//        System.out.println(CurrentGame.isMute());
     }
 
     public static boolean isMute() {
@@ -51,5 +44,5 @@ public class SettingController {
     public static int getDefaultBallsCount() {
         return CurrentGame.getDefaultBallsCount();
     }
-    //TODO: change number of balls
+
 }

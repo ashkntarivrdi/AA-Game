@@ -25,7 +25,6 @@ public class LoginMenu extends Application {
         stage.setScene(scene);
         stage.setTitle("Login Menu");
         stage.getIcons().add(new Image(LoginMenu.class.getResource("/images/aa.png").toExternalForm()));
-//        stage.setMaximized(true);
         stage.setResizable(false);
         stage.show();
 

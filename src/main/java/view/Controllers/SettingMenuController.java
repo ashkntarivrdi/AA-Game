@@ -118,18 +118,6 @@ public class SettingMenuController {
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER);
 
-//        Button back = new Button("Back");
-//        back.setOnAction(response -> {
-//            try {
-//                enterSettingMenu(response);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        back.setMaxWidth(150);
-//        VBox vBox1 = new VBox(back);
-//        vBox1.setAlignment(Pos.CENTER);
-
         pane.setCenter(vBox);
         pane.setBottom(backButton());
 
@@ -184,18 +172,6 @@ public class SettingMenuController {
         VBox vBox = new VBox(easy, medium, hard, textField);
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER);
-
-//        Button back = new Button("Back");
-//        back.setOnAction(response -> {
-//            try {
-//                enterSettingMenu(response);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        back.setMaxWidth(150);
-//        VBox vBox1 = new VBox(back);
-//        vBox1.setAlignment(Pos.CENTER);
 
         pane.setCenter(vBox);
         pane.setBottom(backButton());
@@ -290,14 +266,6 @@ public class SettingMenuController {
                 seven.setSelected(true);
                 break;
         }
-    }
-
-    public void changeLanguage(MouseEvent mouseEvent) {
-        //TODO
-    }
-
-    public void changeControlKeys(MouseEvent mouseEvent) {
-        //TODO
     }
 
     public void enterMainMenu(MouseEvent mouseEvent) throws Exception {

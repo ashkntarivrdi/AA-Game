@@ -9,8 +9,6 @@ public class User {
     private Avatar avatar;
     private String path;
     private double time;
-    private CurrentGame currentGame;
-
     public User(String name, String password) {
         this.name = name;
         this.password = password;

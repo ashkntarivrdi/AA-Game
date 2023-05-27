@@ -56,9 +56,6 @@ public class ScoreBoard extends Application {
             }
         });
 
-        //TODO: change scoreboard by level doesn't work
-
-
         String[] sortedPlayers = scoreBoardController.getHighRanks(level).split(",");
         VBox vBox = new VBox();
         Text text = new Text();

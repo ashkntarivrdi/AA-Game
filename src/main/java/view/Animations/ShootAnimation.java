@@ -2,22 +2,17 @@ package view.Animations;
 
 import controller.GameController;
 import controller.Utils.UserUtils;
-import javafx.animation.*;
-import javafx.scene.chart.PieChart;
+import javafx.animation.Transition;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Ball;
 import model.CenterBall;
 import model.CurrentGame;
-import model.Database;
-import view.Menus.GameMenu;
-import view.Menus.LoginMenu;
 
 public class ShootAnimation extends Transition {
     GameController gameController = new GameController();
@@ -30,9 +25,6 @@ public class ShootAnimation extends Transition {
     private ProgressBar progressBar;
     private int guestScore = 0;
 
-//    static {
-//        GameController.createRotationAnimation(new CenterBall(150));
-//    }
     public ShootAnimation(Pane pane, Ball ball, CenterBall outerBall , Text numberOfBallsLeft, ProgressBar progressBar, Line line, Text score) {
         this.pane = pane;
         this.ball = ball;
@@ -43,7 +35,7 @@ public class ShootAnimation extends Transition {
         this.score = score;
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
-        this.progressBar.setProgress(this.progressBar.getProgress() + 1);//TODO:0.15
+        this.progressBar.setProgress(this.progressBar.getProgress() + 0.2);
         CenterBall.addBallToArray(this.ball);
         CenterBall.addTextToArray(this.numberOfBallsLeft);
         CenterBall.addLineToArray(this.line);
@@ -51,8 +43,8 @@ public class ShootAnimation extends Transition {
 
     @Override
     protected void interpolate(double frac) {
-        double y = ball.getCenterY() - 10;//TODO:10
-        double textY = numberOfBallsLeft.getY() - 10;//10
+        double y = ball.getCenterY() - 10;
+        double textY = numberOfBallsLeft.getY() - 10;
 
         double x;
         double textX;
@@ -70,8 +62,6 @@ public class ShootAnimation extends Transition {
             textX = numberOfBallsLeft.getX() - 4;
         }
 
-
-        //TODO: get ball from database?
         if(outerBall.getBoundsInParent().intersects(ball.getLayoutBounds())) {
             Media media = new Media(getClass().getResource("/musics/shoot.wav").toExternalForm());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -96,7 +86,6 @@ public class ShootAnimation extends Transition {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         }
 
         if(y <= 20) {
